@@ -19,4 +19,8 @@
     <ProjectReference Include="..\SplitwiseApp.DomainModels\SplitwiseApp.DomainModels.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="User\" />
+  </ItemGroup>
+
 </Project>

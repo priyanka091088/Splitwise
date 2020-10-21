@@ -19,15 +19,8 @@ using SplitwiseApp.Web;
 #line default
 #line hidden
 #nullable disable
-#nullable restore
-#line 2 "C:\Users\Win10\source\repos\Splitwise Application\SplitwiseApp\SplitwiseApp.Web\Views\_ViewImports.cshtml"
-using SplitwiseApp.Web.Models;
-
-#line default
-#line hidden
-#nullable disable
     [global::Microsoft.AspNetCore.Razor.Hosting.RazorSourceChecksumAttribute(@"SHA1", @"7091c65830b0329e613be026ede8a57552863778", @"/Views/_ViewStart.cshtml")]
-    [global::Microsoft.AspNetCore.Razor.Hosting.RazorSourceChecksumAttribute(@"SHA1", @"3abbfb43b2eefc2e223f425b20eaa45dcbe02210", @"/Views/_ViewImports.cshtml")]
+    [global::Microsoft.AspNetCore.Razor.Hosting.RazorSourceChecksumAttribute(@"SHA1", @"11952b303bca6df39326cfeee605f16b3338f1fa", @"/Views/_ViewImports.cshtml")]
     public class Views__ViewStart : global::Microsoft.AspNetCore.Mvc.Razor.RazorPage<dynamic>
     {
         #pragma warning disable 1998

@@ -19,4 +19,9 @@
     <ProjectReference Include="..\SplitwiseApp.Repository\SplitwiseApp.Repository.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="ApiControllers\" />
+    <Folder Include="Hubs\" />
+  </ItemGroup>
+
 </Project>
