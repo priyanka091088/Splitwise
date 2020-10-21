@@ -1,0 +1,9 @@
+C:\Users\Win10\source\repos\Splitwise Application\SplitwiseApp\SplitwiseApp.DomainModels\bin\Debug\netstandard2.1\SplitwiseApp.DomainModels.deps.json
+C:\Users\Win10\source\repos\Splitwise Application\SplitwiseApp\SplitwiseApp.DomainModels\bin\Debug\netstandard2.1\SplitwiseApp.DomainModels.dll
+C:\Users\Win10\source\repos\Splitwise Application\SplitwiseApp\SplitwiseApp.DomainModels\bin\Debug\netstandard2.1\SplitwiseApp.DomainModels.pdb
+C:\Users\Win10\source\repos\Splitwise Application\SplitwiseApp\SplitwiseApp.DomainModels\obj\Debug\netstandard2.1\SplitwiseApp.DomainModels.csprojAssemblyReference.cache
+C:\Users\Win10\source\repos\Splitwise Application\SplitwiseApp\SplitwiseApp.DomainModels\obj\Debug\netstandard2.1\SplitwiseApp.DomainModels.AssemblyInfoInputs.cache
+C:\Users\Win10\source\repos\Splitwise Application\SplitwiseApp\SplitwiseApp.DomainModels\obj\Debug\netstandard2.1\SplitwiseApp.DomainModels.AssemblyInfo.cs
+C:\Users\Win10\source\repos\Splitwise Application\SplitwiseApp\SplitwiseApp.DomainModels\obj\Debug\netstandard2.1\SplitwiseApp.DomainModels.dll
+C:\Users\Win10\source\repos\Splitwise Application\SplitwiseApp\SplitwiseApp.DomainModels\obj\Debug\netstandard2.1\SplitwiseApp.DomainModels.pdb
+C:\Users\Win10\source\repos\Splitwise Application\SplitwiseApp\SplitwiseApp.DomainModels\obj\Debug\netstandard2.1\SplitwiseApp.DomainModels.csproj.CoreCompileInputs.cache
