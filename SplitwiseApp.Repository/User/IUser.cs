@@ -11,5 +11,6 @@ namespace SplitwiseApp.Repository.User
         Task<UserDTO> AddUser(UserDTO user);
         Task<UserDTO> UpdateProfile(UserDTO user);
         Task<UserDTO> Login(UserDTO user);
+        Task<UserDTO> GetUserById(string userId);
     }
 }

@@ -13,6 +13,11 @@ namespace SplitwiseApp.Repository.User
             throw new NotImplementedException();
         }
 
+        public Task<UserDTO> GetUserById(string userId)
+        {
+            throw new NotImplementedException();
+        }
+
         public Task<UserDTO> Login(UserDTO user)
         {
             throw new NotImplementedException();

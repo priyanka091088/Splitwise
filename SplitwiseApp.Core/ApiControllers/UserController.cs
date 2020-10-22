@@ -18,6 +18,13 @@ namespace SplitwiseApp.Core.ApiControllers
             _user = user;
         }
 
+        [HttpGet]
+        public async Task<ActionResult<UserDTO>> GetUser(string id)
+        {
+            UserDTO user = await _user.GetUserById(id);
+            return Ok(user);
+        }
+
         [HttpPost]
         [Route("signup")]
         public async Task<ActionResult<UserDTO>> SignUp(UserDTO user)
