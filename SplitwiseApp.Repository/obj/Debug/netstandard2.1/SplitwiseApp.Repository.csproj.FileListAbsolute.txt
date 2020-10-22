@@ -8,5 +8,5 @@ C:\Users\Win10\source\repos\Splitwise Application\SplitwiseApp\SplitwiseApp.Repo
 C:\Users\Win10\source\repos\Splitwise Application\SplitwiseApp\SplitwiseApp.Repository\obj\Debug\netstandard2.1\SplitwiseApp.Repository.pdb
 C:\Users\Win10\source\repos\Splitwise Application\SplitwiseApp\SplitwiseApp.Repository\bin\Debug\netstandard2.1\SplitwiseApp.DomainModels.dll
 C:\Users\Win10\source\repos\Splitwise Application\SplitwiseApp\SplitwiseApp.Repository\bin\Debug\netstandard2.1\SplitwiseApp.DomainModels.pdb
-C:\Users\Win10\source\repos\Splitwise Application\SplitwiseApp\SplitwiseApp.Repository\obj\Debug\netstandard2.1\SplitwiseApp.Repository.csproj.CoreCompileInputs.cache
 C:\Users\Win10\source\repos\Splitwise Application\SplitwiseApp\SplitwiseApp.Repository\obj\Debug\netstandard2.1\SplitwiseApp.Repository.csproj.CopyComplete
+C:\Users\Win10\source\repos\Splitwise Application\SplitwiseApp\SplitwiseApp.Repository\obj\Debug\netstandard2.1\SplitwiseApp.Repository.csproj.CoreCompileInputs.cache
