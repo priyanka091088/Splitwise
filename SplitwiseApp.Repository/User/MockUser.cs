@@ -4,21 +4,21 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SplitwiseApp.Repository.Settlement
+namespace SplitwiseApp.Repository.User
 {
-    public class MockSettlement : ISettlement
+    public class MockUser : IUser
     {
-        public Task<SettlementDTO> AddSettlementDetails(SettlementDTO settlement)
+        public Task<UserDTO> AddUser(UserDTO user)
         {
             throw new NotImplementedException();
         }
 
-        public Task<IEnumerable<SettlementDTO>> GetSettlementDetails(string userId)
+        public Task<UserDTO> Login(UserDTO user)
         {
             throw new NotImplementedException();
         }
 
-        public Task<SettlementDTO> UpdateSettlementDetails(SettlementDTO settlement)
+        public Task<UserDTO> UpdateProfile(UserDTO user)
         {
             throw new NotImplementedException();
         }

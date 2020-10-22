@@ -1,10 +1,31 @@
-﻿using System;
+﻿using SplitwiseApp.Repository.DTOs;
+using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace SplitwiseApp.Repository.Payers_Expenses
 {
-    class MockPayersExpenses
+    public class MockPayersExpenses : IPayersExpenses
     {
+        public Task<Payers_ExpensesDTO> AddPayersExpenses(Payers_ExpensesDTO payerExpense)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<Payers_ExpensesDTO> DeletePayersExpenses(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<Payers_ExpensesDTO> GetPayersExpenses(int expenseId)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<Payers_ExpensesDTO> UpdatePayersExpenses(Payers_ExpensesDTO payerExpense)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
