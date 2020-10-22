@@ -10,8 +10,14 @@ namespace SplitwiseApp.DomainModels.Models
     {
         [Key]
         public int memberId { get; set; }
-        [ForeignKey("Groups")]
-        public int groupId { get; set; }
-       // public string userId { get; set; }
+        
+        public int? groupId { get; set; }
+        [ForeignKey("groupId")]
+        public Groups groups { get; set; }
+
+
+        public string userId { get; set; }
+        [ForeignKey("userId")]
+        public ApplicationUser users { get; set; }
     }
 }

@@ -18,8 +18,13 @@ namespace SplitwiseApp.DomainModels.Models
         public string Currency { get; set; }
         [Required]
         public string SplitBy { get; set; }
-        [ForeignKey("Groups")]
-        public int groupId { get; set; }
+
+        public int? groupId { get; set; }
+        [ForeignKey("groupId")]
+        public Groups groups { get; set; }
+
         public string creatorId { get; set; }
+        [ForeignKey("creatorId")]
+        public ApplicationUser users { get; set; }
     }
 }

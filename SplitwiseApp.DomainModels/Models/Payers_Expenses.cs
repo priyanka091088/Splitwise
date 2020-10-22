@@ -14,8 +14,14 @@ namespace SplitwiseApp.DomainModels.Models
         public float paidAmount { get; set; }
         [Required]
         public float Share { get; set; }
-        [ForeignKey("Expenses")]
-        public int expenseId { get; set; }
-        //public string payerId { get; set; }
+        
+        public int? expenseId { get; set; }
+        [ForeignKey("expenseId")]
+        public Expenses expenses { get; set; }
+
+
+        public string payerId { get; set; }
+        [ForeignKey("payerId")]
+        public ApplicationUser payer { get; set; }
     }
 }

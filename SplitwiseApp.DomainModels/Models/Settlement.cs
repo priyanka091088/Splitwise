@@ -13,12 +13,22 @@ namespace SplitwiseApp.DomainModels.Models
         [Required]
         public float Amount { get; set; }
        
-        [ForeignKey("Expenses")]
+        
         public int expenseId { get; set; }
-        [ForeignKey("Groups")]
-        public int groupId { get; set; }
+        [ForeignKey("Expenses")]
+        public Expenses expenses { get; set; }
+        
+        public int? groupId { get; set; }
+        [ForeignKey("groupId")]
+        public Groups groups { get; set; }
 
-        /* public string payerId { get; set; }
-        public string receiverId { get; set; }*/
+
+        public string payerId { get; set; }
+        [ForeignKey("payerId")]
+        public ApplicationUser payer { get; set; }
+
+        public string receiverId { get; set; }
+        [ForeignKey("receiverId")]
+        public ApplicationUser receiver { get; set; }
     }
 }
