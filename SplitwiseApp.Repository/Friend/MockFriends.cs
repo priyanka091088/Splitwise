@@ -1,19 +1,25 @@
 ﻿using SplitwiseApp.Repository.DTOs;
+using SplitwiseApp.DomainModels.Models;
 using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SplitwiseApp.Repository.Friends
+namespace SplitwiseApp.Repository.Friend
 {
     public class MockFriends : IFriends
     {
-        public Task<FriendsDTO> AddAFriend(FriendsDTO friends)
+        public void AddAFriend(Friends friends)
         {
             throw new NotImplementedException();
         }
 
-        public Task<FriendsDTO> DeleteAFriend(int id)
+        public void DeleteAFriend(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool FriendExist(int friendId)
         {
             throw new NotImplementedException();
         }
@@ -23,7 +29,7 @@ namespace SplitwiseApp.Repository.Friends
             throw new NotImplementedException();
         }
 
-        public Task<FriendsDTO> UpdateAFriend(FriendsDTO friends)
+        public void UpdateAFriend(Friends friends)
         {
             throw new NotImplementedException();
         }

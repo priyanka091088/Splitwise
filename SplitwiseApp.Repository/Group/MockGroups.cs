@@ -1,25 +1,20 @@
-﻿using SplitwiseApp.Repository.DTOs;
-using SplitwiseApp.Repository.GroupMembers;
+﻿using SplitwiseApp.DomainModels.Models;
+using SplitwiseApp.Repository.DTOs;
 using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SplitwiseApp.Repository.Groups
+namespace SplitwiseApp.Repository.Group
 {
     public class MockGroups : IGroups
     {
-        private readonly IGroupMembers members;
-        public MockGroups(IGroupMembers _members)
-        {
-            members = _members;
-        }
-        public Task<GroupsDTO> AddGroupForUser(GroupsDTO group)
+        public void AddGroupForUser(Groups group)
         {
             throw new NotImplementedException();
         }
 
-        public Task<GroupsDTO> DeleteAGroupById(int groupId)
+        public void DeleteAGroupById(int groupId)
         {
             throw new NotImplementedException();
         }
@@ -34,7 +29,12 @@ namespace SplitwiseApp.Repository.Groups
             throw new NotImplementedException();
         }
 
-        public Task<GroupsDTO> UpdateAGroup(GroupsDTO group)
+        public bool GroupExist(int groupId)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void UpdateAGroup(Groups group)
         {
             throw new NotImplementedException();
         }

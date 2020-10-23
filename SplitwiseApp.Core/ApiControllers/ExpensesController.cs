@@ -3,8 +3,10 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using SplitwiseApp.Repository.DTOs;
-using SplitwiseApp.Repository.Expenses;
+using SplitwiseApp.Repository.Expense;
 using System.Threading.Tasks;
+using SplitwiseApp.DomainModels.Models;
+using SplitwiseApp.Repository.Group;
 
 namespace SplitwiseApp.Core.ApiControllers
 {
@@ -13,56 +15,76 @@ namespace SplitwiseApp.Core.ApiControllers
     class ExpensesController: ControllerBase
     {
         private readonly IExpenses _expenses;
-        public ExpensesController(IExpenses expenses)
+        private readonly IGroups _groups;
+        public ExpensesController(IExpenses expenses, IGroups groups)
         {
             _expenses = expenses;
+            _groups = groups;
 
         }
 
         // GET: api/Expenses/id
         [HttpGet("{id}")]
         [Route("expense")]
-        public async Task<ActionResult<IEnumerable<ExpensesDTO>>> GetExpense(int id)
+        public async Task<ActionResult<ExpensesDTO>> GetExpenseByExpenseId(int id)
         {
+            if (_expenses.ExpenseExist(id))
+            {
+                ExpensesDTO expensesDto = await _expenses.GetExpensesById(id);
+                return Ok(expensesDto);
+            }
+            return NotFound();
 
-            IEnumerable<ExpensesDTO> expensesDto = await _expenses.GetExpenseForGroup(id);
-            return Ok(expensesDto);
         }
 
         [HttpGet]
         [Route("groupsExpense")]
         public async Task<ActionResult<IEnumerable<ExpensesDTO>>> ExpenseForAGroup(int groupId)
         {
-
-            IEnumerable<ExpensesDTO> expensesDto = await _expenses.GetExpenseForGroup(groupId);
-            return Ok(expensesDto);
+            if (_groups.GroupExist(groupId))
+            {
+                IEnumerable<ExpensesDTO> expensesDto = await _expenses.GetExpenseForGroup(groupId);
+                return Ok(expensesDto);
+            }
+            return NotFound();
         }
 
         // POST: api/Expenses
         [HttpPost]
-        public async Task<ActionResult<ExpensesDTO>> AddAGroup(ExpensesDTO expenses)
+        public IActionResult AddExpense(Expenses expenses)
         {
-
-            ExpensesDTO addExpense = await _expenses.AddAnExpense(expenses);
-            return Ok(addExpense);
+            if(!ModelState.IsValid)
+            {
+                return BadRequest();
+            }
+            _expenses.AddAnExpense(expenses);
+            return Ok();
         }
 
         // PUT: api/Expenses
         [HttpPut]
-        public async Task<ActionResult<ExpensesDTO>> UpdateExpense(ExpensesDTO expenses)
+        public IActionResult UpdateExpense(Expenses expenses)
         {
+            if (_expenses.ExpenseExist(expenses.expenseId))
+            {
 
-            ExpensesDTO updateExpense = await _expenses.UpdateAParticularExpense(expenses);
-            return Ok(updateExpense);
+                _expenses.UpdateAParticularExpense(expenses);
+                return Ok();
+            }
+            return NotFound();
+
         }
 
         // DELETE: api/Expenses
         [HttpDelete]
-        public async Task<ActionResult<ExpensesDTO>> DeleteExpense(int expenseId)
+        public IActionResult DeleteExpense(int expenseId)
         {
-
-            ExpensesDTO deleteExpense = await _expenses.DeleteAnExpense(expenseId);
-            return Ok(deleteExpense);
+            if (_expenses.ExpenseExist(expenseId))
+            {
+                _expenses.DeleteAnExpense(expenseId);
+                return Ok();
+            }
+            return NotFound();
         }
     }
 }

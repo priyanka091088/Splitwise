@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using SplitwiseApp.Repository.DTOs;
-using SplitwiseApp.Repository.Payers_Expenses;
+using SplitwiseApp.Repository.Payers_Expense;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -19,11 +19,11 @@ namespace SplitwiseApp.Core.ApiControllers
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<Payers_ExpensesDTO>> GetPayersExpenses(int id)
+        public IActionResult GetPayersExpenses(int id)
         {
 
-            Payers_ExpensesDTO expenseDtos = await _payersExpense.GetPayersExpenses(id);
-            return Ok(expenseDtos);
+             _payersExpense.GetPayersExpenses(id);
+            return Ok();
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using SplitwiseApp.DomainModels.Models;
 using SplitwiseApp.Repository.DTOs;
 using SplitwiseApp.Repository.User;
 using System;
@@ -21,33 +22,49 @@ namespace SplitwiseApp.Core.ApiControllers
         [HttpGet]
         public async Task<ActionResult<UserDTO>> GetUser(string id)
         {
-            UserDTO user = await _user.GetUserById(id);
-            return Ok(user);
+            if (_user.UserExists(id))
+            {
+                UserDTO user = await _user.GetUserById(id);
+                return Ok(user);
+            }
+            return NotFound();
         }
 
         [HttpPost]
         [Route("signup")]
-        public async Task<ActionResult<UserDTO>> SignUp(UserDTO user)
+        public IActionResult SignUp(ApplicationUser user)
         {
+            if(!ModelState.IsValid)
+            {
+                return BadRequest();
+            }
 
-            UserDTO register = await _user.AddUser(user);
-            return Ok(register);
+            _user.AddUser(user);
+            return Ok();
         }
+
         [HttpPost]
         [Route("login")]
-        public async Task<ActionResult<UserDTO>> Login(UserDTO friends)
+        public async Task<ActionResult> Login(UserDTO user)
         {
+            if (!ModelState.IsValid)
+            {
 
-            UserDTO login = await _user.Login(friends);
-            return Ok(login);
+                UserDTO login = await _user.Login(user);
+                return Ok(login);
+            }
+            return BadRequest();
         }
 
         [HttpPut]
-        public async Task<ActionResult<UserDTO>> Profile(UserDTO user)
+        public IActionResult Profile(ApplicationUser user)
         {
-
-            UserDTO updateProfile = await _user.UpdateProfile(user);
-            return Ok(updateProfile);
+            if (_user.UserExists(user.Id))
+            {
+                _user.UpdateProfile(user);
+                return Ok();
+            }
+            return NotFound();
         }
     }
 }

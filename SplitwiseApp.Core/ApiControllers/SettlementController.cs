@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using SplitwiseApp.DomainModels.Models;
 using SplitwiseApp.Repository.DTOs;
-using SplitwiseApp.Repository.Settlement;
+using SplitwiseApp.Repository.Settlements;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -27,19 +28,19 @@ namespace SplitwiseApp.Core.ApiControllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<SettlementDTO>> AddASettlement(SettlementDTO settlement)
+        public IActionResult AddASettlement(Settlement settlement)
         {
 
-            SettlementDTO addSettlement = await _settlement.AddSettlementDetails(settlement);
-            return Ok(addSettlement);
+            _settlement.AddSettlementDetails(settlement);
+            return Ok();
         }
 
         [HttpPut]
-        public async Task<ActionResult<SettlementDTO>> UpdateSettlementDetails(SettlementDTO settlement)
+        public IActionResult UpdateSettlementDetails(Settlement settlement)
         {
 
-            SettlementDTO updateSettlement = await _settlement.UpdateSettlementDetails(settlement);
-            return Ok(updateSettlement);
+            _settlement.UpdateSettlementDetails(settlement);
+            return Ok();
         }
 
     }

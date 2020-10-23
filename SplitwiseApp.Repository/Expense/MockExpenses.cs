@@ -1,24 +1,31 @@
-﻿using SplitwiseApp.Repository.DTOs;
+﻿using SplitwiseApp.DomainModels.Models;
+using SplitwiseApp.Repository.DTOs;
 using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SplitwiseApp.Repository.Expenses
+namespace SplitwiseApp.Repository.Expense
 {
     public class MockExpenses : IExpenses
     {
-        public Task<ExpensesDTO> AddAnExpense(ExpensesDTO expenses)
+        public void AddAnExpense(Expenses expenses)
         {
             //Also call the payers_Expenses and Payees_Expenses post method
             throw new NotImplementedException();
         }
 
-        public Task<ExpensesDTO> DeleteAnExpense(int id)
+        public void DeleteAnExpense(int id)
         {
             //Also call the payers_expenses and payees_expenses delete method
             throw new NotImplementedException();
         }
+
+        public bool ExpenseExist(int expenseId)
+        {
+            throw new NotImplementedException();
+        }
+
         public Task<IEnumerable<ExpensesDTO>> GetExpenseForGroup(int groupId)
         {
             throw new NotImplementedException();
@@ -29,7 +36,7 @@ namespace SplitwiseApp.Repository.Expenses
             throw new NotImplementedException();
         }
 
-        public Task<ExpensesDTO> UpdateAParticularExpense(ExpensesDTO expenses)
+        public void UpdateAParticularExpense(Expenses expenses)
         {
             //Also call the payers_expenses and payees_expenses update method if necessary
             throw new NotImplementedException();

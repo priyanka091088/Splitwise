@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using SplitwiseApp.DomainModels.Models;
 using SplitwiseApp.Repository.DTOs;
-using SplitwiseApp.Repository.GroupMembers;
+using SplitwiseApp.Repository.Group;
+using SplitwiseApp.Repository.GroupMember;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -13,41 +15,55 @@ namespace SplitwiseApp.Core.ApiControllers
     class GroupMembersController:ControllerBase
     {
         private readonly IGroupMembers _members;
-        public GroupMembersController(IGroupMembers members)
+        private readonly IGroups _groups;
+        public GroupMembersController(IGroupMembers members,IGroups groups)
         {
             _members = members;
+            _groups = groups;
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<IEnumerable<GroupMembersDTO>>> GetMembers(int id)
+        public IActionResult GetMembersOfAGroup(int groupId)
         {
-
-            IEnumerable<GroupMembersDTO> memberDtos = await _members.GetGroupMembers(id);
-            return Ok(memberDtos);
+            if (_groups.GroupExist(groupId))
+            {
+                var memberDtos = _members.GetGroupMembers(groupId);
+                return Ok(memberDtos);
+            }
+            return NotFound();
         }
 
         [HttpPost]
-        public async Task<ActionResult<GroupMembersDTO>> AddMember(GroupMembersDTO members)
+        public IActionResult AddMember(GroupMembers members)
         {
-
-            GroupMembersDTO addMember = await _members.AddGroupMembers(members);
-            return Ok(addMember);
+            if (!ModelState.IsValid)
+            {
+                return BadRequest();
+            }
+            _members.AddGroupMembers(members);
+            return Ok();
         }
 
         [HttpPut]
-        public async Task<ActionResult<GroupMembersDTO>> UpdateMembers(GroupMembersDTO members)
+        public IActionResult UpdateMembers(GroupMembers members)
         {
-
-            GroupMembersDTO updateMembers = await _members.UpdateGroupMembers(members);
-            return Ok(updateMembers);
+            if (_members.MemberExist(members.memberId))
+            {
+                _members.UpdateGroupMembers(members);
+                return Ok();
+            }
+            return NotFound();
         }
 
         [HttpDelete]
-        public async Task<ActionResult<GroupMembersDTO>> DeleteMembers(int id)
+        public IActionResult DeleteMembers(int id)
         {
-
-            GroupMembersDTO deleteMembers = await _members.DeleteGroupMembers(id);
-            return Ok(deleteMembers);
+            if (_members.MemberExist(id))
+            {
+                _members.DeleteGroupMembers(id);
+                return Ok();
+            }
+            return NotFound();
         }
     }
 }
