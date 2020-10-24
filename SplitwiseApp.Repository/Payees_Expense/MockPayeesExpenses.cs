@@ -9,12 +9,12 @@ namespace SplitwiseApp.Repository.Payees_Expense
 {
     public class MockPayeesExpenses : IPayeeExpenses
     {
-        public void AddPayeesExpenses(Payees_Expenses payeesExpense)
+        public Task AddPayeesExpenses(Payees_Expenses payeesExpense)
         {
             throw new NotImplementedException();
         }
 
-        public void DeletePayeesExpenses(int id)
+        public Task DeletePayeesExpenses(int id)
         {
             throw new NotImplementedException();
         }
@@ -24,7 +24,7 @@ namespace SplitwiseApp.Repository.Payees_Expense
             throw new NotImplementedException();
         }
 
-        public void UpdatePayeesExpenses(Payees_Expenses payeesExpense)
+        public Task UpdatePayeesExpenses(Payees_Expenses payeesExpense)
         {
             throw new NotImplementedException();
         }

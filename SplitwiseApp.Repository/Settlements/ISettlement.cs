@@ -10,8 +10,8 @@ namespace SplitwiseApp.Repository.Settlements
     public interface ISettlement
     {
         Task<IEnumerable<SettlementDTO>> GetSettlementDetails(string userId);
-        public void AddSettlementDetails(Settlement settlement);
-        public void UpdateSettlementDetails(Settlement settlement);
+        public Task AddSettlementDetails(Settlement settlement);
+        public Task UpdateSettlementDetails(Settlement settlement);
         public bool SettlementExist(int settlemntId);
     }
 }

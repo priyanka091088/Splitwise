@@ -9,11 +9,11 @@ namespace SplitwiseApp.Repository.Group
 {
     public interface IGroups
     {
-        void AddGroupForUser(Groups group);
-        void UpdateAGroup(Groups group);
+        Task AddGroupForUser(Groups group);
+        Task UpdateAGroup(Groups group);
         Task<GroupsDTO> GetGroupByGroupId(int groupId);
         Task<IEnumerable<GroupsDTO>> GetGroupByUserId(string id);
-        void DeleteAGroupById(int groupId);
+        Task DeleteAGroupById(int groupId);
         public bool GroupExist(int groupId);
 
     }

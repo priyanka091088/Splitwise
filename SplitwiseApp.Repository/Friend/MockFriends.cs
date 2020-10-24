@@ -9,12 +9,12 @@ namespace SplitwiseApp.Repository.Friend
 {
     public class MockFriends : IFriends
     {
-        public void AddAFriend(Friends friends)
+        public Task AddAFriend(Friends friends)
         {
             throw new NotImplementedException();
         }
 
-        public void DeleteAFriend(int id)
+        public Task DeleteAFriend(int id)
         {
             throw new NotImplementedException();
         }
@@ -29,7 +29,7 @@ namespace SplitwiseApp.Repository.Friend
             throw new NotImplementedException();
         }
 
-        public void UpdateAFriend(Friends friends)
+        public Task UpdateAFriend(Friends friends)
         {
             throw new NotImplementedException();
         }

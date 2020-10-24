@@ -10,8 +10,8 @@ namespace SplitwiseApp.Repository.Payees_Expense
     public interface IPayeeExpenses
     {
         Task<IEnumerable<Payees_ExpensesDTO>> GetPayeesExpenses(int expenseId);
-        public void AddPayeesExpenses(Payees_Expenses payerExpense);
-        public void UpdatePayeesExpenses(Payees_Expenses payerExpense);
-        public void DeletePayeesExpenses(int id);
+        public Task AddPayeesExpenses(Payees_Expenses payerExpense);
+        public Task UpdatePayeesExpenses(Payees_Expenses payerExpense);
+        public Task DeletePayeesExpenses(int id);
     }
 }

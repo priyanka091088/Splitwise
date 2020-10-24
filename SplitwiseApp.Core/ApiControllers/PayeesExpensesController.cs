@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using SplitwiseApp.Repository.DTOs;
+using SplitwiseApp.Repository.Expense;
 using SplitwiseApp.Repository.Payees_Expense;
 using System;
 using System.Collections.Generic;
@@ -13,17 +14,22 @@ namespace SplitwiseApp.Core.ApiControllers
     class PayeesExpensesController:ControllerBase
     {
         private readonly IPayeeExpenses _payeesExpense;
-        public PayeesExpensesController(IPayeeExpenses payeesExpense)
+        private readonly IExpenses _expenses;
+        public PayeesExpensesController(IPayeeExpenses payeesExpense,IExpenses expenses)
         {
             _payeesExpense = payeesExpense;
+            _expenses = expenses;
         }
 
         [HttpGet("{id}")]
-        public IActionResult GetPayeesExpenses(int id)
+        public async Task<ActionResult<IEnumerable<Payees_ExpensesDTO>>> GetPayeesExpensesById(int id)
         {
-
-             _payeesExpense.GetPayeesExpenses(id);
-            return Ok();
+            if (_expenses.ExpenseExist(id))
+            {
+                IEnumerable<Payees_ExpensesDTO> payeesExpense = await _payeesExpense.GetPayeesExpenses(id);
+                return Ok(payeesExpense);
+            }
+            return NotFound();
         }
     }
 }

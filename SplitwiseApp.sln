@@ -3,13 +3,15 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30309.148
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SplitwiseApp.Web", "SplitwiseApp.Web\SplitwiseApp.Web.csproj", "{DE9E2128-D888-4F5E-ADC1-D53CC2B921E0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SplitwiseApp.Web", "SplitwiseApp.Web\SplitwiseApp.Web.csproj", "{DE9E2128-D888-4F5E-ADC1-D53CC2B921E0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SplitwiseApp.Core", "SplitwiseApp.Core\SplitwiseApp.Core.csproj", "{E1C370D2-6ADB-4A66-85D0-51D8962E764F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SplitwiseApp.Core", "SplitwiseApp.Core\SplitwiseApp.Core.csproj", "{E1C370D2-6ADB-4A66-85D0-51D8962E764F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SplitwiseApp.Repository", "SplitwiseApp.Repository\SplitwiseApp.Repository.csproj", "{568280D0-1C8D-4E54-83EF-6FF7CB1994F3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SplitwiseApp.Repository", "SplitwiseApp.Repository\SplitwiseApp.Repository.csproj", "{568280D0-1C8D-4E54-83EF-6FF7CB1994F3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SplitwiseApp.DomainModels", "SplitwiseApp.DomainModels\SplitwiseApp.DomainModels.csproj", "{38B3DDD6-A0D6-4602-9C6F-353F864C7EE3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SplitwiseApp.DomainModels", "SplitwiseApp.DomainModels\SplitwiseApp.DomainModels.csproj", "{38B3DDD6-A0D6-4602-9C6F-353F864C7EE3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SplitwiseApp.Repository.Test", "SplitwiseApp.Repository.Test\SplitwiseApp.Repository.Test.csproj", "{C3EB1DB6-F016-4B93-8DEC-68585A161AF0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{38B3DDD6-A0D6-4602-9C6F-353F864C7EE3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{38B3DDD6-A0D6-4602-9C6F-353F864C7EE3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{38B3DDD6-A0D6-4602-9C6F-353F864C7EE3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C3EB1DB6-F016-4B93-8DEC-68585A161AF0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C3EB1DB6-F016-4B93-8DEC-68585A161AF0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C3EB1DB6-F016-4B93-8DEC-68585A161AF0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C3EB1DB6-F016-4B93-8DEC-68585A161AF0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -10,8 +10,8 @@ namespace SplitwiseApp.Repository.User
     public interface IUser
     {
         Task<IEnumerable<UserDTO>> GetUser();
-        public void AddUser(ApplicationUser user);
-        public void UpdateProfile(ApplicationUser user);
+        public Task AddUser(ApplicationUser user);
+        public Task UpdateProfile(ApplicationUser user);
         Task<UserDTO> Login(UserDTO user);
         Task<UserDTO> GetUserById(string userId);
         public bool UserExists(string userId);

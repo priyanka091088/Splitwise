@@ -9,7 +9,7 @@ namespace SplitwiseApp.Repository.Settlements
 {
     public class MockSettlement : ISettlement
     {
-        public void AddSettlementDetails(Settlement settlement)
+        public Task AddSettlementDetails(Settlement settlement)
         {
             throw new NotImplementedException();
         }
@@ -24,7 +24,7 @@ namespace SplitwiseApp.Repository.Settlements
             throw new NotImplementedException();
         }
 
-        public void UpdateSettlementDetails(Settlement settlement)
+        public Task UpdateSettlementDetails(Settlement settlement)
         {
             throw new NotImplementedException();
         }

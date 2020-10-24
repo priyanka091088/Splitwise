@@ -9,12 +9,12 @@ namespace SplitwiseApp.Repository.Group
 {
     public class MockGroups : IGroups
     {
-        public void AddGroupForUser(Groups group)
+        public Task AddGroupForUser(Groups group)
         {
             throw new NotImplementedException();
         }
 
-        public void DeleteAGroupById(int groupId)
+        public Task DeleteAGroupById(int groupId)
         {
             throw new NotImplementedException();
         }
@@ -34,7 +34,7 @@ namespace SplitwiseApp.Repository.Group
             throw new NotImplementedException();
         }
 
-        public void UpdateAGroup(Groups group)
+        public Task UpdateAGroup(Groups group)
         {
             throw new NotImplementedException();
         }
