@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.Configuration;
 using SplitwiseApp.DomainModels.Models;
 using SplitwiseApp.Repository.DTOs;
 using SplitwiseApp.Repository.Group;
@@ -13,20 +14,27 @@ namespace SplitwiseApp.Repository.User
     public class MockUser : IUser
     {
         private readonly UserManager<ApplicationUser> _userManager;
+        private readonly AppDbContext _context;
+        private readonly IConfiguration _configuration;
+
         public MockUser()
         {
 
         }
-        public MockUser(UserManager<ApplicationUser> userManager)
+        public MockUser(AppDbContext context, UserManager<ApplicationUser> userManager,IConfiguration config)
         {
             _userManager = userManager;
+            _context = context;
+            _configuration = config;
         }
-        public Task AddUser(ApplicationUser user)
+        public string AddUser(ApplicationUser user)
         {
             var password = user.Name + "@123";
             var users = new ApplicationUser { UserName = user.Email, Email = user.Email, Name = user.Name, Balance = user.Balance };
             _userManager.CreateAsync(users, password);
-            throw new NotImplementedException();
+            
+            return users.Id; 
+           
         }
 
         public Task<IEnumerable<UserDTO>> GetUser()
@@ -49,6 +57,11 @@ namespace SplitwiseApp.Repository.User
         {
             var users = _userManager.FindByIdAsync(user.Id);
             _userManager.UpdateAsync(user);
+           /* if (result.IsCompletedSuccessfully) {
+                return true;
+
+            }*/
+            
             throw new NotImplementedException();
         }
 

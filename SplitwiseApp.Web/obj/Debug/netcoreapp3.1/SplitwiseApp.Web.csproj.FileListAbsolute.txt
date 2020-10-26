@@ -103,9 +103,6 @@ C:\Users\Win10\source\repos\Splitwise Application\SplitwiseApp\SplitwiseApp.Web\
 C:\Users\Win10\source\repos\Splitwise Application\SplitwiseApp\SplitwiseApp.Web\bin\Debug\netcoreapp3.1\SplitwiseApp.Core.pdb
 C:\Users\Win10\source\repos\Splitwise Application\SplitwiseApp\SplitwiseApp.Web\bin\Debug\netcoreapp3.1\SplitwiseApp.DomainModels.pdb
 C:\Users\Win10\source\repos\Splitwise Application\SplitwiseApp\SplitwiseApp.Web\bin\Debug\netcoreapp3.1\SplitwiseApp.Repository.pdb
-C:\Users\Win10\source\repos\Splitwise Application\SplitwiseApp\SplitwiseApp.Web\obj\Debug\netcoreapp3.1\SplitwiseApp.Web.csproj.CoreCompileInputs.cache
-C:\Users\Win10\source\repos\Splitwise Application\SplitwiseApp\SplitwiseApp.Web\obj\Debug\netcoreapp3.1\SplitwiseApp.Web.MvcApplicationPartsAssemblyInfo.cs
-C:\Users\Win10\source\repos\Splitwise Application\SplitwiseApp\SplitwiseApp.Web\obj\Debug\netcoreapp3.1\SplitwiseApp.Web.MvcApplicationPartsAssemblyInfo.cache
 C:\Users\Win10\source\repos\Splitwise Application\SplitwiseApp\SplitwiseApp.Web\bin\Debug\netcoreapp3.1\Microsoft.AspNetCore.JsonPatch.dll
 C:\Users\Win10\source\repos\Splitwise Application\SplitwiseApp\SplitwiseApp.Web\bin\Debug\netcoreapp3.1\Microsoft.AspNetCore.Mvc.Razor.Extensions.dll
 C:\Users\Win10\source\repos\Splitwise Application\SplitwiseApp\SplitwiseApp.Web\bin\Debug\netcoreapp3.1\Microsoft.AspNetCore.Razor.Language.dll
@@ -113,3 +110,7 @@ C:\Users\Win10\source\repos\Splitwise Application\SplitwiseApp\SplitwiseApp.Web\
 C:\Users\Win10\source\repos\Splitwise Application\SplitwiseApp\SplitwiseApp.Web\bin\Debug\netcoreapp3.1\Microsoft.CodeAnalysis.CSharp.dll
 C:\Users\Win10\source\repos\Splitwise Application\SplitwiseApp\SplitwiseApp.Web\bin\Debug\netcoreapp3.1\Microsoft.CodeAnalysis.Razor.dll
 C:\Users\Win10\source\repos\Splitwise Application\SplitwiseApp\SplitwiseApp.Web\bin\Debug\netcoreapp3.1\Newtonsoft.Json.Bson.dll
+C:\Users\Win10\source\repos\Splitwise Application\SplitwiseApp\SplitwiseApp.Web\obj\Debug\netcoreapp3.1\SplitwiseApp.Web.csproj.CoreCompileInputs.cache
+C:\Users\Win10\source\repos\Splitwise Application\SplitwiseApp\SplitwiseApp.Web\obj\Debug\netcoreapp3.1\SplitwiseApp.Web.MvcApplicationPartsAssemblyInfo.cs
+C:\Users\Win10\source\repos\Splitwise Application\SplitwiseApp\SplitwiseApp.Web\obj\Debug\netcoreapp3.1\SplitwiseApp.Web.MvcApplicationPartsAssemblyInfo.cache
+C:\Users\Win10\source\repos\Splitwise Application\SplitwiseApp\SplitwiseApp.Web\bin\Debug\netcoreapp3.1\Microsoft.EntityFrameworkCore.InMemory.dll

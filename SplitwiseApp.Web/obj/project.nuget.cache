@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "LhME38hqsAG2xbJj5mEH50Pv0/vMnuFV2MiSvR5Je57RfBWU90XrsIFALLUL5WBnzSc1Gs6w4DGRFipXITfHyw==",
+  "dgSpecHash": "lLWfb3owtlC9SjWprYYtC3AEMlmhuCU/k1vELT2gU8iLxyphBdw2X8JD3++eSqUXz9fACpXkZCwBXzTeCn+VrQ==",
   "success": true,
   "projectFilePath": "C:\\Users\\Win10\\source\\repos\\Splitwise Application\\SplitwiseApp\\SplitwiseApp.Web\\SplitwiseApp.Web.csproj",
   "expectedPackageFiles": [
@@ -61,6 +61,7 @@
     "C:\\Users\\Win10\\.nuget\\packages\\microsoft.entityframeworkcore.abstractions\\3.1.9\\microsoft.entityframeworkcore.abstractions.3.1.9.nupkg.sha512",
     "C:\\Users\\Win10\\.nuget\\packages\\microsoft.entityframeworkcore.analyzers\\3.1.9\\microsoft.entityframeworkcore.analyzers.3.1.9.nupkg.sha512",
     "C:\\Users\\Win10\\.nuget\\packages\\microsoft.entityframeworkcore.design\\3.1.9\\microsoft.entityframeworkcore.design.3.1.9.nupkg.sha512",
+    "C:\\Users\\Win10\\.nuget\\packages\\microsoft.entityframeworkcore.inmemory\\3.1.9\\microsoft.entityframeworkcore.inmemory.3.1.9.nupkg.sha512",
     "C:\\Users\\Win10\\.nuget\\packages\\microsoft.entityframeworkcore.relational\\3.1.9\\microsoft.entityframeworkcore.relational.3.1.9.nupkg.sha512",
     "C:\\Users\\Win10\\.nuget\\packages\\microsoft.entityframeworkcore.sqlite\\3.1.9\\microsoft.entityframeworkcore.sqlite.3.1.9.nupkg.sha512",
     "C:\\Users\\Win10\\.nuget\\packages\\microsoft.entityframeworkcore.sqlite.core\\3.1.9\\microsoft.entityframeworkcore.sqlite.core.3.1.9.nupkg.sha512",
