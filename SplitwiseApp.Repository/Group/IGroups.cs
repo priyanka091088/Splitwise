@@ -9,6 +9,7 @@ namespace SplitwiseApp.Repository.Group
 {
     public interface IGroups
     {
+        List<Groups> GetGroups();
         Task AddGroupForUser(Groups group);
         Task UpdateAGroup(Groups group);
         Task<GroupsDTO> GetGroupByGroupId(int groupId);

@@ -1,4 +1,5 @@
 ﻿
+using AutoMapper;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Moq;
@@ -22,20 +23,13 @@ namespace SplitwiseApp.Repository.Test.Modules.User
         private Mock<FakeUserManager> _userManager = new Mock<FakeUserManager>();
         private IdentityResult identityResult = new IdentityResult();
         private IConfiguration _configuration;
-        
+        private readonly IMapper _mapper;
+
         private ApplicationUser CreateApplicationUser(string name, string email)
         {
             return new ApplicationUser { Name = name, Email = email,Balance=0 }; ;
         }
-       /* private void AddUserMock(ApplicationUser applicationUser, string databaseName)
-        {
-            using (var db = MockDatabase.Create(databaseName))
-            {
-                _user = SetUpUserRepository(db);
-                _user.AddUser(applicationUser);
-
-            }
-        }*/
+       
         private void SetUserManager(ApplicationUser User)
         {
             IdentityResult result = IdentityResult.Success;
@@ -66,7 +60,7 @@ namespace SplitwiseApp.Repository.Test.Modules.User
             _configuration = new ConfigurationBuilder()
                 .AddInMemoryCollection(myConfiguration)
                 .Build();
-            return new MockUser(db, SetUserManager(), _configuration);
+            return new MockUser(db, SetUserManager(),_mapper);
         }
 
         private FakeUserManager SetUserManager()
@@ -84,7 +78,7 @@ namespace SplitwiseApp.Repository.Test.Modules.User
             using (var db = MockDatabase.Create(nameof(AddingUserTest)))
             {
                 _user = SetUpUserRepository(db);
-                _user.AddUser(applicationUser);
+                //_user.AddUser(applicationUser);
 
             }
             using (var db = MockDatabase.Create(nameof(AddingUserTest)))

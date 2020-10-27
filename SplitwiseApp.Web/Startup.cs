@@ -11,6 +11,16 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using SplitwiseApp.DomainModels.Models;
+using SplitwiseApp.Repository.Expense;
+using SplitwiseApp.Repository.Friend;
+using SplitwiseApp.Repository.Group;
+using SplitwiseApp.Repository.GroupMember;
+using SplitwiseApp.Repository.Payees_Expense;
+using SplitwiseApp.Repository.Payers_Expense;
+using SplitwiseApp.Repository.Settlements;
+using SplitwiseApp.Repository.User;
+using Newtonsoft.Json.Serialization;
+
 namespace SplitwiseApp.Web
 {
     public class Startup
@@ -32,7 +42,23 @@ namespace SplitwiseApp.Web
                 .AddEntityFrameworkStores<AppDbContext>()
                 .AddDefaultTokenProviders();
 
-            services.AddControllersWithViews();
+            services.AddScoped<IUser, MockUser>();
+            services.AddScoped<IExpenses, MockExpenses>();
+            services.AddScoped<IFriends, MockFriends>();
+            services.AddScoped<IGroups, MockGroups>();
+            services.AddScoped<IGroupMembers, MockGroupMembers>();
+            services.AddScoped<IPayeeExpenses, MockPayeesExpenses>();
+            services.AddScoped<IPayersExpenses, MockPayersExpenses>();
+            services.AddScoped<ISettlement, MockSettlement>();
+
+            services.AddControllersWithViews()
+                .AddNewtonsoftJson(options =>
+            {
+                var resolver = options.SerializerSettings.ContractResolver;
+                if (resolver != null)
+                    (resolver as DefaultContractResolver).NamingStrategy = null;
+
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

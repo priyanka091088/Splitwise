@@ -1,4 +1,7 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using SplitwiseApp.DomainModels.Models;
 using SplitwiseApp.Repository.DTOs;
@@ -15,59 +18,61 @@ namespace SplitwiseApp.Repository.User
     {
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly AppDbContext _context;
-        private readonly IConfiguration _configuration;
-
+        private readonly IMapper _mapper;
         public MockUser()
         {
 
         }
-        public MockUser(AppDbContext context, UserManager<ApplicationUser> userManager,IConfiguration config)
+        public MockUser(AppDbContext context, UserManager<ApplicationUser> userManager,IMapper mapper)
         {
             _userManager = userManager;
             _context = context;
-            _configuration = config;
+            _mapper = mapper;
+          
         }
-        public string AddUser(ApplicationUser user)
+        public async Task<IdentityResult> AddUser(signUpDTO user)
         {
-            var password = user.Name + "@123";
             var users = new ApplicationUser { UserName = user.Email, Email = user.Email, Name = user.Name, Balance = user.Balance };
-            _userManager.CreateAsync(users, password);
-            
-            return users.Id; 
+            return await _userManager.CreateAsync(users, user.Password);
            
         }
-
-        public Task<IEnumerable<UserDTO>> GetUser()
+        public async Task<ApplicationUser> GetUserById(string userId)
         {
-            throw new NotImplementedException();
+            return await _userManager.FindByIdAsync(userId);
+            
         }
-
-        public async Task<UserDTO> GetUserById(string userId)
+        public IEnumerable<UserDTO> GetUsers()
         {
-            var user = await _userManager.FindByIdAsync(userId);
-            throw new NotImplementedException();
+            return _mapper.Map<IEnumerable<UserDTO>>(_userManager.Users);
+            //return _context.Users.ToList();
+            
         }
-
         public Task<UserDTO> Login(UserDTO user)
         {
             throw new NotImplementedException();
         }
 
-        public Task UpdateProfile(ApplicationUser user)
+        public async Task UpdateProfile(ApplicationUser user)
         {
-            var users = _userManager.FindByIdAsync(user.Id);
-            _userManager.UpdateAsync(user);
-           /* if (result.IsCompletedSuccessfully) {
-                return true;
+            ApplicationUser u = await _userManager.FindByIdAsync(user.Id);
+            u.Email = user.Email;
+            u.Name = user.Name;
+            u.Balance = user.Balance;
 
-            }*/
-            
-            throw new NotImplementedException();
+            await _userManager.UpdateAsync(u);
+          
         }
 
         public bool UserExists(string userId)
         {
-            throw new NotImplementedException();
+            var u = _userManager.FindByIdAsync(userId);
+            if (u == null)
+            {
+                return false;
+            }
+            else
+                return true;
+            
         }
     }
 }

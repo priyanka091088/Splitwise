@@ -23,6 +23,13 @@ namespace SplitwiseApp.Core.ApiControllers
             _user = users;
 
         }
+
+        [HttpGet]
+        public List<Groups> GetGroup()
+        {
+            IEnumerable<Groups> groups = _groups.GetGroups();
+            return groups.ToList();
+        }
         // GET: api/Groups
         [HttpGet("{id}")]
         [Route("{userid}")]
