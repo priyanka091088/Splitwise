@@ -17,11 +17,12 @@ namespace SplitwiseApp.Core.ApiControllers
     {
         private readonly IGroups _groups;
         private readonly IUser _user;
-        public GroupsController(IGroups groups,IUser users)
+        private readonly AppDbContext _context;
+        public GroupsController(IGroups groups,IUser users,AppDbContext context)
         {
             _groups = groups;
             _user = users;
-
+            _context = context;
         }
 
         [HttpGet]
@@ -31,7 +32,8 @@ namespace SplitwiseApp.Core.ApiControllers
             return groups.ToList();
         }
         // GET: api/Groups
-        [HttpGet("{id}")]
+        /*
+      [HttpGet("{id}")]
         [Route("{userid}")]
         public async Task<ActionResult<IEnumerable<GroupsDTO>>> GetGroupForAUser(string userId)
         {
@@ -41,18 +43,19 @@ namespace SplitwiseApp.Core.ApiControllers
                 return Ok(groupUser);
             }
             return NotFound();
-        }
+        }*/
 
         // GET: api/Groups
         [HttpGet("{id}")]
-        public async Task<ActionResult<GroupsDTO>> GetGroup(int groupId)
+        
+        public ActionResult<GroupsDTO> GetGroup(int id)
         {
-            if (_groups.GroupExist(groupId))
+            if (_groups.GroupExist(id))
             {
-                GroupsDTO groupsDtos = await _groups.GetGroupByGroupId(groupId);
-                return Ok(groupsDtos);
+                return _groups.GetGroupByGroupId(id);
             }
-            return NotFound();
+
+            return BadRequest();
         }
 
         // POST: api/Groups
@@ -63,30 +66,51 @@ namespace SplitwiseApp.Core.ApiControllers
             {
                 return BadRequest();
             }
-             _groups.AddGroupForUser(groups);
+             var count= _groups.AddGroupForUser(groups);
+
+            if (count==0)
+            {
+                return NotFound();
+                
+            }
+            else
+                return Ok();
+
+        }
+
+        [HttpPut("{id}")]
+        public IActionResult UpdateGroup(Groups groups,int id)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest();
+            }
+            if (!_groups.GroupExist(groups.groupId) && !(groups.groupId == id))
+            {
+                return BadRequest();
+               
+            }
+            var count = _groups.UpdateAGroup(groups);
+            if (count == 0)
+            {
+                return NotFound();
+            }
             return Ok();
         }
 
-        [HttpPut]
-        public IActionResult UpdateGroup(Groups groups)
-        {
-            if (_groups.GroupExist(groups.groupId))
-            {
-                _groups.UpdateAGroup(groups);
-                return Ok();
-            }
-            return NotFound();
-        }
-
-        [HttpDelete]
+        [HttpDelete("{groupId}")]
         public IActionResult DeleteGroup(int groupId)
         {
-            if (_groups.GroupExist(groupId))
+            if (!_groups.GroupExist(groupId))
             {
-                _groups.DeleteAGroupById(groupId);
-                return Ok();
+                return BadRequest();
             }
-            return NotFound();
+            var count= _groups.DeleteAGroupById(groupId);
+            if (count == 0)
+            {
+                return NotFound();
+            }
+            return Ok();
         }
     }
 }

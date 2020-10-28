@@ -69,6 +69,7 @@ namespace SplitwiseApp.Web
             var configuration = new AutoMapper.MapperConfiguration(config =>
             {
                 config.CreateMap<ApplicationUser, UserDTO>();
+                config.CreateMap<Groups, GroupsDTO>();
             });
             IMapper mapper = configuration.CreateMapper();
             services.AddSingleton(mapper);

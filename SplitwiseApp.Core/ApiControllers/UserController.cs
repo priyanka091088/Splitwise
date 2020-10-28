@@ -64,10 +64,14 @@ namespace SplitwiseApp.Core.ApiControllers
             
         }
 
-        [HttpPut]
-        public async Task<IActionResult> Profile(UserDTO user)
+        [HttpPut("{userId}")]
+        public async Task<IActionResult> Profile(UserDTO user,string userId)
         {
-            var users= await _user.UpdateProfile(user);
+            if (userId != user.Id)
+            {
+                return BadRequest();
+            }
+            var users = await _user.UpdateProfile(user);
             if (users!=null)
             {
                 

@@ -1,4 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using SplitwiseApp.DomainModels.Models;
 using SplitwiseApp.Repository.DTOs;
 using System;
@@ -12,27 +14,37 @@ namespace SplitwiseApp.Repository.Group
     public class MockGroups : IGroups
     {
         private readonly AppDbContext _context;
+        private readonly IMapper _mapper;
         public MockGroups()
         {
 
         }
-        public MockGroups(AppDbContext context)
+        public MockGroups(AppDbContext context, IMapper mapper)
         {
             _context = context;
+            _mapper = mapper;
         }
-        public Task AddGroupForUser(Groups group)
+        public int AddGroupForUser(Groups group)
         {
-            throw new NotImplementedException();
-        }
-
-        public Task DeleteAGroupById(int groupId)
-        {
-            throw new NotImplementedException();
+             _context.group.Add(group);
+            var result= _context.SaveChanges();
+            return result;
         }
 
-        public Task<GroupsDTO> GetGroupByGroupId(int groupId)
+        public int DeleteAGroupById(int groupId)
         {
+            /*
+            var group =(Groups)_context.group.Where(g => g.groupId == groupId);
+            _context.group.Remove(group);
+            var result = _context.SaveChanges();
+            return result;*/
             throw new NotImplementedException();
+        }
+        
+        public ActionResult<GroupsDTO> GetGroupByGroupId(int groupId)
+        {
+            return _mapper.Map<GroupsDTO>(_context.group.Include(u => u.creator).FirstOrDefault(g => g.groupId == groupId));
+           
         }
 
         public Task<IEnumerable<GroupsDTO>> GetGroupByUserId(string id)
@@ -49,12 +61,21 @@ namespace SplitwiseApp.Repository.Group
 
         public bool GroupExist(int groupId)
         {
-            throw new NotImplementedException();
+            var group = _context.group.Where(g => g.groupId == groupId);
+            if (group == null)
+            {
+                return false;
+            }
+            else
+                return true;
         }
 
-        public Task UpdateAGroup(Groups group)
+        public int UpdateAGroup(Groups group)
         {
-            throw new NotImplementedException();
+            _context.group.Update(group);
+            var result = _context.SaveChanges();
+            return result;
+            
         }
     }
 }

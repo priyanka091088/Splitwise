@@ -1,4 +1,5 @@
-﻿using SplitwiseApp.DomainModels.Models;
+﻿using Microsoft.AspNetCore.Mvc;
+using SplitwiseApp.DomainModels.Models;
 using SplitwiseApp.Repository.DTOs;
 using System;
 using System.Collections.Generic;
@@ -10,11 +11,11 @@ namespace SplitwiseApp.Repository.Group
     public interface IGroups
     {
         List<Groups> GetGroups();
-        Task AddGroupForUser(Groups group);
-        Task UpdateAGroup(Groups group);
-        Task<GroupsDTO> GetGroupByGroupId(int groupId);
+        int AddGroupForUser(Groups group);
+        int UpdateAGroup(Groups group);
+        ActionResult<GroupsDTO> GetGroupByGroupId(int groupId);
         Task<IEnumerable<GroupsDTO>> GetGroupByUserId(string id);
-        Task DeleteAGroupById(int groupId);
+        int DeleteAGroupById(int groupId);
         public bool GroupExist(int groupId);
 
     }

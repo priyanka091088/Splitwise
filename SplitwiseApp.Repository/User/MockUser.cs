@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.JsonWebTokens;
 using Microsoft.IdentityModel.Tokens;
@@ -91,7 +92,7 @@ namespace SplitwiseApp.Repository.User
 
         }
 
-            public async Task<IdentityResult> UpdateProfile(UserDTO user)
+        public async Task<IdentityResult> UpdateProfile(UserDTO user)
         {
             ApplicationUser u = await _userManager.FindByIdAsync(user.Id);
             u.Email = user.Email;
@@ -99,20 +100,20 @@ namespace SplitwiseApp.Repository.User
             u.Balance = user.Balance;
 
             return await _userManager.UpdateAsync(u);
-             
-          
+
+
         }
 
         public bool UserExists(string userId)
         {
-            var u = _userManager.FindByIdAsync(userId);
-            if (u == null)
-            {
-                return false;
-            }
-            else
-                return true;
-            
+        var u = _userManager.FindByIdAsync(userId);
+        if (u == null)
+        {
+            return false;
         }
-    }
+        else
+            return true;
+
+        }
+}
 }
