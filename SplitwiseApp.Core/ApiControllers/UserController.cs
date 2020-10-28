@@ -23,16 +23,14 @@ namespace SplitwiseApp.Core.ApiControllers
         [HttpGet]
         public IEnumerable<UserDTO> GetUsers()
         {
-            
             return _user.GetUsers();
         }
         [HttpGet("{id}")]
-        public async Task<ActionResult<UserDTO>> GetUser(string id)
+        public ActionResult<UserDTO> GetUser(string id)
         {
             if (_user.UserExists(id))
             {
-                ApplicationUser user = await _user.GetUserById(id);
-                return Ok(user);
+                return _user.GetUserById(id);
             }
             return NotFound();
         }
@@ -52,24 +50,28 @@ namespace SplitwiseApp.Core.ApiControllers
 
         [HttpPost]
         [Route("login")]
-        public async Task<ActionResult> Login(UserDTO user)
+        public async Task<IActionResult> Login(LoginDTO user)
         {
-            if (!ModelState.IsValid)
+            var login = await _user.Login(user);
+            if (login!=null)
             {
-
-                UserDTO login = await _user.Login(user);
                 return Ok(login);
             }
-            return BadRequest();
+            else
+            {
+                return BadRequest();
+            }
+            
         }
 
         [HttpPut]
-        public IActionResult Profile(ApplicationUser user)
+        public async Task<IActionResult> Profile(UserDTO user)
         {
-            if (_user.UserExists(user.Id))
+            var users= await _user.UpdateProfile(user);
+            if (users!=null)
             {
-                _user.UpdateProfile(user);
-                return Ok();
+                
+                return Ok(user);
             }
             return NotFound();
         }

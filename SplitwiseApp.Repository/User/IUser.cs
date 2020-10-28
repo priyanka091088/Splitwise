@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
 using SplitwiseApp.DomainModels.Models;
 using SplitwiseApp.Repository.DTOs;
 using System;
@@ -12,9 +13,9 @@ namespace SplitwiseApp.Repository.User
     {
         IEnumerable<UserDTO> GetUsers();
         public Task<IdentityResult> AddUser(signUpDTO user);
-        public Task UpdateProfile(ApplicationUser user);
-        Task<UserDTO> Login(UserDTO user);
-        Task<ApplicationUser> GetUserById(string userId);
+        public Task<IdentityResult> UpdateProfile(UserDTO user);
+        Task<string> Login(LoginDTO user);
+        ActionResult<UserDTO> GetUserById(string userId);
         public bool UserExists(string userId);
     }
 }

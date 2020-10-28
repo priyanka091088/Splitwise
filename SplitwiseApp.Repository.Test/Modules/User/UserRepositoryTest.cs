@@ -60,7 +60,7 @@ namespace SplitwiseApp.Repository.Test.Modules.User
             _configuration = new ConfigurationBuilder()
                 .AddInMemoryCollection(myConfiguration)
                 .Build();
-            return new MockUser(db, SetUserManager(),_mapper);
+            return new MockUser(db, SetUserManager(), _mapper, _configuration);
         }
 
         private FakeUserManager SetUserManager()

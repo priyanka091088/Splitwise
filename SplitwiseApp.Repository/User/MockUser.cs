@@ -3,12 +3,16 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
+using Microsoft.IdentityModel.JsonWebTokens;
+using Microsoft.IdentityModel.Tokens;
 using SplitwiseApp.DomainModels.Models;
 using SplitwiseApp.Repository.DTOs;
 using SplitwiseApp.Repository.Group;
 using System;
 using System.Collections.Generic;
+using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
+using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -19,15 +23,18 @@ namespace SplitwiseApp.Repository.User
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly AppDbContext _context;
         private readonly IMapper _mapper;
+        private readonly IConfiguration _configuration;
         public MockUser()
         {
 
         }
-        public MockUser(AppDbContext context, UserManager<ApplicationUser> userManager,IMapper mapper)
+        public MockUser(AppDbContext context, UserManager<ApplicationUser> userManager,IMapper mapper,
+             IConfiguration configuration)
         {
             _userManager = userManager;
             _context = context;
             _mapper = mapper;
+            _configuration = configuration;
           
         }
         public async Task<IdentityResult> AddUser(signUpDTO user)
@@ -36,30 +43,63 @@ namespace SplitwiseApp.Repository.User
             return await _userManager.CreateAsync(users, user.Password);
            
         }
-        public async Task<ApplicationUser> GetUserById(string userId)
+        public ActionResult<UserDTO> GetUserById(string userId)
         {
-            return await _userManager.FindByIdAsync(userId);
+            return _mapper.Map<UserDTO>(_context.Users.Where(u => u.Id==userId).FirstOrDefault());
             
         }
         public IEnumerable<UserDTO> GetUsers()
         {
-            return _mapper.Map<IEnumerable<UserDTO>>(_userManager.Users);
-            //return _context.Users.ToList();
+            return _mapper.Map<IEnumerable<UserDTO>>(_context.Users);
             
         }
-        public Task<UserDTO> Login(UserDTO user)
+        public async Task<string> Login(LoginDTO users)
         {
-            throw new NotImplementedException();
+            var user = await _userManager.FindByNameAsync(users.Email);
+            if (user != null && await _userManager.CheckPasswordAsync(user, users.Password))
+            {
+                var userRoles = await _userManager.GetRolesAsync(user);
+
+                var authClaims = new List<Claim>
+                {
+
+                    new Claim("name", user.UserName),
+                    new Claim(ClaimTypes.Name, user.UserName),
+                    new Claim(Microsoft.IdentityModel.JsonWebTokens.JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
+                };
+
+                foreach (var userRole in userRoles)
+                {
+
+                    authClaims.Add(new Claim("role", userRole));
+                    authClaims.Add(new Claim(ClaimTypes.Role, userRole));
+                }
+
+                var authSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["JWT:Secret"]));
+
+                var token = new JwtSecurityToken(
+                    issuer: _configuration["JWT:ValidIssuer"],
+                    audience: _configuration["JWT:ValidAudience"],
+                    expires: DateTime.Now.AddHours(3),
+                    claims: authClaims,
+                    signingCredentials: new SigningCredentials(authSigningKey, SecurityAlgorithms.HmacSha256)
+                    );
+                var result = new JwtSecurityTokenHandler().WriteToken(token);
+                return result;
+            }
+            return null;
+
         }
 
-        public async Task UpdateProfile(ApplicationUser user)
+            public async Task<IdentityResult> UpdateProfile(UserDTO user)
         {
             ApplicationUser u = await _userManager.FindByIdAsync(user.Id);
             u.Email = user.Email;
             u.Name = user.Name;
             u.Balance = user.Balance;
 
-            await _userManager.UpdateAsync(u);
+            return await _userManager.UpdateAsync(u);
+             
           
         }
 
