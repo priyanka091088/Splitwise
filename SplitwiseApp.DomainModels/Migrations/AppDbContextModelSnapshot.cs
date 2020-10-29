@@ -260,7 +260,7 @@ namespace SplitwiseApp.DomainModels.Migrations
 
             modelBuilder.Entity("SplitwiseApp.DomainModels.Models.Friends", b =>
                 {
-                    b.Property<int>("friendId")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
@@ -268,25 +268,17 @@ namespace SplitwiseApp.DomainModels.Migrations
                     b.Property<float>("Balance")
                         .HasColumnType("real");
 
-                    b.Property<string>("Email")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("creatorId")
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<string>("friendName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("userId")
+                    b.Property<string>("friendId")
                         .HasColumnType("nvarchar(450)");
 
-                    b.HasKey("friendId");
+                    b.HasKey("Id");
 
                     b.HasIndex("creatorId");
 
-                    b.HasIndex("userId");
+                    b.HasIndex("friendId");
 
                     b.ToTable("friends");
                 });
@@ -504,7 +496,7 @@ namespace SplitwiseApp.DomainModels.Migrations
 
                     b.HasOne("SplitwiseApp.DomainModels.Models.ApplicationUser", "users")
                         .WithMany()
-                        .HasForeignKey("userId");
+                        .HasForeignKey("friendId");
                 });
 
             modelBuilder.Entity("SplitwiseApp.DomainModels.Models.GroupMembers", b =>

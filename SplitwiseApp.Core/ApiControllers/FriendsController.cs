@@ -23,15 +23,17 @@ namespace SplitwiseApp.Core.ApiControllers
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<IEnumerable<FriendsDTO>>> GetFriends(string id)
+        public ActionResult<FriendsDTO> GetFriends(string id)
         {
             if (_user.UserExists(id))
             {
-                IEnumerable<FriendsDTO> friendDtos = await _friends.GetFriends(id);
+                var friendDtos =  _friends.GetFriends(id);
                 return Ok(friendDtos);
             }
             return NotFound();
         }
+
+        
 
         [HttpPost]
         public IActionResult AddAFriend(Friends friends)
@@ -40,30 +42,62 @@ namespace SplitwiseApp.Core.ApiControllers
             {
                 return BadRequest();
             }
-            _friends.AddAFriend(friends);
-            return Ok();
+
+            var count = _friends.AddAFriend(friends);
+
+            if (count == 0)
+            {
+                return NotFound();
+
+            }
+            else
+                return Ok();
         }
 
-        [HttpPut]
-        public IActionResult UpdateFriend(Friends friends)
+        [HttpPut("{id}")]
+        public IActionResult UpdateFriend(Friends friends,int id)
         {
-            if (_friends.FriendExist(friends.friendId))
+            if (!ModelState.IsValid)
             {
-                _friends.UpdateAFriend(friends);
+                return BadRequest();
+            }
+
+
+            if (!_friends.FriendExist(id) && !(friends.Id==id))
+            {
+                return BadRequest();
+            }
+
+            var count = _friends.UpdateAFriend(friends);
+            if (count == 0)
+            {
+                return NotFound();
+            }
+            else {
                 return Ok();
             }
-            return NotFound();
+            
         }
 
-        [HttpDelete]
+        [HttpDelete("{id}")]
         public IActionResult DeleteFriend(int id)
         {
-            if (_friends.FriendExist(id))
+            if (!_friends.FriendExist(id))
             {
-                _friends.DeleteAFriend(id);
-                return Ok();
+              
+                return BadRequest();
             }
-            return NotFound();
+            var count = _friends.DeleteAFriend(id);
+
+            if (count == 0)
+            {
+                return NotFound();
+
+            }
+            else
+                return Ok();
+            
+            
         }
     }
 }

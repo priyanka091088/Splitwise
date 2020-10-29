@@ -19,5 +19,7 @@ namespace SplitwiseApp.DomainModels.Models
         public DbSet<Payers_Expenses> payers_Expenses { get; set; }
         public DbSet<Payees_Expenses> payees_Expenses { get; set; }
         public DbSet<Settlement> settlement { get; set; }
+
+        
     }
 }

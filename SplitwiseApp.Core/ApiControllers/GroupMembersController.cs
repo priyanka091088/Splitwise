@@ -12,7 +12,7 @@ namespace SplitwiseApp.Core.ApiControllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    class GroupMembersController:ControllerBase
+    public class GroupMembersController : ControllerBase
     {
         private readonly IGroupMembers _members;
         private readonly IGroups _groups;
@@ -22,7 +22,7 @@ namespace SplitwiseApp.Core.ApiControllers
             _groups = groups;
         }
 
-        [HttpGet("{id}")]
+        [HttpGet("{groupId}")]
         public IActionResult GetMembersOfAGroup(int groupId)
         {
             if (_groups.GroupExist(groupId))
@@ -40,30 +40,54 @@ namespace SplitwiseApp.Core.ApiControllers
             {
                 return BadRequest();
             }
-            _members.AddGroupMembers(members);
+            var count = _members.AddGroupMembers(members);
+
+            if (count == 0)
+            {
+                return BadRequest();
+
+            }
+            else
+                return Ok();
+        }
+
+        [HttpPut("{id}")]
+        public IActionResult UpdateMembers(GroupMembers members,int id)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest();
+            }
+            if (!_members.MemberExist(members.memberId) && !(members.groupId == id))
+            {
+                return BadRequest();
+
+            }
+            var count = _members.UpdateGroupMembers(members);
+
+            if (count == 0)
+            {
+                return NotFound();
+            }
             return Ok();
         }
 
-        [HttpPut]
-        public IActionResult UpdateMembers(GroupMembers members)
+        [HttpDelete("{memberId}")]
+        public IActionResult DeleteMembers(int memberId)
         {
-            if (_members.MemberExist(members.memberId))
+            if (!_members.MemberExist(memberId))
             {
-                _members.UpdateGroupMembers(members);
-                return Ok();
+                return BadRequest();
             }
-            return NotFound();
-        }
 
-        [HttpDelete]
-        public IActionResult DeleteMembers(int id)
-        {
-            if (_members.MemberExist(id))
+            var count = _members.DeleteGroupMembers(memberId);
+
+            if (count == 0)
             {
-                _members.DeleteGroupMembers(id);
-                return Ok();
+                return NotFound();
             }
-            return NotFound();
+            return Ok();
+            
         }
     }
 }

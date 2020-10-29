@@ -33,12 +33,12 @@ namespace SplitwiseApp.Repository.Group
 
         public int DeleteAGroupById(int groupId)
         {
-            /*
-            var group =(Groups)_context.group.Where(g => g.groupId == groupId);
-            _context.group.Remove(group);
+            
+            var groups =_context.group.Find(groupId);
+            _context.group.Remove(groups);
             var result = _context.SaveChanges();
-            return result;*/
-            throw new NotImplementedException();
+            return result;
+            //throw new NotImplementedException();
         }
         
         public ActionResult<GroupsDTO> GetGroupByGroupId(int groupId)

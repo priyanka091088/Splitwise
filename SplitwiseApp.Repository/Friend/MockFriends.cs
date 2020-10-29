@@ -4,34 +4,66 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
+using AutoMapper;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Mvc;
 
 namespace SplitwiseApp.Repository.Friend
 {
     public class MockFriends : IFriends
     {
-        public Task AddAFriend(Friends friends)
+        private readonly AppDbContext _context;
+        private readonly IMapper _mapper;
+        public MockFriends()
         {
-            throw new NotImplementedException();
+
+        }
+        public MockFriends(AppDbContext context,IMapper mapper)
+        {
+            _context = context;
+            _mapper = mapper;
+        }
+        public int AddAFriend(Friends friends)
+        {
+            _context.friends.Add(friends);
+            var result = _context.SaveChanges();
+            return result;
+            
         }
 
-        public Task DeleteAFriend(int id)
+        public int DeleteAFriend(int id)
         {
-            throw new NotImplementedException();
+            var friend = _context.friends.Find(id);
+            _context.friends.Remove(friend);
+            var result = _context.SaveChanges();
+            return result;
+            
         }
 
         public bool FriendExist(int friendId)
         {
-            throw new NotImplementedException();
+            var friend = _context.friends.Find(friendId);
+            if (friend == null)
+            {
+                return false;
+            }
+            else
+                return true;
+            
         }
 
-        public Task<IEnumerable<FriendsDTO>> GetFriends(string userId)
+        public ActionResult<FriendsDTO> GetFriends(string userId)
         {
-            throw new NotImplementedException();
+            return _mapper.Map<FriendsDTO>(_context.friends.Include(f => f.users).FirstOrDefaultAsync(f => f.creatorId==userId));
+            
         }
 
-        public Task UpdateAFriend(Friends friends)
+        public int UpdateAFriend(Friends friends)
         {
-            throw new NotImplementedException();
+            _context.friends.Update(friends);
+            var result = _context.SaveChanges();
+            return result;
+            
         }
     }
 }

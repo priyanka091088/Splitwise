@@ -1,7 +1,12 @@
-﻿using SplitwiseApp.DomainModels.Models;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using SplitwiseApp.DomainModels.Models;
 using SplitwiseApp.Repository.DTOs;
+using SplitwiseApp.Repository.Group;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -9,29 +14,80 @@ namespace SplitwiseApp.Repository.GroupMember
 {
     public class MockGroupMembers : IGroupMembers
     {
-        public Task AddGroupMembers(GroupMembers members)
+        private readonly IGroups _groups;
+        private readonly AppDbContext _context;
+        private readonly IMapper _mapper;
+
+        public MockGroupMembers()
         {
-            throw new NotImplementedException();
+
+        }
+        public MockGroupMembers(AppDbContext context,IGroups groups,IMapper mapper)
+        {
+            _context = context;
+            _groups = groups;
+            _mapper = mapper;
+        }
+        public int AddGroupMembers(GroupMembers members)
+        {
+            _context.groupMember.Add(members);
+            var result = _context.SaveChanges();
+            return result;
+            
         }
 
-        public Task DeleteGroupMembers(int id)
+        public int DeleteGroupMembers(int id)
         {
-            throw new NotImplementedException();
+           var member= _context.groupMember.Find(id);
+            _context.groupMember.Remove(member);
+            var result = _context.SaveChanges();
+            return result;
+            
         }
 
-        public Task<IEnumerable<GroupMembersDTO>> GetGroupMembers(int groupId)
+        public IEnumerable<UserDTO> GetGroupMembers(int groupId)
         {
-            throw new NotImplementedException();
+            var members = from user in _context.Users
+                          join member in _context.groupMember
+                          on user.Id equals member.userId
+                          where member.groupId == groupId
+                          select new UserDTO
+                          {
+                              Email=user.Email,
+                              Name=user.Name
+                          };
+            List<UserDTO> usersDto=new List<UserDTO>();
+
+            foreach(var users in members)
+            {
+             usersDto.Add(new UserDTO { 
+                   
+                    Name = users.Name,
+                    Email = users.Email
+                });
+            }
+            return usersDto;
+           
         }
 
         public bool MemberExist(int memberId)
         {
-            throw new NotImplementedException();
+            var member=_context.groupMember.Find(memberId);
+            if (member == null)
+            {
+                return false;
+            }
+            else
+                return true;
+           
         }
 
-        public Task UpdateGroupMembers(GroupMembers members)
+        public int UpdateGroupMembers(GroupMembers members)
         {
-            throw new NotImplementedException();
+            _context.groupMember.Update(members);
+            var result = _context.SaveChanges();
+            return result;
+            
         }
     }
 }

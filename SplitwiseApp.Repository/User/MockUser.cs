@@ -40,80 +40,92 @@ namespace SplitwiseApp.Repository.User
         }
         public async Task<IdentityResult> AddUser(signUpDTO user)
         {
-            var users = new ApplicationUser { UserName = user.Email, Email = user.Email, Name = user.Name, Balance = user.Balance };
-            return await _userManager.CreateAsync(users, user.Password);
-           
+             var users = new ApplicationUser { UserName = user.Email, Email = user.Email, Name = user.Name, Balance = user.Balance };
+             return await _userManager.CreateAsync(users, user.Password);
+            
+
         }
         public ActionResult<UserDTO> GetUserById(string userId)
         {
+            
             return _mapper.Map<UserDTO>(_context.Users.Where(u => u.Id==userId).FirstOrDefault());
             
         }
+
+        public async Task<ActionResult<UserDTO>> GetUserByEmailId(string email)
+        {
+            var user = await _userManager.FindByEmailAsync(email);
+            return _mapper.Map<UserDTO>(user);
+
+        }
         public IEnumerable<UserDTO> GetUsers()
         {
-            return _mapper.Map<IEnumerable<UserDTO>>(_context.Users);
             
+             return _mapper.Map<IEnumerable<UserDTO>>(_context.Users);
+
         }
         public async Task<string> Login(LoginDTO users)
         {
-            var user = await _userManager.FindByNameAsync(users.Email);
-            if (user != null && await _userManager.CheckPasswordAsync(user, users.Password))
-            {
-                var userRoles = await _userManager.GetRolesAsync(user);
+             var user = await _userManager.FindByNameAsync(users.Email);
+             if (user != null && await _userManager.CheckPasswordAsync(user, users.Password))
+             {
+                 var userRoles = await _userManager.GetRolesAsync(user);
 
-                var authClaims = new List<Claim>
-                {
+                 var authClaims = new List<Claim>
+                 {
 
-                    new Claim("name", user.UserName),
-                    new Claim(ClaimTypes.Name, user.UserName),
-                    new Claim(Microsoft.IdentityModel.JsonWebTokens.JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
-                };
+                     new Claim("name", user.UserName),
+                     new Claim(ClaimTypes.Name, user.UserName),
+                     new Claim(Microsoft.IdentityModel.JsonWebTokens.JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
+                 };
 
-                foreach (var userRole in userRoles)
-                {
+                 foreach (var userRole in userRoles)
+                 {
 
-                    authClaims.Add(new Claim("role", userRole));
-                    authClaims.Add(new Claim(ClaimTypes.Role, userRole));
-                }
+                     authClaims.Add(new Claim("role", userRole));
+                     authClaims.Add(new Claim(ClaimTypes.Role, userRole));
+                 }
 
-                var authSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["JWT:Secret"]));
+                 var authSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["JWT:Secret"]));
 
-                var token = new JwtSecurityToken(
-                    issuer: _configuration["JWT:ValidIssuer"],
-                    audience: _configuration["JWT:ValidAudience"],
-                    expires: DateTime.Now.AddHours(3),
-                    claims: authClaims,
-                    signingCredentials: new SigningCredentials(authSigningKey, SecurityAlgorithms.HmacSha256)
-                    );
-                var result = new JwtSecurityTokenHandler().WriteToken(token);
-                return result;
-            }
-            return null;
+                 var token = new JwtSecurityToken(
+                     issuer: _configuration["JWT:ValidIssuer"],
+                     audience: _configuration["JWT:ValidAudience"],
+                     expires: DateTime.Now.AddHours(3),
+                     claims: authClaims,
+                     signingCredentials: new SigningCredentials(authSigningKey, SecurityAlgorithms.HmacSha256)
+                     );
+                 var result = new JwtSecurityTokenHandler().WriteToken(token);
+                 return result;
+             }
+             return null;
+            //throw new NotImplementedException();
 
         }
 
         public async Task<IdentityResult> UpdateProfile(UserDTO user)
         {
-            ApplicationUser u = await _userManager.FindByIdAsync(user.Id);
-            u.Email = user.Email;
-            u.Name = user.Name;
-            u.Balance = user.Balance;
+             ApplicationUser u = await _userManager.FindByIdAsync(user.Id);
+             u.Email = user.Email;
+             u.Name = user.Name;
+             u.Balance = user.Balance;
 
-            return await _userManager.UpdateAsync(u);
+             return await _userManager.UpdateAsync(u);
 
+            //throw new NotImplementedException();
 
         }
 
         public bool UserExists(string userId)
         {
-        var u = _userManager.FindByIdAsync(userId);
-        if (u == null)
-        {
-            return false;
-        }
-        else
-            return true;
-
-        }
-}
+             var u = _userManager.FindByIdAsync(userId);
+            if (u == null)
+            {
+                return false;
+            }
+            else
+                return true;
+            //throw new NotImplementedException();
+         }
+     }
 }

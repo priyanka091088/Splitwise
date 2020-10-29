@@ -16,6 +16,7 @@ namespace SplitwiseApp.Repository.User
         public Task<IdentityResult> UpdateProfile(UserDTO user);
         Task<string> Login(LoginDTO user);
         ActionResult<UserDTO> GetUserById(string userId);
+        Task<ActionResult<UserDTO>> GetUserByEmailId(string email);
         public bool UserExists(string userId);
     }
 }

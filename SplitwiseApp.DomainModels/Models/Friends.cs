@@ -8,12 +8,8 @@ namespace SplitwiseApp.DomainModels.Models
 {
     public class Friends
     {
-        [Key]
-        public int friendId { get; set; }
-        [Required]
-        public string friendName { get; set; }
-        [Required]
-        public string Email { get; set; }
+         [Key]
+         public int Id { get; set; }
         public float Balance { get; set; }
 
 
@@ -21,8 +17,8 @@ namespace SplitwiseApp.DomainModels.Models
         [ForeignKey("creatorId")]
         public ApplicationUser creator { get; set; }
 
-        public string userId { get; set; }
-        [ForeignKey("userId")]
+        public string friendId { get; set; }
+        [ForeignKey("friendId")]
         public ApplicationUser users { get; set; }
     }
 }

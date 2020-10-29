@@ -4,15 +4,17 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 using SplitwiseApp.DomainModels.Models;
+using Microsoft.AspNetCore.Mvc;
 
 namespace SplitwiseApp.Repository.Friend
 {
     public interface IFriends
     {
-        Task<IEnumerable<FriendsDTO>> GetFriends(string userId);
-        public Task AddAFriend(Friends friends);
-        public Task UpdateAFriend(Friends friends);
-        public Task DeleteAFriend(int id);
+        ActionResult<FriendsDTO> GetFriends(string userId);
+        public int AddAFriend(Friends friends);
+        public int UpdateAFriend(Friends friends);
+        public int DeleteAFriend(int id);
         public bool FriendExist(int friendId);
+       
     }
 }
