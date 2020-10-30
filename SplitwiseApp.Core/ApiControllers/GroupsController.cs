@@ -37,11 +37,11 @@ namespace SplitwiseApp.Core.ApiControllers
         // GET: api/Groups
       [HttpGet("{userId}")]
       [Route("getByUser/{userId}")]
-        public async Task<ActionResult<IEnumerable<GroupsDTO>>> GetGroupForAUser(string userId)
+        public IActionResult GetGroupsForAUser(string userId)
         {
             if (_user.UserExists(userId))
             {
-                IEnumerable<GroupsDTO> groupUser = await _groups.GetGroupByUserId(userId);
+                IEnumerable<GroupsDTO> groupUser = _groups.GetGroupByUserId(userId);
                 return Ok(groupUser);
             }
             return NotFound();

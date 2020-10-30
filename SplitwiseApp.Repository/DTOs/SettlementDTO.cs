@@ -11,5 +11,6 @@ namespace SplitwiseApp.Repository.DTOs
         public string payerName { get; set; }
         public string receiverName { get; set; }
         public string expense { get; set; }
+        public string groupName { get; set; }
     }
 }

@@ -12,8 +12,13 @@ namespace SplitwiseApp.Repository.Friend
 {
     public class MockFriends : IFriends
     {
+        #region private variables
         private readonly AppDbContext _context;
         private readonly IMapper _mapper;
+
+        #endregion
+
+        #region constructor
         public MockFriends()
         {
 
@@ -23,6 +28,10 @@ namespace SplitwiseApp.Repository.Friend
             _context = context;
             _mapper = mapper;
         }
+
+        #endregion
+
+        #region public methods
         public int AddAFriend(Friends friends)
         {
             _context.friends.Add(friends);
@@ -84,5 +93,7 @@ namespace SplitwiseApp.Repository.Friend
             return result;
             
         }
+
+        #endregion
     }
 }

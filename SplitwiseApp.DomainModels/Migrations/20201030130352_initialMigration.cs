@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace SplitwiseApp.DomainModels.Migrations
 {
-    public partial class DatabaseRemovedAndRecreated : Migration
+    public partial class initialMigration : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -328,7 +328,6 @@ namespace SplitwiseApp.DomainModels.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Amount = table.Column<float>(nullable: false),
                     expenseId = table.Column<int>(nullable: false),
-                    Expenses = table.Column<int>(nullable: true),
                     groupId = table.Column<int>(nullable: true),
                     payerId = table.Column<string>(nullable: true),
                     receiverId = table.Column<string>(nullable: true)
@@ -337,11 +336,11 @@ namespace SplitwiseApp.DomainModels.Migrations
                 {
                     table.PrimaryKey("PK_settlement", x => x.settlemntId);
                     table.ForeignKey(
-                        name: "FK_settlement_expenses_Expenses",
-                        column: x => x.Expenses,
+                        name: "FK_settlement_expenses_expenseId",
+                        column: x => x.expenseId,
                         principalTable: "expenses",
                         principalColumn: "expenseId",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_settlement_group_groupId",
                         column: x => x.groupId,
@@ -462,9 +461,9 @@ namespace SplitwiseApp.DomainModels.Migrations
                 column: "payerId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_settlement_Expenses",
+                name: "IX_settlement_expenseId",
                 table: "settlement",
-                column: "Expenses");
+                column: "expenseId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_settlement_groupId",

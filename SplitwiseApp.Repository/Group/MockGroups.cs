@@ -14,9 +14,12 @@ namespace SplitwiseApp.Repository.Group
 {
     public class MockGroups : IGroups
     {
+        #region private variables
         private readonly AppDbContext _context;
         private readonly IMapper _mapper;
-        
+        #endregion
+
+        #region constructor
         public MockGroups()
         {
 
@@ -27,6 +30,9 @@ namespace SplitwiseApp.Repository.Group
             _mapper = mapper;
           
         }
+        #endregion
+
+        #region public methods
         public int AddGroupForUser(Groups group)
         {
             
@@ -42,7 +48,7 @@ namespace SplitwiseApp.Repository.Group
             _context.group.Remove(groups);
             var result = _context.SaveChanges();
             return result;
-            //throw new NotImplementedException();
+            
         }
         
         public ActionResult<GroupsDTO> GetGroupByGroupId(int groupId)
@@ -51,16 +57,38 @@ namespace SplitwiseApp.Repository.Group
            
         }
 
-        public Task<IEnumerable<GroupsDTO>> GetGroupByUserId(string id)
+        public IEnumerable<GroupsDTO> GetGroupByUserId(string id)
         {
-            throw new NotImplementedException();
+            var userGroup = from groups in _context.@group
+                            join user in _context.Users
+                            on groups.creatorId equals user.Id
+                            where groups.creatorId == id
+                            select new GroupsDTO
+                            {
+                                groupName=groups.groupName,
+                                groupType=groups.groupType
+                            };
+            List<GroupsDTO> groupDto = new List<GroupsDTO>();
+            foreach(var grp in userGroup)
+            {
+                groupDto.Add(new GroupsDTO
+                {
+                    groupName=grp.groupName,
+                    groupType=grp.groupType
+                });
+                return groupDto;
+                
+            }
+            
+  
+              throw new NotImplementedException();
         }
 
         public List<Groups> GetGroups()
         {
             var group = _context.group.Include(e => e.creator);
             return group.ToList();
-           // return _context.group.ToListAsync();
+           
         }
 
         public bool GroupExist(int groupId)
@@ -81,5 +109,6 @@ namespace SplitwiseApp.Repository.Group
             return result;
             
         }
+        #endregion
     }
 }

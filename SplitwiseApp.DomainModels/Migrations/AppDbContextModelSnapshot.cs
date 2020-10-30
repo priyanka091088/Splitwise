@@ -398,9 +398,6 @@ namespace SplitwiseApp.DomainModels.Migrations
                     b.Property<float>("Amount")
                         .HasColumnType("real");
 
-                    b.Property<int?>("Expenses")
-                        .HasColumnType("int");
-
                     b.Property<int>("expenseId")
                         .HasColumnType("int");
 
@@ -415,7 +412,7 @@ namespace SplitwiseApp.DomainModels.Migrations
 
                     b.HasKey("settlemntId");
 
-                    b.HasIndex("Expenses");
+                    b.HasIndex("expenseId");
 
                     b.HasIndex("groupId");
 
@@ -547,7 +544,9 @@ namespace SplitwiseApp.DomainModels.Migrations
                 {
                     b.HasOne("SplitwiseApp.DomainModels.Models.Expenses", "expenses")
                         .WithMany()
-                        .HasForeignKey("Expenses");
+                        .HasForeignKey("expenseId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("SplitwiseApp.DomainModels.Models.Groups", "groups")
                         .WithMany()

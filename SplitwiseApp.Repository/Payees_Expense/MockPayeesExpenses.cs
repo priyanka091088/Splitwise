@@ -9,8 +9,11 @@ namespace SplitwiseApp.Repository.Payees_Expense
 {
     public class MockPayeesExpenses : IPayeeExpenses
     {
+        #region private variable
         private readonly AppDbContext _context;
+        #endregion
 
+        #region constructor
         public MockPayeesExpenses()
         {
 
@@ -20,6 +23,9 @@ namespace SplitwiseApp.Repository.Payees_Expense
         {
             _context = context;
         }
+        #endregion
+
+        #region public methods
         public int AddPayeesExpenses(Payees_Expenses payeesExpense)
         {
             _context.payees_Expenses.Add(payeesExpense);
@@ -90,5 +96,6 @@ namespace SplitwiseApp.Repository.Payees_Expense
             return result;
             
         }
+        #endregion
     }
 }

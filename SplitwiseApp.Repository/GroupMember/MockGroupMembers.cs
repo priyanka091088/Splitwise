@@ -14,10 +14,14 @@ namespace SplitwiseApp.Repository.GroupMember
 {
     public class MockGroupMembers : IGroupMembers
     {
+        #region private variables
+
         private readonly IGroups _groups;
         private readonly AppDbContext _context;
         private readonly IMapper _mapper;
+        #endregion
 
+        #region constructor
         public MockGroupMembers()
         {
 
@@ -28,6 +32,10 @@ namespace SplitwiseApp.Repository.GroupMember
             _groups = groups;
             _mapper = mapper;
         }
+
+        #endregion
+
+        #region public methods
         public int AddGroupMembers(GroupMembers members)
         {
             _context.groupMember.Add(members);
@@ -89,5 +97,7 @@ namespace SplitwiseApp.Repository.GroupMember
             return result;
             
         }
+
+        #endregion
     }
 }

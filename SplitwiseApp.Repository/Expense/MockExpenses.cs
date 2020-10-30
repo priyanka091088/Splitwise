@@ -13,10 +13,13 @@ namespace SplitwiseApp.Repository.Expense
 {
     public class MockExpenses : IExpenses
     {
+        #region private variables
         private readonly AppDbContext _context;
         private readonly IPayersExpenses _payersExpenses;
         private readonly IPayeeExpenses _payeesExpenses;
+        #endregion
 
+        #region constructor
         public MockExpenses()
         {
                 
@@ -27,6 +30,10 @@ namespace SplitwiseApp.Repository.Expense
             _payersExpenses = payersExpenses;
             _payeesExpenses = payeesExpenses;
         }
+
+        #endregion
+
+        #region public methods
         public int AddAnExpense(Expenses expenses)
         {
             
@@ -91,6 +98,7 @@ namespace SplitwiseApp.Repository.Expense
 
                     Description = exp.Description,
                     Amount = exp.Amount,
+                    Currency=exp.Currency,
                     creatorId = exp.users.Name
                 });
             }
@@ -102,7 +110,8 @@ namespace SplitwiseApp.Repository.Expense
             _context.expenses.Update(expenses);
             var result = _context.SaveChanges();
             return result;
-            throw new NotImplementedException();
+            
         }
+        #endregion
     }
 }

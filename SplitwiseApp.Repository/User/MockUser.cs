@@ -21,10 +21,15 @@ namespace SplitwiseApp.Repository.User
 {
     public class MockUser : IUser
     {
+
+        #region private variables
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly AppDbContext _context;
         private readonly IMapper _mapper;
         private readonly IConfiguration _configuration;
+        #endregion
+
+        #region constructor
         public MockUser()
         {
 
@@ -38,6 +43,10 @@ namespace SplitwiseApp.Repository.User
             _configuration = configuration;
           
         }
+
+        #endregion
+
+        #region public methods
         public async Task<IdentityResult> AddUser(signUpDTO user)
         {
              var users = new ApplicationUser { UserName = user.Email, Email = user.Email, Name = user.Name, Balance = user.Balance };
@@ -99,7 +108,6 @@ namespace SplitwiseApp.Repository.User
                  return result;
              }
              return null;
-            //throw new NotImplementedException();
 
         }
 
@@ -112,8 +120,6 @@ namespace SplitwiseApp.Repository.User
 
              return await _userManager.UpdateAsync(u);
 
-            //throw new NotImplementedException();
-
         }
 
         public bool UserExists(string userId)
@@ -125,7 +131,9 @@ namespace SplitwiseApp.Repository.User
             }
             else
                 return true;
-            //throw new NotImplementedException();
+            
          }
-     }
+
+        #endregion
+    }
 }
