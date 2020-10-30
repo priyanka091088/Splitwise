@@ -13,11 +13,19 @@ namespace SplitwiseApp.Core.ApiControllers
     [ApiController]
     public class SettlementController : ControllerBase
     {
+        #region private variables
+
         private readonly ISettlement _settlement;
+        #endregion
+
+        #region constructor
         public SettlementController(ISettlement settlement)
         {
             _settlement = settlement;
         }
+        #endregion
+
+        #region API controller methods
 
         [HttpGet("{id}")]
         public IActionResult GetSettlement(string id)
@@ -62,6 +70,6 @@ namespace SplitwiseApp.Core.ApiControllers
             else
                 return Ok();
         }
-
+        #endregion
     }
 }

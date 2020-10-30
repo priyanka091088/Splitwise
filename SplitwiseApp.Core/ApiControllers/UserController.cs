@@ -14,11 +14,19 @@ namespace SplitwiseApp.Core.ApiControllers
     [ApiController]
     public class UserController: ControllerBase
     {
+        #region private variables
+
         private readonly IUser _user;
+        #endregion
+
+        #region constructor
         public UserController(IUser user)
         {
             _user = user;
         }
+        #endregion
+
+        #region API controller methods
 
         [HttpGet]
         public IEnumerable<UserDTO> GetUsers()
@@ -88,5 +96,6 @@ namespace SplitwiseApp.Core.ApiControllers
             }
             return NotFound();
         }
+        #endregion
     }
 }

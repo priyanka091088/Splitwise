@@ -14,13 +14,21 @@ namespace SplitwiseApp.Core.ApiControllers
     [ApiController]
     public class PayeesExpensesController:ControllerBase
     {
+        #region private variabes
         private readonly IPayeeExpenses _payeesExpense;
         private readonly IExpenses _expenses;
+        #endregion
+
+        #region constructor
         public PayeesExpensesController(IPayeeExpenses payeesExpense,IExpenses expenses)
         {
             _payeesExpense = payeesExpense;
             _expenses = expenses;
         }
+
+        #endregion
+
+        #region API controller methods
 
         [HttpGet("{id}")]
         public IActionResult GetPayeesExpensesById(int id)
@@ -84,5 +92,6 @@ namespace SplitwiseApp.Core.ApiControllers
             }
             return Ok();
         }
+        #endregion
     }
 }

@@ -14,14 +14,22 @@ namespace SplitwiseApp.Core.ApiControllers
     [ApiController]
     public class ExpensesController : ControllerBase
     {
+        #region private variables
+
         private readonly IExpenses _expenses;
         private readonly IGroups _groups;
+        #endregion
+
+        #region constructor
         public ExpensesController(IExpenses expenses, IGroups groups)
         {
             _expenses = expenses;
             _groups = groups;
 
         }
+        #endregion
+
+        #region API controller methods
 
         // GET: api/Expenses/id
         [HttpGet("{id}")]
@@ -110,5 +118,6 @@ namespace SplitwiseApp.Core.ApiControllers
                 return Ok();
             }
         }
+        #endregion
     }
 }

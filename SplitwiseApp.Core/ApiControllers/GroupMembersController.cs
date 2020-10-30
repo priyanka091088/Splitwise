@@ -14,13 +14,20 @@ namespace SplitwiseApp.Core.ApiControllers
     [ApiController]
     public class GroupMembersController : ControllerBase
     {
+        #region private variables
         private readonly IGroupMembers _members;
         private readonly IGroups _groups;
+        #endregion
+
+        #region constructor
         public GroupMembersController(IGroupMembers members,IGroups groups)
         {
             _members = members;
             _groups = groups;
         }
+        #endregion
+
+        #region API controller methods
 
         [HttpGet("{groupId}")]
         public IActionResult GetMembersOfAGroup(int groupId)
@@ -89,5 +96,6 @@ namespace SplitwiseApp.Core.ApiControllers
             return Ok();
             
         }
+        #endregion
     }
 }

@@ -18,7 +18,7 @@ namespace SplitwiseApp.Repository.GroupMember
 
         private readonly IGroups _groups;
         private readonly AppDbContext _context;
-        private readonly IMapper _mapper;
+        //private readonly IMapper _mapper;
         #endregion
 
         #region constructor
@@ -26,11 +26,11 @@ namespace SplitwiseApp.Repository.GroupMember
         {
 
         }
-        public MockGroupMembers(AppDbContext context,IGroups groups,IMapper mapper)
+        public MockGroupMembers(AppDbContext context,IGroups groups)
         {
             _context = context;
             _groups = groups;
-            _mapper = mapper;
+            
         }
 
         #endregion

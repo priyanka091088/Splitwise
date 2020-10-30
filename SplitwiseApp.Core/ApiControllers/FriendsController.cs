@@ -14,14 +14,21 @@ namespace SplitwiseApp.Core.ApiControllers
     [ApiController]
     public class FriendsController : ControllerBase
     {
+        #region private variables
+
         private readonly IFriends _friends;
         private readonly IUser _user;
+        #endregion
+
+        #region constructor
         public FriendsController(IFriends friends,IUser user)
         {
             _friends = friends;
             _user = user;
         }
+        #endregion
 
+        #region API controller methods
         [HttpGet("{id}")]
         public ActionResult<FriendsDTO> GetFriends(string id)
         {
@@ -99,5 +106,6 @@ namespace SplitwiseApp.Core.ApiControllers
             
             
         }
+        #endregion
     }
 }

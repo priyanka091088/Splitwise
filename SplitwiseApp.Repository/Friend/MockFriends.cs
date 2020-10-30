@@ -14,7 +14,7 @@ namespace SplitwiseApp.Repository.Friend
     {
         #region private variables
         private readonly AppDbContext _context;
-        private readonly IMapper _mapper;
+        //private readonly IMapper _mapper;
 
         #endregion
 
@@ -23,10 +23,10 @@ namespace SplitwiseApp.Repository.Friend
         {
 
         }
-        public MockFriends(AppDbContext context,IMapper mapper)
+        public MockFriends(AppDbContext context)
         {
             _context = context;
-            _mapper = mapper;
+            
         }
 
         #endregion
