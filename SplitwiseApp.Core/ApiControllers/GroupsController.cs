@@ -69,13 +69,6 @@ namespace SplitwiseApp.Core.ApiControllers
                 return BadRequest();
             }
              var count= _groups.AddGroupForUser(groups);
-           /* GroupMembers member = new GroupMembers
-            {
-                groupId = groups.groupId,
-                userId = groups.creatorId
-            };*/
-           // var count2= _members.AddGroupMembers(member);
-
             if (count==0 )
             {
                 return NotFound();

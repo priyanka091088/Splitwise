@@ -8,7 +8,8 @@ namespace SplitwiseApp.Repository.DTOs
     {
         public float Share { get; set; }
         public int expenseId { get; set; }
-        public string payerId { get; set; }
-        public string receiverId { get; set; }
+        public string payerName { get; set; }
+        public string receiverName { get; set; }
+        public string expense { get; set; }
     }
 }

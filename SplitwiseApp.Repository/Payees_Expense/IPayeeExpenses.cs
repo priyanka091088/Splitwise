@@ -9,9 +9,10 @@ namespace SplitwiseApp.Repository.Payees_Expense
 {
     public interface IPayeeExpenses
     {
-        Task<IEnumerable<Payees_ExpensesDTO>> GetPayeesExpenses(int expenseId);
-        public Task AddPayeesExpenses(Payees_Expenses payerExpense);
-        public Task UpdatePayeesExpenses(Payees_Expenses payerExpense);
-        public Task DeletePayeesExpenses(int id);
+        IEnumerable<Payees_ExpensesDTO> GetPayeesExpensesByExpenseId(int expenseId);
+        public int AddPayeesExpenses(Payees_Expenses payerExpense);
+        public int UpdatePayeesExpenses(Payees_Expenses payerExpense);
+        public int DeletePayeesExpenses(int id);
+        public bool PayeeExists(int id);
     }
 }

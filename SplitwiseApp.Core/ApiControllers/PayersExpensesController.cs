@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using SplitwiseApp.DomainModels.Models;
 using SplitwiseApp.Repository.DTOs;
 using SplitwiseApp.Repository.Expense;
 using SplitwiseApp.Repository.Payers_Expense;
@@ -11,7 +12,7 @@ namespace SplitwiseApp.Core.ApiControllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    class PayersExpensesController: ControllerBase
+    public class PayersExpensesController: ControllerBase
     {
         private readonly IPayersExpenses _payersExpense;
         private readonly IExpenses _expenses;
@@ -22,14 +23,63 @@ namespace SplitwiseApp.Core.ApiControllers
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<IEnumerable<Payers_ExpensesDTO>>> GetPayersExpensesById(int id)
+        public IActionResult GetPayersExpensesByexpenseId(int id)
         {
             if (_expenses.ExpenseExist(id))
             {
-                IEnumerable<Payers_ExpensesDTO> groupUser = await _payersExpense.GetPayersExpenses(id);
-                return Ok(groupUser);
+                IEnumerable<Payers_ExpensesDTO> payer = _payersExpense.GetPayersExpensesByExpenseId(id);
+                return Ok(payer);
             }
             return NotFound();
+        }
+
+        [HttpPost]
+        public IActionResult AddPayersExpense(Payers_Expenses payers)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest();
+            }
+            var count = _payersExpense.AddPayersExpenses(payers);
+            if (count == 0)
+            {
+                return NotFound();
+
+            }
+            else
+                return Ok();
+
+        }
+
+        [HttpPut("{id}")]
+        public IActionResult UpdateGroup(Payers_Expenses payers, int id)
+        {
+            if (!ModelState.IsValid && !(payers.expenseId == id))
+            {
+                return BadRequest();
+            }
+            
+            var count = _payersExpense.UpdatePayersExpenses(payers);
+            if (count == 0)
+            {
+                return NotFound();
+            }
+            return Ok();
+        }
+
+        [HttpDelete("{payerId}")]
+        public IActionResult DeleteGroup(int payerId)
+        {
+            if (!_payersExpense.PayerExists(payerId))
+            {
+                return BadRequest();
+            }
+            var count = _payersExpense.DeletePayersExpenses(payerId);
+            if (count == 0)
+            {
+                return NotFound();
+            }
+            return Ok();
         }
     }
 }

@@ -15,7 +15,7 @@ namespace SplitwiseApp.DomainModels.Models
        
         
         public int expenseId { get; set; }
-        [ForeignKey("Expenses")]
+        [ForeignKey("expenseId")]
         public Expenses expenses { get; set; }
         
         public int? groupId { get; set; }

@@ -11,7 +11,7 @@ namespace SplitwiseApp.Core.ApiControllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    class SettlementController : ControllerBase
+    public class SettlementController : ControllerBase
     {
         private readonly ISettlement _settlement;
         public SettlementController(ISettlement settlement)
@@ -20,27 +20,47 @@ namespace SplitwiseApp.Core.ApiControllers
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<IEnumerable<SettlementDTO>>> GetSettlement(string id)
+        public IActionResult GetSettlement(string id)
         {
 
-            IEnumerable<SettlementDTO> settlementDtos = await _settlement.GetSettlementDetails(id);
+            IEnumerable<SettlementDTO> settlementDtos = _settlement.GetSettlementDetails(id);
             return Ok(settlementDtos);
         }
 
         [HttpPost]
         public IActionResult AddASettlement(Settlement settlement)
         {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest();
+            }
+            var count= _settlement.AddSettlementDetails(settlement);
 
-            _settlement.AddSettlementDetails(settlement);
-            return Ok();
+            if (count==0)
+            {
+                return NotFound();
+            }
+            else
+            {
+                return Ok();
+            }
+           
         }
 
-        [HttpPut]
-        public IActionResult UpdateSettlementDetails(Settlement settlement)
+        [HttpPut("{settlementId}")]
+        public IActionResult UpdateSettlementDetails(Settlement settlement,int settlementId)
         {
-
-            _settlement.UpdateSettlementDetails(settlement);
-            return Ok();
+            if(!ModelState.IsValid || !(settlement.settlemntId == settlementId))
+            {
+                return BadRequest();
+            }
+            var count=_settlement.UpdateSettlementDetails(settlement);
+            if (count == 0)
+            {
+                return NotFound();
+            }
+            else
+                return Ok();
         }
 
     }
