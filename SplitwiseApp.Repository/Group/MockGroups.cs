@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using SplitwiseApp.DomainModels.Models;
 using SplitwiseApp.Repository.DTOs;
+using SplitwiseApp.Repository.GroupMember;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,6 +16,7 @@ namespace SplitwiseApp.Repository.Group
     {
         private readonly AppDbContext _context;
         private readonly IMapper _mapper;
+        
         public MockGroups()
         {
 
@@ -23,9 +25,11 @@ namespace SplitwiseApp.Repository.Group
         {
             _context = context;
             _mapper = mapper;
+          
         }
         public int AddGroupForUser(Groups group)
         {
+            
              _context.group.Add(group);
             var result= _context.SaveChanges();
             return result;

@@ -72,6 +72,7 @@ namespace SplitwiseApp.Web
                 config.CreateMap<Groups, GroupsDTO>();
                 config.CreateMap<Friends, FriendsDTO>();
                 config.CreateMap<GroupMembersDTO, GroupMembers>();
+                config.CreateMap<ExpensesDTO, Expenses>();
             });
             IMapper mapper = configuration.CreateMapper();
             services.AddSingleton(mapper);

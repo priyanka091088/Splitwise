@@ -12,7 +12,7 @@ namespace SplitwiseApp.Core.ApiControllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    class ExpensesController: ControllerBase
+    public class ExpensesController : ControllerBase
     {
         private readonly IExpenses _expenses;
         private readonly IGroups _groups;
@@ -25,25 +25,25 @@ namespace SplitwiseApp.Core.ApiControllers
 
         // GET: api/Expenses/id
         [HttpGet("{id}")]
-        [Route("expense")]
-        public async Task<ActionResult<ExpensesDTO>> GetExpenseByExpenseId(int id)
+        [Route("expense/{id}")]
+        public IActionResult GetExpenseByExpenseId(int id)
         {
             if (_expenses.ExpenseExist(id))
             {
-                ExpensesDTO expensesDto = await _expenses.GetExpensesById(id);
+                IEnumerable<ExpensesDTO> expensesDto = _expenses.GetExpensesByexpenseId(id);
                 return Ok(expensesDto);
             }
             return NotFound();
 
         }
 
-        [HttpGet]
-        [Route("groupsExpense")]
-        public async Task<ActionResult<IEnumerable<ExpensesDTO>>> ExpenseForAGroup(int groupId)
+        [HttpGet("{groupId}")]
+        [Route("groupsExpense/{groupId}")]
+        public IActionResult ExpenseForAGroup(int groupId)
         {
             if (_groups.GroupExist(groupId))
             {
-                IEnumerable<ExpensesDTO> expensesDto = await _expenses.GetExpenseForGroup(groupId);
+                IEnumerable<ExpensesDTO> expensesDto = _expenses.GetExpenseForGroup(groupId);
                 return Ok(expensesDto);
             }
             return NotFound();
@@ -53,38 +53,62 @@ namespace SplitwiseApp.Core.ApiControllers
         [HttpPost]
         public IActionResult AddExpense(Expenses expenses)
         {
-            if(!ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
                 return BadRequest();
             }
-            _expenses.AddAnExpense(expenses);
-            return Ok();
+
+            var count = _expenses.AddAnExpense(expenses);
+            if (count == 0)
+            {
+                return NotFound();
+            }
+            else
+            {
+                return Ok();
+            }
+
         }
 
         // PUT: api/Expenses
-        [HttpPut]
-        public IActionResult UpdateExpense(Expenses expenses)
+        [HttpPut("{id}")]
+        public IActionResult UpdateExpense(Expenses expenses,int id)
         {
-            if (_expenses.ExpenseExist(expenses.expenseId))
+            if (!ModelState.IsValid || !_expenses.ExpenseExist(expenses.expenseId) || !(expenses.expenseId == id))
             {
-
-                _expenses.UpdateAParticularExpense(expenses);
+                return BadRequest();
+            }
+            var count= _expenses.UpdateAParticularExpense(expenses);
+            if (count == 0)
+            {
+                return NotFound();
+            }
+            else
+            {
                 return Ok();
             }
-            return NotFound();
-
-        }
+               
+         }
 
         // DELETE: api/Expenses
-        [HttpDelete]
+        [HttpDelete("{expenseId}")]
         public IActionResult DeleteExpense(int expenseId)
         {
-            if (_expenses.ExpenseExist(expenseId))
+            if (!_expenses.ExpenseExist(expenseId))
             {
-                _expenses.DeleteAnExpense(expenseId);
+                return BadRequest();
+               
+            }
+
+            var count = _expenses.DeleteAnExpense(expenseId);
+            if (count == 0)
+            {
+                return NotFound();
+            }
+            else
+            {
                 return Ok();
             }
-            return NotFound();
         }
     }
 }

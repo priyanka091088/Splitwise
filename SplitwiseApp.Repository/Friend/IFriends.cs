@@ -10,7 +10,7 @@ namespace SplitwiseApp.Repository.Friend
 {
     public interface IFriends
     {
-        ActionResult<FriendsDTO> GetFriends(string userId);
+        IEnumerable<UserDTO> GetFriends(string userId);
         public int AddAFriend(Friends friends);
         public int UpdateAFriend(Friends friends);
         public int DeleteAFriend(int id);

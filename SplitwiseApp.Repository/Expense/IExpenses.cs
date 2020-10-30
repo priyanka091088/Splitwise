@@ -9,11 +9,11 @@ namespace SplitwiseApp.Repository.Expense
 {
     public interface IExpenses
     {
-        Task<IEnumerable<ExpensesDTO>> GetExpenseForGroup(int groupId);
-        Task<ExpensesDTO> GetExpensesById(int id);
-        public Task AddAnExpense(Expenses expenses);
-        public Task UpdateAParticularExpense(Expenses expenses);
-        public Task DeleteAnExpense(int id);
+        IEnumerable<ExpensesDTO> GetExpenseForGroup(int groupId);
+        IEnumerable<ExpensesDTO> GetExpensesByexpenseId(int id);
+        public int AddAnExpense(Expenses expenses);
+        public int UpdateAParticularExpense(Expenses expenses);
+        public int DeleteAnExpense(int id);
         public bool ExpenseExist(int expenseId);
     }
 }

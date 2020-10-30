@@ -26,7 +26,7 @@ namespace SplitwiseApp.Core.ApiControllers
             return _user.GetUsers();
         }
         [HttpGet("{id}")]
-        [Route("{getById}")]
+        [Route("getById/{id}")]
         public ActionResult<UserDTO> GetUser(string id)
         {
             if (_user.UserExists(id))
@@ -37,7 +37,7 @@ namespace SplitwiseApp.Core.ApiControllers
         }
 
         [HttpGet("{email}")]
-        [Route("{getByEmail}")]
+        [Route("getByEmail/{email}")]
         public async Task<ActionResult<UserDTO>> GetUserByEmail(string email)
         {
             

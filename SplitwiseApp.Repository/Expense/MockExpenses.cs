@@ -1,7 +1,11 @@
-﻿using SplitwiseApp.DomainModels.Models;
+﻿using Microsoft.EntityFrameworkCore;
+using SplitwiseApp.DomainModels.Models;
 using SplitwiseApp.Repository.DTOs;
+using SplitwiseApp.Repository.Payees_Expense;
+using SplitwiseApp.Repository.Payers_Expense;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -9,37 +13,95 @@ namespace SplitwiseApp.Repository.Expense
 {
     public class MockExpenses : IExpenses
     {
-        
-        public Task AddAnExpense(Expenses expenses)
+        private readonly AppDbContext _context;
+        private readonly IPayersExpenses _payersExpenses;
+        private readonly IPayeeExpenses _payeesExpenses;
+
+        public MockExpenses()
         {
-            //Also call the payers_Expenses and Payees_Expenses post method
-            throw new NotImplementedException();
+                
+        }
+        public MockExpenses(AppDbContext context,IPayeeExpenses payeesExpenses,IPayersExpenses payersExpenses)
+        {
+            _context = context;
+            _payersExpenses = payersExpenses;
+            _payeesExpenses = payeesExpenses;
+        }
+        public int AddAnExpense(Expenses expenses)
+        {
+            
+            _context.expenses.Add(expenses);
+            var result = _context.SaveChanges();
+            return result;
+            
         }
 
-        public Task DeleteAnExpense(int id)
+        public int DeleteAnExpense(int id)
         {
-            //Also call the payers_expenses and payees_expenses delete method
-            throw new NotImplementedException();
+            
+            var expenseDel = _context.expenses.Find(id);
+            _context.expenses.Remove(expenseDel);
+            var result = _context.SaveChanges();
+            
+            return result;
+            
         }
 
         public bool ExpenseExist(int expenseId)
         {
-            throw new NotImplementedException();
+            var expense = _context.expenses.Find(expenseId);
+            if (expense == null)
+            {
+                return false;
+            }
+            else
+            {
+                return true;
+            }
+           
         }
 
-        public Task<IEnumerable<ExpensesDTO>> GetExpenseForGroup(int groupId)
+        public IEnumerable<ExpensesDTO> GetExpenseForGroup(int groupId)
         {
-            throw new NotImplementedException();
+            var expense = _context.expenses.Where(e => e.groupId == groupId);
+
+            List<ExpensesDTO> groupExpenses = new List<ExpensesDTO>();
+
+            foreach(var exp in expense)
+            {
+                groupExpenses.Add(new ExpensesDTO
+                {
+                    Description = exp.Description
+                });
+            }
+            return groupExpenses.ToList();
+            
         }
 
-        public Task<ExpensesDTO> GetExpensesById(int id)
+        public IEnumerable<ExpensesDTO> GetExpensesByexpenseId(int expenseId)
         {
-            throw new NotImplementedException();
+            var expense = _context.expenses.Include(e => e.users).Where(e => e.expenseId == expenseId);
+
+
+            List<ExpensesDTO> expenses = new List<ExpensesDTO>();
+            foreach (var exp in expense)
+            {
+                expenses.Add(new ExpensesDTO
+                {
+
+                    Description = exp.Description,
+                    Amount = exp.Amount,
+                    creatorId = exp.users.Name
+                });
+            }
+            return expenses.ToList();
         }
 
-        public Task UpdateAParticularExpense(Expenses expenses)
+        public int UpdateAParticularExpense(Expenses expenses)
         {
-            //Also call the payers_expenses and payees_expenses update method if necessary
+            _context.expenses.Update(expenses);
+            var result = _context.SaveChanges();
+            return result;
             throw new NotImplementedException();
         }
     }
