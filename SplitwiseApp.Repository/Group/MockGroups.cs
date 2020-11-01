@@ -55,12 +55,34 @@ namespace SplitwiseApp.Repository.Group
 
         public int DeleteAGroupById(int groupId)
         {
+            //remove the particular group
             var groups = _context.group.Find(groupId);
             _context.group.Remove(groups);
-            
+
+            //remove the members of the group
+            IEnumerable<GroupMembers> members = _context.groupMember.Where(m => m.groupId == groupId);
+            _context.groupMember.RemoveRange(members);
+
+            //remove the expenses frelated to the group
+            IEnumerable<Expenses> expense = _context.expenses.Where(e => e.groupId == groupId);
+            _context.expenses.RemoveRange(expense);
+
+            //loop for removing all the payers,payees and settlements related to th particular expense
+            foreach(var item in expense)
+                {
+                IEnumerable<Payers_Expenses> payer = _context.payers_Expenses.Where(p => p.expenseId == item.expenseId);
+                _context.payers_Expenses.RemoveRange(payer);
+
+                IEnumerable<Payees_Expenses> payee = _context.payees_Expenses.Where(pa => pa.expenseId == item.expenseId);
+                _context.payees_Expenses.RemoveRange(payee);
+
+                IEnumerable<Settlement> settle = _context.settlement.Where(s => s.expenseId == item.expenseId);
+                _context.settlement.RemoveRange(settle);
+                
+                }
             var result = _context.SaveChanges();
             return result;
-            
+           
         }
         
         public ActionResult<GroupsDTO> GetGroupByGroupId(int groupId)

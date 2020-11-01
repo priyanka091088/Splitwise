@@ -45,9 +45,23 @@ namespace SplitwiseApp.Repository.Expense
 
         public int DeleteAnExpense(int id)
         {
+            //removing the particular expense
             var expenseDel = _context.expenses.Find(id);
             _context.expenses.Remove(expenseDel);
-            var result=_context.SaveChanges();
+
+            //removing the payers of that particular expense
+            IEnumerable<Payers_Expenses> payer = _context.payers_Expenses.Where(p => p.expenseId == id);
+            _context.payers_Expenses.RemoveRange(payer);
+
+            //removing the payees of that particular expense
+            IEnumerable<Payees_Expenses> payee = _context.payees_Expenses.Where(pa => pa.expenseId == id);
+            _context.payees_Expenses.RemoveRange(payee);
+
+            //removing the payees of that particular expense
+            IEnumerable<Settlement> settle = _context.settlement.Where(s => s.expenseId == id);
+            _context.settlement.RemoveRange(settle);
+
+            var result = _context.SaveChanges();
             return result;
         }
 

@@ -49,7 +49,7 @@ namespace SplitwiseApp.Repository.User
         #region public methods
         public async Task<IdentityResult> AddUser(signUpDTO user)
         {
-             var users = new ApplicationUser { UserName = user.Email, Email = user.Email, Name = user.Name, Balance = user.Balance };
+             var users = new ApplicationUser { UserName = user.Email, Email = user.Email, Name = user.Name};
              return await _userManager.CreateAsync(users, user.Password);
             
 

@@ -8,6 +8,6 @@ namespace SplitwiseApp.DomainModels.Models
     public class ApplicationUser:IdentityUser
     {
         public string Name { get; set; }
-        public float Balance { get; set; }
+        public float? Balance { get; set; }
     }
 }
