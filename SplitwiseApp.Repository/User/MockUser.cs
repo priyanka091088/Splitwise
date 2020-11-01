@@ -124,7 +124,7 @@ namespace SplitwiseApp.Repository.User
 
         public bool UserExists(string userId)
         {
-             var u = _userManager.FindByIdAsync(userId);
+            var u = _userManager.FindByIdAsync(userId);
             if (u == null)
             {
                 return false;

@@ -18,13 +18,15 @@ namespace SplitwiseApp.Core.ApiControllers
 
         private readonly IExpenses _expenses;
         private readonly IGroups _groups;
+        private readonly AppDbContext _context;
         #endregion
 
         #region constructor
-        public ExpensesController(IExpenses expenses, IGroups groups)
+        public ExpensesController(IExpenses expenses, IGroups groups,AppDbContext context)
         {
             _expenses = expenses;
             _groups = groups;
+            _context = context;
 
         }
         #endregion
@@ -107,8 +109,8 @@ namespace SplitwiseApp.Core.ApiControllers
                 return BadRequest();
                
             }
-
-            var count = _expenses.DeleteAnExpense(expenseId);
+            var count=_expenses.DeleteAnExpense(expenseId);
+            
             if (count == 0)
             {
                 return NotFound();

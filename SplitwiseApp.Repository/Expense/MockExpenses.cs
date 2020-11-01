@@ -45,27 +45,15 @@ namespace SplitwiseApp.Repository.Expense
 
         public int DeleteAnExpense(int id)
         {
-            
             var expenseDel = _context.expenses.Find(id);
             _context.expenses.Remove(expenseDel);
-            var result = _context.SaveChanges();
-            
+            var result=_context.SaveChanges();
             return result;
-            
         }
 
         public bool ExpenseExist(int expenseId)
         {
-            var expense = _context.expenses.Find(expenseId);
-            if (expense == null)
-            {
-                return false;
-            }
-            else
-            {
-                return true;
-            }
-           
+            return _context.expenses.Any(e => e.expenseId == expenseId);
         }
 
         public IEnumerable<ExpensesDTO> GetExpenseForGroup(int groupId)

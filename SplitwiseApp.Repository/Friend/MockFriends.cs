@@ -14,8 +14,7 @@ namespace SplitwiseApp.Repository.Friend
     {
         #region private variables
         private readonly AppDbContext _context;
-        //private readonly IMapper _mapper;
-
+       
         #endregion
 
         #region constructor
@@ -51,14 +50,7 @@ namespace SplitwiseApp.Repository.Friend
 
         public bool FriendExist(int friendId)
         {
-            var friend = _context.friends.Find(friendId);
-            if (friend == null)
-            {
-                return false;
-            }
-            else
-                return true;
-            
+            return _context.friends.Any(f =>f.Id == friendId);
         }
 
         public IEnumerable<UserDTO> GetFriends(string userId)

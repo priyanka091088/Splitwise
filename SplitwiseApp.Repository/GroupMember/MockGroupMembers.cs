@@ -80,14 +80,8 @@ namespace SplitwiseApp.Repository.GroupMember
 
         public bool MemberExist(int memberId)
         {
-            var member=_context.groupMember.Find(memberId);
-            if (member == null)
-            {
-                return false;
-            }
-            else
-                return true;
-           
+            return _context.groupMember.Any(m => m.memberId == memberId);
+          
         }
 
         public int UpdateGroupMembers(GroupMembers members)

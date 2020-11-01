@@ -88,15 +88,8 @@ namespace SplitwiseApp.Repository.Payers_Expense
 
         public bool PayerExists(int id)
         {
-            var payer = _context.payers_Expenses.Find(id);
-            if (payer == null)
-            {
-                return false;
-            }
-            else
-            {
-                return true;
-            }
+            return _context.payers_Expenses.Any(p =>p.Id == id);
+          
         }
         #endregion
     }

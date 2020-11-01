@@ -92,14 +92,8 @@ namespace SplitwiseApp.Repository.Settlements
 
         public bool SettlementExist(int settlemntId)
         {
-            var settlement = _context.settlement.Find(settlemntId);
-            if (settlement == null)
-            {
-                return false;
-            }
-            else
-                return true;
-            
+            return _context.settlement.Any(s => s.settlemntId == settlemntId);
+           
         }
 
         public int UpdateSettlementDetails(Settlement settlement)

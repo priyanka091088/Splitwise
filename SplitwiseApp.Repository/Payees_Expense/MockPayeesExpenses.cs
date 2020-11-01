@@ -77,15 +77,8 @@ namespace SplitwiseApp.Repository.Payees_Expense
 
         public bool PayeeExists(int id)
         {
-            var payee = _context.payees_Expenses.Find(id);
-            if (payee == null)
-            {
-                return false;
-            }
-            else
-            {
-                return true;
-            }
+            return _context.payees_Expenses.Any(pa => pa.pId == id);
+          
            
         }
 

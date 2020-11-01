@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using SplitwiseApp.DomainModels.Models;
 using SplitwiseApp.Repository.DTOs;
+using SplitwiseApp.Repository.Expense;
 using SplitwiseApp.Repository.GroupMember;
 using System;
 using System.Collections.Generic;
@@ -17,6 +18,7 @@ namespace SplitwiseApp.Repository.Group
         #region private variables
         private readonly AppDbContext _context;
         private readonly IMapper _mapper;
+        private readonly IExpenses _expenses;
         #endregion
 
         #region constructor
@@ -24,11 +26,11 @@ namespace SplitwiseApp.Repository.Group
         {
 
         }
-        public MockGroups(AppDbContext context, IMapper mapper)
+        public MockGroups(AppDbContext context, IMapper mapper,IExpenses expenses)
         {
             _context = context;
             _mapper = mapper;
-          
+            _expenses = expenses;
         }
         #endregion
 
@@ -37,15 +39,25 @@ namespace SplitwiseApp.Repository.Group
         {
             
              _context.group.Add(group);
+            if (_context.SaveChanges() != 0)
+            {
+                GroupMembers member = new GroupMembers
+                {
+                    groupId = group.groupId,
+                    userId = group.creatorId
+                };
+                _context.groupMember.Add(member);
+            }
+           
             var result= _context.SaveChanges();
             return result;
         }
 
         public int DeleteAGroupById(int groupId)
         {
-            
-            var groups =_context.group.Find(groupId);
+            var groups = _context.group.Find(groupId);
             _context.group.Remove(groups);
+            
             var result = _context.SaveChanges();
             return result;
             
@@ -93,13 +105,7 @@ namespace SplitwiseApp.Repository.Group
 
         public bool GroupExist(int groupId)
         {
-            var group = _context.group.Where(g => g.groupId == groupId);
-            if (group == null)
-            {
-                return false;
-            }
-            else
-                return true;
+            return _context.group.Any(g => g.groupId == groupId);
         }
 
         public int UpdateAGroup(Groups group)
