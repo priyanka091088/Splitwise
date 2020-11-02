@@ -48,6 +48,8 @@ namespace SplitwiseApp.Web
                 .AddEntityFrameworkStores<AppDbContext>()
                 .AddDefaultTokenProviders();
 
+            services.AddSwaggerDocument();
+
             services.AddScoped<IUser, MockUser>();
             services.AddScoped<IExpenses, MockExpenses>();
             services.AddScoped<IFriends, MockFriends>();
@@ -134,6 +136,9 @@ namespace SplitwiseApp.Web
             }
             app.UseHttpsRedirection();
             app.UseStaticFiles();
+
+            app.UseOpenApi();
+            app.UseSwaggerUi3();
 
             app.UseRouting();
 

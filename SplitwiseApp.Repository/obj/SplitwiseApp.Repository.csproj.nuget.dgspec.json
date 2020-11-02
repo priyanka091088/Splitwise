@@ -76,6 +76,10 @@
               "target": "Package",
               "version": "[3.1.9, )"
             },
+            "NSwag.AspNetCore": {
+              "target": "Package",
+              "version": "[13.8.2, )"
+            },
             "Newtonsoft.Json": {
               "target": "Package",
               "version": "[12.0.3, )"
@@ -183,6 +187,10 @@
             "Microsoft.IdentityModel.JsonWebTokens": {
               "target": "Package",
               "version": "[6.8.0, )"
+            },
+            "NSwag.AspNetCore": {
+              "target": "Package",
+              "version": "[13.8.2, )"
             },
             "Newtonsoft.Json": {
               "target": "Package",
