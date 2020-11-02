@@ -18,7 +18,7 @@ namespace SplitwiseApp.Repository.Group
         #region private variables
         private readonly AppDbContext _context;
         private readonly IMapper _mapper;
-        private readonly IExpenses _expenses;
+        
         #endregion
 
         #region constructor
@@ -26,11 +26,11 @@ namespace SplitwiseApp.Repository.Group
         {
 
         }
-        public MockGroups(AppDbContext context, IMapper mapper,IExpenses expenses)
+        public MockGroups(AppDbContext context, IMapper mapper)
         {
             _context = context;
             _mapper = mapper;
-            _expenses = expenses;
+            
         }
         #endregion
 

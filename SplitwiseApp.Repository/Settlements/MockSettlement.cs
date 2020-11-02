@@ -43,7 +43,8 @@ namespace SplitwiseApp.Repository.Settlements
                                Amount = settlements.Amount,
                                expense = settlements.expenses.Description,
                                receiverName=settlements.receiver.Name,
-                               payerName = settlements.payer.Name
+                               payerName = settlements.payer.Name,
+                               groupName=settlements.groups.groupName
                            };
             List<SettlementDTO> settlementDto = new List<SettlementDTO>();
             foreach(var settle in settleup)
@@ -53,7 +54,7 @@ namespace SplitwiseApp.Repository.Settlements
                     Amount =settle.Amount,
                     expense=settle.expense,
                     receiverName=settle.receiverName,
-                    payerName=settle.payerName
+                    payerName=settle.payerName,
             });
             }
             return settlementDto;
