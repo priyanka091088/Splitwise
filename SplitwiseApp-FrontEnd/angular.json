@@ -119,6 +119,10 @@
           }
         }
       }
-    }},
-  "defaultProject": "SplitwiseApp-FrontEnd"
+    }
+  },
+  "defaultProject": "SplitwiseApp-FrontEnd",
+  "cli": {
+    "analytics": false
+  }
 }
