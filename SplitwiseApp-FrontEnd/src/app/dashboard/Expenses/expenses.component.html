@@ -1,4 +1,13 @@
-<p>expenses works!</p>
-<div class="container">
+<app-details></app-details>
+<app-top-nav></app-top-nav>
+
+<h2>All Expenses</h2>
+<div style="float: right;">
+  <label>Your Total Balance:</label>
+</div>
+<h3>All Expense(Group & Non-Group) Will Be Displayed Here!!</h3>
+
+<button class="nav-button" routerLink="/addexpense" routerLinkActive="router-link-active">Add Expense</button>
+<div class="outlet">
   <router-outlet></router-outlet>
 </div>

@@ -1,1 +1,15 @@
-<p>update-group works!</p>
+<form>
+  <label>My Group Name Will Be </label><br><br>
+  <input type="text"><br>
+  <label>Group type</label><br>
+  <select id = "myList">
+    <option value = "Apartment">Apartment</option>
+    <option value = "Trip">Trip</option>
+    <option value = "Family">Family</option>
+    <option value = "Others">Others</option>
+  </select>
+  <button [routerLink]="['/editmembers',0]" routerLinkActive="router-link-active" class="btn btn-primary">Edit Members</button>
+  <button class="btn btn-primary">Cancel</button>
+<button type="submit" class="btn btn-success btn-block">Save</button>
+<button class="btn btn-danger">Delete Group</button>
+</form>

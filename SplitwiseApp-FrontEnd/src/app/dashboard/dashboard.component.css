@@ -1,0 +1,46 @@
+.dashboard-div{
+  height:100%;
+  width:100%;
+}
+
+
+.left-section{
+  float: left;
+margin-top: 0;
+height:absolute;
+
+}
+
+.detail-left-sec{
+  margin-top:60px;
+  margin-left: 0;
+  float: left;
+  display: block;
+  height: auto;
+  width:auto;
+  padding:10px 10px 10px 10px;
+  background-color: rgb(183, 209, 87);
+}
+.detail-left-sec a{
+  color: red;
+
+}
+.detail-right-sec{
+  margin-top:60px;
+  margin-left: 0;
+  float: right;
+  display: block;
+  height: auto;
+  width:auto;
+  padding:10px 10px 10px 10px;
+  background-color: rgb(183, 209, 87);
+}
+.outlet{
+  margin-top: 30px;
+  margin-left: 13%;
+  margin-right: 12%;
+  margin-bottom: 10px;
+  height:absolute;
+  padding-bottom: 0;
+}
+

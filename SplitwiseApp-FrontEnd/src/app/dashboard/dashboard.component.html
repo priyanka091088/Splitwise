@@ -1,34 +1,28 @@
+<app-details></app-details>
+<app-top-nav></app-top-nav>
 
- <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-  <div class="container">
-      <a class="navbar-brand" >{{title}}</a>
-
-
-      <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
-          <ul class="navbar-nav flex-grow-1">
-              <li class="nav-item">
-                  <a class="nav-link text-dark" [routerLink]="['/expense']" routerLinkActive="router-link-active">Expenses</a>
-              </li>
-
-              <li class="nav-item">
-                  <a class="nav-link text-dark" [routerLink]="['/groups']" routerLinkActive="router-link-active">Groups</a>
-              </li>
-
-              <li class="nav-item">
-                <a class="nav-link text-dark" [routerLink]="['/friends']" routerLinkActive="router-link-active">SettleUp</a>
-            </li>
-
-            <li class="nav-item">
-              <a class="nav-link text-dark" [routerLink]="['/friends']" routerLinkActive="router-link-active">Friends</a>
-          </li>
-
-          </ul>
+    <div class="dashboard-div">
+      <div class="left-section">
+        <h2>DASHBOARD</h2>
       </div>
+
+          <div class="detail-left-sec">
+            <h5>YOU OWE</h5>
+            <a href="#">owe</a>
+          </div>
+          <div class="detail-right-sec">
+            <h5>YOU ARE OWED</h5>
+            <a href="#">owed</a>
+          </div>
+          <label>Group Members</label>
+
+
+
+    </div>
+  <div class="outlet">
+    <router-outlet></router-outlet>
   </div>
-</nav>
-<p>details-page works!</p>
 
 
-<div class="container">
-  <router-outlet></router-outlet>
-</div>
+
+

@@ -1,1 +1,12 @@
-<p>signup works!</p>
+<form #form="ngForm">
+  <label>Name</label><br>
+  <input type="text" placeholder="Your Name" name="Name" required><br><br>
+
+  <label>Email</label><br>
+  <input type="text" placeholder="Email" name="Email" required><br><br>
+
+  <label>Password</label><br>
+  <input type="password" placeholder="password" name="Password" required><br><br>
+
+  <button class="btn btn-primary" [routerLink]="['/dashboard']" [disabled]="(form.invalid)" >Sign Up</button>
+</form>
