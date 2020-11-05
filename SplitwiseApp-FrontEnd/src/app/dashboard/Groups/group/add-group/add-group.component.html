@@ -1,13 +1,20 @@
-<form>
-  <label>My Group Name Will Be </label><br><br>
-  <input type="text"><br>
+<app-details></app-details>
+<app-top-nav></app-top-nav>
+
+<form #form="ngForm">
+  <label>My Group Name Will Be: </label><br>
+  <input type="text" placeholder="Group Name" [(ngModel)]="groups.groupName" maxlength="30" required><br><br>
   <label>Group type</label><br>
-  <select id = "myList">
+  <select id = "myList" [(ngModel)]="groups.groupType" class="form-control">
     <option value = "Apartment">Apartment</option>
     <option value = "Trip">Trip</option>
     <option value = "Family">Family</option>
     <option value = "Others">Others</option>
-  </select>
-  <button [routerLink]="['/addgroup',0]" routerLinkActive="router-link-active" class="btn btn-primary">Add Members</button>
-<button type="submit" class="btn btn-success btn-block">Save</button>
+  </select><br><br>
+
+  <button routerLink="/groups/addmember/0" routerLinkActive="router-link-active" class="btn btn-primary">Add Members</button><br><br>
+  <app-add-members></app-add-members>
+<br><br>
+<button type="submit" class="btn btn-primary" (click)="onSubmit(groups,members)" [disabled]="(form.invalid)" [routerLink]="['/dashboard']">Save</button>&nbsp;
+<button type="submit" class="btn btn-danger" [routerLink]="['/dashboard']">Cancel</button>
 </form>

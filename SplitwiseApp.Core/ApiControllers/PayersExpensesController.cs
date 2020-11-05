@@ -31,7 +31,7 @@ namespace SplitwiseApp.Core.ApiControllers
         #region API Controller methods
 
         [HttpGet("{id}")]
-        public IActionResult GetPayersExpensesByexpenseId(int id)
+        public ActionResult<Payers_ExpensesDTO> GetPayersExpensesByexpenseId(int id)
         {
             if (_expenses.ExpenseExist(id))
             {

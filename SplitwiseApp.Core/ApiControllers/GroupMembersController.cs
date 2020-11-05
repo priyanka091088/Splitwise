@@ -30,11 +30,11 @@ namespace SplitwiseApp.Core.ApiControllers
         #region API controller methods
 
         [HttpGet("{groupId}")]
-        public IActionResult GetMembersOfAGroup(int groupId)
+        public ActionResult<UserDTO> GetMembersOfAGroup(int groupId)
         {
             if (_groups.GroupExist(groupId))
             {
-                var memberDtos = _members.GetGroupMembers(groupId);
+                IEnumerable<UserDTO> memberDtos = _members.GetGroupMembers(groupId);
                 return Ok(memberDtos);
             }
             return NotFound();

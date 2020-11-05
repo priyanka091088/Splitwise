@@ -7,7 +7,7 @@ namespace SplitwiseApp.Repository.DTOs
     public class FriendsDTO
     {
         public float Balance { get; set; }
-        public string creatorId { get; set; }
-        public string friendId { get; set; }
+        public string creator { get; set; }
+        public string friendName { get; set; }
     }
 }

@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ViewExpenseComponent } from './view-expense.component';
+import { RightSideNavComponent } from './right-side-nav.component';
 
-describe('ViewExpenseComponent', () => {
-  let component: ViewExpenseComponent;
-  let fixture: ComponentFixture<ViewExpenseComponent>;
+describe('RightSideNavComponent', () => {
+  let component: RightSideNavComponent;
+  let fixture: ComponentFixture<RightSideNavComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ViewExpenseComponent ]
+      declarations: [ RightSideNavComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(ViewExpenseComponent);
+    fixture = TestBed.createComponent(RightSideNavComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

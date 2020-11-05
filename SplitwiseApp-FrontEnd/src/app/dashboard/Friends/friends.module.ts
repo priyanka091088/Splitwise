@@ -2,18 +2,20 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FriendsComponent } from '../friends/friends.component';
 import { RouterModule } from '@angular/router';
-import { ViewfriendlistComponent } from './viewfriendlist/viewfriendlist.component';
+
 import { AddfriendComponent } from './addfriend/addfriend.component';
 import { UpdatefriendComponent } from './updatefriend/updatefriend.component';
 import { SharedModule } from 'src/app/shared/shared.module';
+import { FormsModule } from '@angular/forms';
 
 
 
 @NgModule({
-  declarations: [FriendsComponent],
+  declarations: [FriendsComponent,AddfriendComponent,UpdatefriendComponent],
   imports: [
     CommonModule,
     SharedModule,
+    FormsModule,
     RouterModule.forChild([
       { path: 'friends', component: FriendsComponent },
       { path: '', redirectTo: 'friends', pathMatch: 'full' },
@@ -21,6 +23,7 @@ import { SharedModule } from 'src/app/shared/shared.module';
       { path: 'editfriend/:id', component: UpdatefriendComponent},
 
     ])
-  ]
+  ],
+  exports:[RouterModule]
 })
 export class FriendsModule { }

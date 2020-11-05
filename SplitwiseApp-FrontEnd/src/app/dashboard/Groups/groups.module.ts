@@ -2,12 +2,12 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { GroupsComponent } from '../groups/groups.component';
 import { RouterModule } from '@angular/router';
-import { ViewListGroupComponent } from './group/view-list-group/view-list-group.component';
 import { AddGroupComponent } from './group/add-group/add-group.component';
 import { UpdateGroupComponent } from './group/update-group/update-group.component';
 import { AddMembersComponent } from './groupMember/add-members/add-members.component';
 import { UpdateGroupMembersComponent } from './groupMember/update-group-members/update-group-members.component';
 import { SharedModule } from 'src/app/shared/shared.module';
+import { FormsModule } from '@angular/forms';
 
 
 
@@ -16,6 +16,7 @@ import { SharedModule } from 'src/app/shared/shared.module';
   imports: [
     CommonModule,
     SharedModule,
+    FormsModule,
     RouterModule.forChild([
       { path: 'groups', component: GroupsComponent },
       { path: '', redirectTo: 'groups', pathMatch: 'full' },

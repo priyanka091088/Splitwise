@@ -48,7 +48,7 @@ namespace SplitwiseApp.Repository.Test.Modules.User
 
 
         }
-        private MockUser SetUpUserRepository(AppDbContext db)
+        /*private MockUser SetUpUserRepository(AppDbContext db)
         {
             var myConfiguration = new Dictionary<string, string>
             {
@@ -61,7 +61,7 @@ namespace SplitwiseApp.Repository.Test.Modules.User
                 .AddInMemoryCollection(myConfiguration)
                 .Build();
             return new MockUser(db, SetUserManager(), _mapper, _configuration);
-        }
+        }*/
 
         private FakeUserManager SetUserManager()
         {
@@ -77,7 +77,7 @@ namespace SplitwiseApp.Repository.Test.Modules.User
 
             using (var db = MockDatabase.Create(nameof(AddingUserTest)))
             {
-                _user = SetUpUserRepository(db);
+               // _user = SetUpUserRepository(db);
                 //_user.AddUser(applicationUser);
 
             }

@@ -53,7 +53,7 @@ namespace SplitwiseApp.Repository.Friend
             return _context.friends.Any(f =>f.Id == friendId);
         }
 
-        public IEnumerable<UserDTO> GetFriends(string userId)
+        public IEnumerable<FriendsDTO> GetFriends(string userId)
         {
             var friends = from user in _context.Users
                           join frnd in _context.friends
@@ -63,18 +63,18 @@ namespace SplitwiseApp.Repository.Friend
                           {
                               Name = user.Name
                           };
-            List<UserDTO> usersDto = new List<UserDTO>();
+            List<FriendsDTO> friendsDto = new List<FriendsDTO>();
 
             foreach(var friend in friends)
             {
-                usersDto.Add(new UserDTO
+                friendsDto.Add(new FriendsDTO
                 {
 
-                    Name = friend.Name,
+                    friendName = friend.Name,
                 });
                
             }
-            return usersDto;
+            return friendsDto;
 
         }
 

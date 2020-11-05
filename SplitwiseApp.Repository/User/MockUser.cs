@@ -9,6 +9,8 @@ using Microsoft.IdentityModel.Tokens;
 using SplitwiseApp.DomainModels.Models;
 using SplitwiseApp.Repository.DTOs;
 using SplitwiseApp.Repository.Group;
+using SplitwiseApp.Repository.Payees_Expense;
+using SplitwiseApp.Repository.Payers_Expense;
 using System;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
@@ -27,6 +29,15 @@ namespace SplitwiseApp.Repository.User
         private readonly AppDbContext _context;
         private readonly IMapper _mapper;
         private readonly IConfiguration _configuration;
+        private readonly IPayeeExpenses _payees;
+        private readonly IPayersExpenses _payers;
+        #endregion
+
+        #region public variables
+
+        public float payeeShare = 0;
+        public float receiverShare = 0;
+        public float settlementShare = 0;
         #endregion
 
         #region constructor
@@ -35,12 +46,14 @@ namespace SplitwiseApp.Repository.User
 
         }
         public MockUser(AppDbContext context, UserManager<ApplicationUser> userManager,IMapper mapper,
-             IConfiguration configuration)
+             IConfiguration configuration,IPayeeExpenses payees,IPayersExpenses payers)
         {
             _userManager = userManager;
             _context = context;
             _mapper = mapper;
             _configuration = configuration;
+            _payees = payees;
+            _payers = payers;
           
         }
 
@@ -133,6 +146,31 @@ namespace SplitwiseApp.Repository.User
                 return true;
             
          }
+
+        public async Task<IdentityResult> GetBalanceByUserId(string userId)
+        {
+            ApplicationUser u = await _userManager.FindByIdAsync(userId);
+            var payees = _context.payees_Expenses.Where(p => p.payerId == userId);
+            var receivers = _context.payees_Expenses.Where(r => r.receiverId == userId);
+            var settled = _context.settlement.Where(s => s.payerId == userId);
+
+            foreach(var p in payees)
+            {
+                 payeeShare =payeeShare+ p.Share;
+            }
+            foreach(var r in receivers)
+            {
+                receiverShare = receiverShare + r.Share;
+            }
+            foreach(var s in settled)
+            {
+                settlementShare = settlementShare + s.Amount;
+            }
+            var totalBalance = payeeShare - (settlementShare + receiverShare);
+            u.Balance = totalBalance;
+            return await _userManager.UpdateAsync(u);
+            //throw new NotImplementedException();
+        }
 
         #endregion
     }

@@ -1,22 +1,25 @@
-<h2>Edit Expense</h2>
+<app-details></app-details>
+<app-top-nav></app-top-nav>
+
+<h2>Add Expense</h2>
 <form>
-  <label>With <b>You</b> And:</label>
+  <label>With <b>You</b> And</label>
   <select id = "myFriends">
     <option value = "Sweta">Sweta</option>
     <option value = "Shush">Shush</option>
     <option value = "Tahseen">Tahseen</option>
     <option value = "All Friends">All Of Friends</option>
   </select><br><br>
-  <label>Description:</label>
-  <input type="text" placeholder="Description">
-  <label>Amount:</label>
+
+  <input type="text" placeholder="Description"><br><br>
+
   <select id = "currency">
     <option value = "INR">Indian Rupee</option>
     <option value = "Dollar">American Dollar</option>
     <option value = "Won">Korean Won</option>
     <option value = "Others">Others</option>
   </select>
-  <input type="number" placeholder="amount">
+  <input type="number" placeholder="amount"><br><br>
 
   <label>paid by</label>
   <select id = "myFriends">
@@ -35,15 +38,15 @@
   </select><br>
   <div class="Split-Amount-By"></div><br>
   <label>Choose Date:</label><br><br>
-  <label>Group Or Non-Group:</label>
+
   <select id = "Group">
     <option value = "Family">Family</option>
     <option value = "Trip">Trip</option>
     <option value = "Promact">Promact</option>
     <option value = "Non-Group">Non-Group Expenses</option>
-  </select>
+  </select><br><br>
 
-  <button type="submit" class="btn btn-success">Update</button>
+  <button type="submit" class="btn btn-success">Save</button>
   <button type="submit" class="btn btn-primary">Cancel</button>
 
 </form>

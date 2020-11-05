@@ -28,7 +28,7 @@ namespace SplitwiseApp.Core.ApiControllers
         #region API controller methods
 
         [HttpGet("{id}")]
-        public IActionResult GetSettlement(string id)
+        public ActionResult<SettlementDTO> GetSettlement(string id)
         {
 
             IEnumerable<SettlementDTO> settlementDtos = _settlement.GetSettlementDetails(id);

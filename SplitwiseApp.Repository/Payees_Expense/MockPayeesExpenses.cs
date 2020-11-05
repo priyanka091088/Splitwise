@@ -42,7 +42,6 @@ namespace SplitwiseApp.Repository.Payees_Expense
             return result;
             
         }
-
         public IEnumerable<Payees_ExpensesDTO> GetPayeesExpensesByExpenseId(int expenseId)
         {
             var payees = from payee in _context.payees_Expenses

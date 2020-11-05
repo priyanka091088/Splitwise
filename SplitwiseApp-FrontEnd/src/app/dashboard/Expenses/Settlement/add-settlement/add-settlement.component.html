@@ -1,4 +1,7 @@
-<h2>Add A Settlement</h2>
+<app-details></app-details>
+<app-top-nav></app-top-nav>
+
+<h2>Add A Settlement</h2><hr>
 <form>
 
   <select id="payer">
@@ -6,8 +9,8 @@
     <option value="shush">Shush</option>
     <option value="tahseen">Tahseen</option>
     <option value="others">others</option>
-  </select>
-  <label>Paid</label>
+  </select>&nbsp;&nbsp;
+  <label>Paid</label>&nbsp;&nbsp;
   <select id="receiver">
     <option value="sweta">Sweta</option>
     <option value="shush">Shush</option>
@@ -21,14 +24,16 @@
     <option value = "Won">Korean Won</option>
     <option value = "Others">Others</option>
   </select>
-  <input type="number" placeholder="amount">
+  <input type="number" placeholder="amount"><br><br>
 
   <label>Choose Date:</label><br><br>
-  <label>Group Or Non-Group:</label>
+
   <select id = "Group">
     <option value = "Family">Family</option>
     <option value = "Trip">Trip</option>
     <option value = "Promact">Promact</option>
     <option value = "Non-Group">Non-Group Expenses</option>
-  </select>
+  </select><br><br>
+  <button class="btn btn-primary">Save</button>
+  <button [routerLink]="['/dashboard']" class="btn btn-danger">Cancel</button>
 </form>

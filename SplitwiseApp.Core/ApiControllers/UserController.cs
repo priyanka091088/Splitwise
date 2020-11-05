@@ -52,6 +52,8 @@ namespace SplitwiseApp.Core.ApiControllers
                 return await _user.GetUserByEmailId(email);
         }
 
+        
+
         [HttpPost]
         [Route("signup")]
         public async Task<IActionResult> SignUp(signUpDTO user)
@@ -93,6 +95,19 @@ namespace SplitwiseApp.Core.ApiControllers
             {
                 
                 return Ok(user);
+            }
+            return NotFound();
+        }
+
+        [HttpPut("{Id}")]
+        [Route("getBalance/{Id}")]
+        public async Task<IActionResult> GetUserBalance(string Id)
+        {
+            var users= await _user.GetBalanceByUserId(Id);
+            if (users != null)
+            {
+
+                return Ok(users);
             }
             return NotFound();
         }

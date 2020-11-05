@@ -19,7 +19,7 @@ import { SharedModule } from 'src/app/shared/shared.module';
     RouterModule.forChild([
       { path: 'expense', component: ExpensesComponent },
 
-      { path: 'addexpense', component: AddExpenseComponent},
+      { path: 'addexpense/:id', component: AddExpenseComponent},
       { path: 'editexpense/:id', component: UpdateExpenseComponent },
       { path: 'addsettlement/:id', component: AddSettlementComponent},
       { path: 'editsettlement/:id', component: UpdateSettlementComponent},
@@ -29,6 +29,5 @@ import { SharedModule } from 'src/app/shared/shared.module';
     ])
   ],
   exports:[RouterModule]
-  //exports:[ExpensesComponent,AddExpenseComponent,UpdateExpenseComponent,AddSettlementComponent,UpdateSettlementComponent]
 })
 export class ExpensesModule { }

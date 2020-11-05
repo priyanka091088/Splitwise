@@ -43,7 +43,7 @@ namespace SplitwiseApp.Core.ApiControllers
         // GET: api/Groups
       [HttpGet("{userId}")]
       [Route("getByUser/{userId}")]
-        public IActionResult GetGroupsForAUser(string userId)
+        public ActionResult<GroupsDTO> GetGroupsForAUser(string userId)
         {
             if (_user.UserExists(userId))
             {
