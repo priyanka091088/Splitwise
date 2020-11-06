@@ -30,11 +30,11 @@ namespace SplitwiseApp.Core.ApiControllers
 
         #region API controller methods
         [HttpGet("{id}")]
-        public ActionResult<FriendsDTO> GetFriends(string id)
+        public ActionResult<IEnumerable<FriendsDTO>> GetFriends(string id)
         {
             if (_user.UserExists(id))
             {
-                var friendDtos =  _friends.GetFriends(id);
+                IEnumerable<FriendsDTO> friendDtos =  _friends.GetFriends(id);
                 return Ok(friendDtos);
             }
             return NotFound();

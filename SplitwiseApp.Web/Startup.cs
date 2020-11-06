@@ -48,6 +48,15 @@ namespace SplitwiseApp.Web
                 .AddEntityFrameworkStores<AppDbContext>()
                 .AddDefaultTokenProviders();
 
+            services.AddCors(options =>
+            {
+                options.AddPolicy("foo",
+                    builder =>
+                    {
+                        builder.WithOrigins("http://localhost:4200").AllowAnyMethod().AllowAnyHeader().AllowCredentials();
+                    });
+            });
+
             services.AddSwaggerDocument();
 
             services.AddScoped<IUser, MockUser>();
@@ -73,6 +82,7 @@ namespace SplitwiseApp.Web
                 config.CreateMap<ApplicationUser, UserDTO>();
                 config.CreateMap<Groups, GroupsDTO>();
                 config.CreateMap<Friends, FriendsDTO>();
+                config.CreateMap<Expenses, ExpensesDTO>();
             });
             IMapper mapper = configuration.CreateMapper();
             services.AddSingleton(mapper);
@@ -134,6 +144,8 @@ namespace SplitwiseApp.Web
             }
             app.UseHttpsRedirection();
             app.UseStaticFiles();
+
+            app.UseCors("foo");
 
             app.UseOpenApi();
             app.UseSwaggerUi3();

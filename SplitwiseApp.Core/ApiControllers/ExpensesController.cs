@@ -40,7 +40,7 @@ namespace SplitwiseApp.Core.ApiControllers
         {
             if (_expenses.ExpenseExist(id))
             {
-                IEnumerable<ExpensesDTO> expensesDto = _expenses.GetExpensesByexpenseId(id);
+                var expensesDto = _expenses.GetExpensesByexpenseId(id);
                 return Ok(expensesDto);
             }
             return NotFound();
@@ -49,7 +49,7 @@ namespace SplitwiseApp.Core.ApiControllers
 
         [HttpGet("{groupId}")]
         [Route("groupsExpense/{groupId}")]
-        public ActionResult<ExpensesDTO> ExpenseForAGroup(int groupId)
+        public ActionResult<IEnumerable<ExpensesDTO>> ExpenseForAGroup(int groupId)
         {
             if (_groups.GroupExist(groupId))
             {

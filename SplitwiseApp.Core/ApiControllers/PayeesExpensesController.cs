@@ -31,7 +31,7 @@ namespace SplitwiseApp.Core.ApiControllers
         #region API controller methods
 
         [HttpGet("{id}")]
-        public ActionResult<Payees_ExpensesDTO> GetPayeesExpensesById(int id)
+        public ActionResult<IEnumerable<Payees_ExpensesDTO>> GetPayeesExpensesById(int id)
         {
             if (_expenses.ExpenseExist(id))
             {
@@ -60,7 +60,7 @@ namespace SplitwiseApp.Core.ApiControllers
         }
 
         [HttpPut("{id}")]
-        public IActionResult UpdateGroup(Payees_Expenses payees, int id)
+        public IActionResult UpdatePayee(Payees_Expenses payees, int id)
         {
             if (!ModelState.IsValid && !(payees.expenseId == id))
             {
@@ -77,7 +77,7 @@ namespace SplitwiseApp.Core.ApiControllers
         }
 
         [HttpDelete("{payeeId}")]
-        public IActionResult DeleteGroup(int payeeId)
+        public IActionResult DeletePayee(int payeeId)
         {
             if (!_payeesExpense.PayeeExists(payeeId))
             {

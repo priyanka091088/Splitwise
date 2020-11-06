@@ -7,6 +7,10 @@ import { SignupComponent } from './User/signup/signup.component';
 import { LoginComponent } from './User/login/login.component';
 import { FormsModule } from '@angular/forms';
 
+import { HttpClientModule } from '@angular/common/http';
+import { SharedModule } from './shared/shared.module';
+import { services } from './services/services.service';
+
 
 
 @NgModule({
@@ -19,9 +23,12 @@ import { FormsModule } from '@angular/forms';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    FormsModule
+    FormsModule,
+    HttpClientModule,
+    SharedModule
+
   ],
-  providers: [],
+  providers: [services.ExpensesClient],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

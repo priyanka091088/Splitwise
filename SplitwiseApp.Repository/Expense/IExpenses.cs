@@ -1,4 +1,5 @@
-﻿using SplitwiseApp.DomainModels.Models;
+﻿using Microsoft.AspNetCore.Mvc;
+using SplitwiseApp.DomainModels.Models;
 using SplitwiseApp.Repository.DTOs;
 using System;
 using System.Collections.Generic;
@@ -10,7 +11,7 @@ namespace SplitwiseApp.Repository.Expense
     public interface IExpenses
     {
         IEnumerable<ExpensesDTO> GetExpenseForGroup(int groupId);
-        IEnumerable<ExpensesDTO> GetExpensesByexpenseId(int id);
+        ActionResult<ExpensesDTO> GetExpensesByexpenseId(int id);
         public int AddAnExpense(Expenses expenses);
         public int UpdateAParticularExpense(Expenses expenses);
         public int DeleteAnExpense(int id);

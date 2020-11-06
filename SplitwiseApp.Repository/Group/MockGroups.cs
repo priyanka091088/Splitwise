@@ -110,12 +110,12 @@ namespace SplitwiseApp.Repository.Group
                     groupName=grp.groupName,
                     groupType=grp.groupType
                 });
-                return groupDto;
+               
                 
             }
-            
-  
-              throw new NotImplementedException();
+            return groupDto;
+
+
         }
 
         public List<Groups> GetGroups()

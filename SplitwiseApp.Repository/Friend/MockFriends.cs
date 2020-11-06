@@ -33,6 +33,18 @@ namespace SplitwiseApp.Repository.Friend
         #region public methods
         public int AddAFriend(Friends friends)
         {
+            List<Friends> search = new List<Friends>();
+
+           //checks if the user is already a friend or not
+            var res=_context.friends.Where(c=>c.creatorId==friends.creatorId && c.friendId==friends.friendId);
+
+            search.AddRange(res);
+            //will not add if the user is already a friend
+            if (search.Count != 0)
+            {
+                return 0;
+            }
+            
             _context.friends.Add(friends);
             var result = _context.SaveChanges();
             return result;

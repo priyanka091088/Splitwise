@@ -10,7 +10,7 @@ namespace SplitwiseApp.Repository.GroupMember
 {
     public interface IGroupMembers
     {
-        IEnumerable<UserDTO> GetGroupMembers(int groupId);
+        IEnumerable<GroupMembersDTO> GetGroupMembers(int groupId);
         public int AddGroupMembers(GroupMembers members);
         public int UpdateGroupMembers(GroupMembers memebers);
         public int DeleteGroupMembers(int id);

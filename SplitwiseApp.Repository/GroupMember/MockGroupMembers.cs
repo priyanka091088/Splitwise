@@ -35,6 +35,18 @@ namespace SplitwiseApp.Repository.GroupMember
         #region public methods
         public int AddGroupMembers(GroupMembers members)
         {
+            List<GroupMembers> search = new List<GroupMembers>();
+
+            //to check if that member already exists in the group or not
+            var res = _context.groupMember.Where(m => m.groupId == members.groupId && m.userId == members.userId);
+
+            search.AddRange(res);
+            //will not add the member if member already exists
+            if (search.Count != 0)
+            {
+                return 0;
+            }
+
             _context.groupMember.Add(members);
             var result = _context.SaveChanges();
             return result;
@@ -50,7 +62,7 @@ namespace SplitwiseApp.Repository.GroupMember
             
         }
 
-        public IEnumerable<UserDTO> GetGroupMembers(int groupId)
+        public IEnumerable<GroupMembersDTO> GetGroupMembers(int groupId)
         {
             var members = from user in _context.Users
                           join member in _context.groupMember
@@ -61,17 +73,17 @@ namespace SplitwiseApp.Repository.GroupMember
                               Email=user.Email,
                               Name=user.Name
                           };
-            List<UserDTO> usersDto=new List<UserDTO>();
+            List<GroupMembersDTO> membersDto=new List<GroupMembersDTO>();
 
             foreach(var users in members)
             {
-             usersDto.Add(new UserDTO { 
+             membersDto.Add(new GroupMembersDTO { 
                    
                     Name = users.Name,
                     Email = users.Email
                 });
             }
-            return usersDto;
+            return membersDto;
            
         }
 

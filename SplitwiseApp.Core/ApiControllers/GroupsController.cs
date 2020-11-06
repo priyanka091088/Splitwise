@@ -35,7 +35,7 @@ namespace SplitwiseApp.Core.ApiControllers
         #region API controller methods
 
         [HttpGet]
-        public List<Groups> GetGroup()
+        public List<Groups> GetAllGroup()
         {
             IEnumerable<Groups> groups = _groups.GetGroups();
             return groups.ToList();
@@ -43,7 +43,7 @@ namespace SplitwiseApp.Core.ApiControllers
         // GET: api/Groups
       [HttpGet("{userId}")]
       [Route("getByUser/{userId}")]
-        public ActionResult<GroupsDTO> GetGroupsForAUser(string userId)
+        public ActionResult<IEnumerable<GroupsDTO>> GetGroupsForAUser(string userId)
         {
             if (_user.UserExists(userId))
             {

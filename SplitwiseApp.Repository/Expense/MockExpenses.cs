@@ -1,4 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using SplitwiseApp.DomainModels.Models;
 using SplitwiseApp.Repository.DTOs;
 using SplitwiseApp.Repository.Payees_Expense;
@@ -15,6 +17,7 @@ namespace SplitwiseApp.Repository.Expense
     {
         #region private variables
         private readonly AppDbContext _context;
+        private readonly IMapper _mapper;
         private readonly IPayersExpenses _payersExpenses;
         private readonly IPayeeExpenses _payeesExpenses;
         #endregion
@@ -24,11 +27,12 @@ namespace SplitwiseApp.Repository.Expense
         {
                 
         }
-        public MockExpenses(AppDbContext context,IPayeeExpenses payeesExpenses,IPayersExpenses payersExpenses)
+        public MockExpenses(AppDbContext context,IPayeeExpenses payeesExpenses,IPayersExpenses payersExpenses,IMapper mapper)
         {
             _context = context;
             _payersExpenses = payersExpenses;
             _payeesExpenses = payeesExpenses;
+            _mapper = mapper;
         }
 
         #endregion
@@ -87,12 +91,12 @@ namespace SplitwiseApp.Repository.Expense
             
         }
 
-        public IEnumerable<ExpensesDTO> GetExpensesByexpenseId(int expenseId)
+        public ActionResult<ExpensesDTO> GetExpensesByexpenseId(int expenseId)
         {
-            var expense = _context.expenses.Include(e => e.users).Where(e => e.expenseId == expenseId);
+            return _mapper.Map<ExpensesDTO>(_context.expenses.Include(u => u.users).FirstOrDefault(e => e.expenseId == expenseId));
 
 
-            List<ExpensesDTO> expenses = new List<ExpensesDTO>();
+            /*List<ExpensesDTO> expenses = new List<ExpensesDTO>();
             foreach (var exp in expense)
             {
                 expenses.Add(new ExpensesDTO
@@ -104,7 +108,7 @@ namespace SplitwiseApp.Repository.Expense
                     creatorId = exp.users.Name
                 });
             }
-            return expenses.ToList();
+            return expenses.ToList();*/
         }
 
         public int UpdateAParticularExpense(Expenses expenses)

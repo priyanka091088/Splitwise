@@ -6,7 +6,7 @@ namespace SplitwiseApp.Repository.DTOs
 {
     public class GroupMembersDTO
     {
-        public int groupId { get; set; }
-        public string userId { get; set; }
+        public string Email { get; set; }
+        public string Name { get; set; }
     }
 }
