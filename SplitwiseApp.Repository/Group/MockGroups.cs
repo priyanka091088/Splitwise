@@ -93,29 +93,14 @@ namespace SplitwiseApp.Repository.Group
 
         public IEnumerable<GroupsDTO> GetGroupByUserId(string id)
         {
-            var userGroup = from groups in _context.@group
-                            join user in _context.Users
-                            on groups.creatorId equals user.Id
-                            where groups.creatorId == id
-                            select new GroupsDTO
-                            {
-                                groupName=groups.groupName,
-                                groupType=groups.groupType
-                            };
-            List<GroupsDTO> groupDto = new List<GroupsDTO>();
-            foreach(var grp in userGroup)
+            var groups = _context.group.Where(g => g.creatorId == id);
+
+            return groups.Select(g => new GroupsDTO
             {
-                groupDto.Add(new GroupsDTO
-                {
-                    groupName=grp.groupName,
-                    groupType=grp.groupType
-                });
-               
-                
-            }
-            return groupDto;
-
-
+                groupId=g.groupId,
+                groupName = g.groupName,
+                groupType = g.groupType
+            });
         }
 
         public List<Groups> GetGroups()
@@ -127,7 +112,16 @@ namespace SplitwiseApp.Repository.Group
 
         public bool GroupExist(int groupId)
         {
-            return _context.group.Any(g => g.groupId == groupId);
+            var groups = _context.group.FirstOrDefault(g=>g.groupId==groupId);
+            if (groups == null)
+            {
+                return false;
+            }
+            else
+            {
+                return true;
+            }
+            
         }
 
         public int UpdateAGroup(Groups group)

@@ -62,32 +62,27 @@ namespace SplitwiseApp.Repository.Friend
 
         public bool FriendExist(int friendId)
         {
-            return _context.friends.Any(f =>f.Id == friendId);
+            var friends = _context.friends.FirstOrDefault(f=>f.Id==friendId);
+            if (friends == null)
+            {
+                return false;
+            }
+            else
+            {
+                return true;
+            }
+            
         }
 
         public IEnumerable<FriendsDTO> GetFriends(string userId)
         {
-            var friends = from user in _context.Users
-                          join frnd in _context.friends
-                          on user.Id equals frnd.friendId
-                          where frnd.creatorId == userId
-                          select new UserDTO
-                          {
-                              Name = user.Name
-                          };
-            List<FriendsDTO> friendsDto = new List<FriendsDTO>();
+            var friends = _context.friends.Include(u=>u.users).Where(f => f.creatorId == userId);
 
-            foreach(var friend in friends)
+            return friends.Select(f => new FriendsDTO
             {
-                friendsDto.Add(new FriendsDTO
-                {
-
-                    friendName = friend.Name,
-                });
-               
-            }
-            return friendsDto;
-
+                friendName = f.users.Name
+            });
+          
         }
 
         public int UpdateAFriend(Friends friends)

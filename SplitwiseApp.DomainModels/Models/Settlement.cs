@@ -14,7 +14,7 @@ namespace SplitwiseApp.DomainModels.Models
         public float Amount { get; set; }
        
         
-        public int expenseId { get; set; }
+        public int? expenseId { get; set; }
         [ForeignKey("expenseId")]
         public Expenses expenses { get; set; }
         

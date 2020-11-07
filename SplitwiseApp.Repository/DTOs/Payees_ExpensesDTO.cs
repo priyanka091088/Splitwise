@@ -6,6 +6,7 @@ namespace SplitwiseApp.Repository.DTOs
 {
     public class Payees_ExpensesDTO
     {
+        public int pId { get; set; }
         public float Share { get; set; }
         public int expenseId { get; set; }
         public string payerName { get; set; }

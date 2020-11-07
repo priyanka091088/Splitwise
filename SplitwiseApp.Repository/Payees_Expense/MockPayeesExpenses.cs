@@ -5,6 +5,8 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 using System.Linq;
+using Microsoft.EntityFrameworkCore;
+
 namespace SplitwiseApp.Repository.Payees_Expense
 {
     public class MockPayeesExpenses : IPayeeExpenses
@@ -44,34 +46,18 @@ namespace SplitwiseApp.Repository.Payees_Expense
         }
         public IEnumerable<Payees_ExpensesDTO> GetPayeesExpensesByExpenseId(int expenseId)
         {
-            var payees = from payee in _context.payees_Expenses
-                         join expense in _context.expenses
-                         on payee.expenseId equals expense.expenseId
-                         where payee.expenseId == expenseId
-                         select new Payees_ExpensesDTO
-                         {
-                             
-                             Share = payee.Share,
-                             payerName = payee.payer.Name,
-                             receiverName=payee.receiever.Name,
-                             expense = payee.expenses.Description
-                         };
-            List<Payees_ExpensesDTO> payeesDto = new List<Payees_ExpensesDTO>();
+            var payees = _context.payees_Expenses.Include(p => p.payer).Include(r=>r.receiever).
+                Where(p => p.expenseId == expenseId);
 
-            foreach (var payee in payees)
+            var expense = _context.expenses.FirstOrDefault(e => e.expenseId == expenseId);
+            return payees.Select(p => new Payees_ExpensesDTO
             {
-                payeesDto.Add(new Payees_ExpensesDTO
-                {
-                    Share = payee.Share,
-                    payerName = payee.payerName,
-                    receiverName=payee.receiverName,
-                    expense=payee.expense
-                });
-            }
-            return payeesDto;
-
-
-            throw new NotImplementedException();
+                Share = p.Share,
+                payerName = p.payer.Name,
+                receiverName = p.receiever.Name,
+                expense = expense.Description
+            });
+          
         }
 
         public bool PayeeExists(int id)

@@ -64,26 +64,14 @@ namespace SplitwiseApp.Repository.GroupMember
 
         public IEnumerable<GroupMembersDTO> GetGroupMembers(int groupId)
         {
-            var members = from user in _context.Users
-                          join member in _context.groupMember
-                          on user.Id equals member.userId
-                          where member.groupId == groupId
-                          select new UserDTO
-                          {
-                              Email=user.Email,
-                              Name=user.Name
-                          };
-            List<GroupMembersDTO> membersDto=new List<GroupMembersDTO>();
+            var members = _context.groupMember.Include(u => u.users).Where(m => m.groupId == groupId).ToList();
 
-            foreach(var users in members)
+            return members.Select(m => new GroupMembersDTO
             {
-             membersDto.Add(new GroupMembersDTO { 
-                   
-                    Name = users.Name,
-                    Email = users.Email
-                });
-            }
-            return membersDto;
+                Email = m.users.Email,
+                Name = m.users.Name
+
+            }).ToList();
            
         }
 

@@ -71,44 +71,36 @@ namespace SplitwiseApp.Repository.Expense
 
         public bool ExpenseExist(int expenseId)
         {
-            return _context.expenses.Any(e => e.expenseId == expenseId);
+            var expense = _context.expenses.FirstOrDefault(e=>e.expenseId==expenseId);
+            if (expense == null)
+            {
+                return false;
+            }
+            else
+            {
+                return true;
+            }
+            
         }
 
         public IEnumerable<ExpensesDTO> GetExpenseForGroup(int groupId)
         {
             var expense = _context.expenses.Where(e => e.groupId == groupId);
 
-            List<ExpensesDTO> groupExpenses = new List<ExpensesDTO>();
 
-            foreach(var exp in expense)
+            return expense.Select(e => new ExpensesDTO
             {
-                groupExpenses.Add(new ExpensesDTO
-                {
-                    Description = exp.Description
-                });
-            }
-            return groupExpenses.ToList();
+                expenseId = e.expenseId,
+                Description = e.Description,
+                Amount = e.Amount,
+                SplitBy = e.SplitBy
+            });
             
         }
 
         public ActionResult<ExpensesDTO> GetExpensesByexpenseId(int expenseId)
         {
             return _mapper.Map<ExpensesDTO>(_context.expenses.Include(u => u.users).FirstOrDefault(e => e.expenseId == expenseId));
-
-
-            /*List<ExpensesDTO> expenses = new List<ExpensesDTO>();
-            foreach (var exp in expense)
-            {
-                expenses.Add(new ExpensesDTO
-                {
-
-                    Description = exp.Description,
-                    Amount = exp.Amount,
-                    Currency=exp.Currency,
-                    creatorId = exp.users.Name
-                });
-            }
-            return expenses.ToList();*/
         }
 
         public int UpdateAParticularExpense(Expenses expenses)

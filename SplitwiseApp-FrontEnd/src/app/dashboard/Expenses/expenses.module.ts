@@ -8,6 +8,7 @@ import { AddSettlementComponent } from './Settlement/add-settlement/add-settleme
 import { UpdateSettlementComponent } from './Settlement/update-settlement/update-settlement.component';
 import { ViewSettlementComponent } from './Settlement/view-settlement/view-settlement.component';
 import { SharedModule } from 'src/app/shared/shared.module';
+import { FormsModule } from '@angular/forms';
 
 
 
@@ -16,15 +17,16 @@ import { SharedModule } from 'src/app/shared/shared.module';
   imports: [
     CommonModule,
     SharedModule,
+    FormsModule,
     RouterModule.forChild([
-      { path: 'expense', component: ExpensesComponent },
+      { path: 'expense/:id', component: ExpensesComponent },
 
       { path: 'addexpense/:id', component: AddExpenseComponent},
       { path: 'editexpense/:id', component: UpdateExpenseComponent },
       { path: 'addsettlement/:id', component: AddSettlementComponent},
       { path: 'editsettlement/:id', component: UpdateSettlementComponent},
       { path: 'viewsettlement', component: ViewSettlementComponent},
-      { path: '', redirectTo: 'expense', pathMatch: 'full' },
+      { path: '', redirectTo: 'expense/:id', pathMatch: 'full' },
 
     ])
   ],

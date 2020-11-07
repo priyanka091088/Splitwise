@@ -5,12 +5,16 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 using System.Linq;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity;
+
 namespace SplitwiseApp.Repository.Settlements
 {
     public class MockSettlement : ISettlement
     {
         #region private variables
         private readonly AppDbContext _context;
+        private readonly UserManager<ApplicationUser> _userManager;
         #endregion
 
         #region constructor
@@ -18,7 +22,7 @@ namespace SplitwiseApp.Repository.Settlements
         {
 
         }
-        public MockSettlement(AppDbContext context)
+        public MockSettlement(AppDbContext context, UserManager<ApplicationUser> userManager)
         {
             _context = context;
         }
@@ -34,60 +38,35 @@ namespace SplitwiseApp.Repository.Settlements
         #region public methods
         public IEnumerable<SettlementDTO> GetSettlementDetails(string userId)
         {
-            var settleup = from settlements in _context.settlement
-                           join user in _context.Users
-                           on settlements.payerId equals user.Id
-                           where settlements.payerId == userId
-                           select new SettlementDTO
-                           {
-                               Amount = settlements.Amount,
-                               expense = settlements.expenses.Description,
-                               receiverName=settlements.receiver.Name,
-                               payerName = settlements.payer.Name,
-                               groupName=settlements.groups.groupName
-                           };
-            List<SettlementDTO> settlementDto = new List<SettlementDTO>();
-            foreach(var settle in settleup)
+
+            var settlement = _context.settlement.Include(p => p.payer).Include(r=>r.receiver).
+                Where(s => s.payerId == userId || s.receiverId==userId)
+                .ToList();
+
+            return settlement.Select(s => new SettlementDTO
             {
-                settlementDto.Add(new SettlementDTO
-                {
-                    Amount =settle.Amount,
-                    expense=settle.expense,
-                    receiverName=settle.receiverName,
-                    payerName=settle.payerName,
-            });
-            }
-            return settlementDto;
+                Amount = s.Amount,
+                receiverName = s.receiver.Name,
+                payerName = s.payer.Name,
+                
+            }).ToList();
             
         }
 
-        public IEnumerable<SettlementDTO> GetSettlementDetailsByGroupId(int groupId)
+        public IEnumerable<SettlementDTO> GetSettlementByGroupId(int groupId)
         {
-            var settleup = from settlements in _context.settlement
-                           join groups in _context.@group
-                           on settlements.groupId equals groups.groupId
-                           where settlements.groupId == groupId
-                           select new SettlementDTO
-                           {
-                               Amount = settlements.Amount,
-                               expense = settlements.expenses.Description,
-                               receiverName = settlements.receiver.Name,
-                               payerName = settlements.payer.Name,
-                               groupName=settlements.groups.groupName
-                           };
-            List<SettlementDTO> settlementDto = new List<SettlementDTO>();
-            foreach (var settle in settleup)
+
+            var settlement = _context.settlement.Include(p => p.payer).Include(r=>r.receiver).
+                Where(s => s.groupId == groupId).ToList();
+
+            var groups = _context.group.FirstOrDefault(g => g.groupId == groupId);
+            return settlement.Select(s => new SettlementDTO
             {
-                settlementDto.Add(new SettlementDTO
-                {
-                    Amount = settle.Amount,
-                    expense = settle.expense,
-                    receiverName = settle.receiverName,
-                    payerName = settle.payerName,
-                    groupName=settle.groupName
-                });
-            }
-            return settlementDto;
+                Amount = s.Amount,
+                receiverName = s.receiver.Name,
+                payerName = s.payer.Name,
+                groupName = groups.groupName
+            }).ToList();
 
         }
 

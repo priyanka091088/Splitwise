@@ -13,18 +13,17 @@
       <a [routerLink]="['/expense']" routerLinkActive="router-link-active">Expenses</a>
 
       <a routerLink="/groups/addgroup/0" routerLinkActive="router-link-active">Groups</a>
-     <!-- <a routerLink="/groups"><i>group1</i></a>
-      <a routerLink="/groups"><i>group2</i></a>-->
+
       <div *ngFor="let g of groupDtoDetails">
-        <a routerLink="/groups"><i>{{g.groupName}}</i></a>
+        <a [routerLink]="['/groups/groups',g.groupId]"><i>{{g.groupName}}</i></a>
+
       </div>
 
-      <a routerLink="/friends/addfriend/0" routerLinkActive="router-link-active">Friends</a>
-      <a routerLink="/friends"><i>friend1</i></a>
-      <a routerLink="/friends"><i>friend2</i></a>
-     <!-- <div *ngFor="let f of friendDetails">
-        <a routerLink="/friends"><i>{{f.users.Name}}</i></a>
-      </div>-->
+      <a [routerLink]="['/friends/addfriend',0]" routerLinkActive="router-link-active">Friends</a>
+
+      <div *ngFor="let f of friendsDtoDetails">
+        <a routerLink="/friends"><i>{{f.friendName}}</i></a>
+      </div>
     </div>
 
 

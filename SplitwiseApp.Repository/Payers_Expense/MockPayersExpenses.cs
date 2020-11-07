@@ -49,32 +49,16 @@ namespace SplitwiseApp.Repository.Payers_Expense
 
         public IEnumerable<Payers_ExpensesDTO> GetPayersExpensesByExpenseId(int expenseId)
         {
-            
-            var payers = from payer in _context.payers_Expenses
-                         join expense in _context.expenses
-                         on payer.expenseId equals expense.expenseId
-                         where payer.expenseId == expenseId
-                         select new Payers_ExpensesDTO
-                         {
-                             paidAmount = payer.paidAmount,
-                             Share = payer.Share,
-                             payerName = payer.payer.Name,
-                             expense = payer.expenses.Description
-                          };
-            List<Payers_ExpensesDTO> payersDto = new List<Payers_ExpensesDTO>();
+            var payers = _context.payers_Expenses.Include(p => p.payer).Where(p => p.expenseId == expenseId);
 
-            foreach (var payer in payers)
+            var expenses = _context.expenses.FirstOrDefault(e => e.expenseId == expenseId);
+            return payers.Select(p => new Payers_ExpensesDTO
             {
-                payersDto.Add(new Payers_ExpensesDTO
-                {
-
-                    paidAmount = payer.paidAmount,
-                    Share = payer.Share,
-                    payerName=payer.payerName,
-                    expense=payer.expense
-                });
-            }
-            return payersDto;
+                paidAmount = p.paidAmount,
+                Share = p.Share,
+                payerName = p.payer.Name,
+                expense = expenses.Description
+            });
            
         }
 

@@ -1,8 +1,49 @@
 <app-details></app-details>
 <app-top-nav></app-top-nav>
 
-<h2>Family</h2><hr>
-<h5>All The Group Details Will Be Displayed Here!!!!</h5>
+  <nav class="navbar navbar-expand navbar-light bg-light">
+    <h4 class="navbar-brand">{{pageTitle}}</h4>
+    <ul class="navbar-nav">
+      <li style="float:right" class="nav-item" >
+        <a class="nav-link" >Edit</a>
+      </li>
+      <li style="float:right" class="nav-item" >
+        <a class="nav-link" >Delete</a>
+      </li>
+    </ul>
+
+  </nav>
+<h5>Expenses</h5><hr>
+  <div class="card-body">
+
+
+    <div class="table-responsive">
+      <table class="table mb-0">
+        <thead>
+          <tr>
+            <th>Expense</th>
+            <th>Amount Paid</th>
+            <th>You lent/Borrowed</th>
+
+            <th></th>
+          </tr>
+        </thead>
+        <tbody >
+          <tr *ngFor="let e of expensesDtoDetails">
+          <td><a [routerLink]="['/expense/expense',e.expenseId]"  class="text-dark">{{e.description}}</a></td>
+          <td>{{e.amount}}</td>
+          <td>{{e.splitBy}}</td>
+        </tr>
+       <!-- <tr>
+          <div *ngIf="arr.indexOf(e.expenseId)==1">
+            <app-expenses></app-expenses>
+            <h5>Expense Details Will Be Viewed Here!!</h5>
+          </div>
+        </tr>-->
+
+        </tbody>
+        </table>
+      </div>
 
 <div class="outlet">
   <router-outlet></router-outlet>

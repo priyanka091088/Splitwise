@@ -28,10 +28,20 @@ namespace SplitwiseApp.Core.ApiControllers
         #region API controller methods
 
         [HttpGet("{id}")]
+        [Route("getSettlementByUser/{id}")]
         public ActionResult<IEnumerable<SettlementDTO>> GetSettlement(string id)
         {
 
             IEnumerable<SettlementDTO> settlementDtos = _settlement.GetSettlementDetails(id);
+            return Ok(settlementDtos);
+        }
+
+        [HttpGet("{groupId}")]
+        [Route("getSettlementByGroup/{groupId}")]
+        public ActionResult<IEnumerable<SettlementDTO>> GetSettlementByGroupId(int groupId)
+        {
+
+            IEnumerable<SettlementDTO> settlementDtos = _settlement.GetSettlementByGroupId(groupId);
             return Ok(settlementDtos);
         }
 

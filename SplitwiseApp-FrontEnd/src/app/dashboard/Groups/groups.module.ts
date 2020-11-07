@@ -8,6 +8,7 @@ import { AddMembersComponent } from './groupMember/add-members/add-members.compo
 import { UpdateGroupMembersComponent } from './groupMember/update-group-members/update-group-members.component';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { FormsModule } from '@angular/forms';
+import { ExpensesModule } from '../Expenses/expenses.module';
 
 
 
@@ -17,9 +18,10 @@ import { FormsModule } from '@angular/forms';
     CommonModule,
     SharedModule,
     FormsModule,
+    ExpensesModule,
     RouterModule.forChild([
-      { path: 'groups', component: GroupsComponent },
-      { path: '', redirectTo: 'groups', pathMatch: 'full' },
+      { path: 'groups/:id', component: GroupsComponent },
+      { path: '', redirectTo: 'groups/:id', pathMatch: 'full' },
       { path: 'addgroup/:id', component: AddGroupComponent},
       { path: 'editgroup/:id', component: UpdateGroupComponent },
       { path: 'addmember/:id', component: AddMembersComponent},

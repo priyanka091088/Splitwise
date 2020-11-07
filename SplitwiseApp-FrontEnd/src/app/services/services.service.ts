@@ -1706,8 +1706,63 @@ export class SettlementClient {
         this.baseUrl = baseUrl !== undefined && baseUrl !== null ? baseUrl : "https://localhost:44331";
     }
 
-    getSettlement(id: string | null): Observable<SettlementDTO[]> {
+    getSettlementAll(id: string | null): Observable<SettlementDTO[]> {
         let url_ = this.baseUrl + "/api/Settlement/{id}";
+        if (id === undefined || id === null)
+            throw new Error("The parameter 'id' must be defined.");
+        url_ = url_.replace("{id}", encodeURIComponent("" + id));
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "application/json"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetSettlementAll(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetSettlementAll(<any>response_);
+                } catch (e) {
+                    return <Observable<SettlementDTO[]>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<SettlementDTO[]>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processGetSettlementAll(response: HttpResponseBase): Observable<SettlementDTO[]> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            if (Array.isArray(resultData200)) {
+                result200 = [] as any;
+                for (let item of resultData200)
+                    result200!.push(SettlementDTO.fromJS(item));
+            }
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<SettlementDTO[]>(<any>null);
+    }
+
+    getSettlement(id: string | null): Observable<SettlementDTO[]> {
+        let url_ = this.baseUrl + "/api/Settlement/getSettlementByUser/{id}";
         if (id === undefined || id === null)
             throw new Error("The parameter 'id' must be defined.");
         url_ = url_.replace("{id}", encodeURIComponent("" + id));
@@ -1736,6 +1791,116 @@ export class SettlementClient {
     }
 
     protected processGetSettlement(response: HttpResponseBase): Observable<SettlementDTO[]> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            if (Array.isArray(resultData200)) {
+                result200 = [] as any;
+                for (let item of resultData200)
+                    result200!.push(SettlementDTO.fromJS(item));
+            }
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<SettlementDTO[]>(<any>null);
+    }
+
+    getSettlementByGroupIdAll(groupId: number): Observable<SettlementDTO[]> {
+        let url_ = this.baseUrl + "/api/Settlement/{groupId}";
+        if (groupId === undefined || groupId === null)
+            throw new Error("The parameter 'groupId' must be defined.");
+        url_ = url_.replace("{groupId}", encodeURIComponent("" + groupId));
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "application/json"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetSettlementByGroupIdAll(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetSettlementByGroupIdAll(<any>response_);
+                } catch (e) {
+                    return <Observable<SettlementDTO[]>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<SettlementDTO[]>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processGetSettlementByGroupIdAll(response: HttpResponseBase): Observable<SettlementDTO[]> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            if (Array.isArray(resultData200)) {
+                result200 = [] as any;
+                for (let item of resultData200)
+                    result200!.push(SettlementDTO.fromJS(item));
+            }
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<SettlementDTO[]>(<any>null);
+    }
+
+    getSettlementByGroupId(groupId: number): Observable<SettlementDTO[]> {
+        let url_ = this.baseUrl + "/api/Settlement/getSettlementByGroup/{groupId}";
+        if (groupId === undefined || groupId === null)
+            throw new Error("The parameter 'groupId' must be defined.");
+        url_ = url_.replace("{groupId}", encodeURIComponent("" + groupId));
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "application/json"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetSettlementByGroupId(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetSettlementByGroupId(<any>response_);
+                } catch (e) {
+                    return <Observable<SettlementDTO[]>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<SettlementDTO[]>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processGetSettlementByGroupId(response: HttpResponseBase): Observable<SettlementDTO[]> {
         const status = response.status;
         const responseBlob =
             response instanceof HttpResponse ? response.body :
@@ -2385,6 +2550,7 @@ export class UserClient {
 }
 
 export class ExpensesDTO implements IExpensesDTO {
+    expenseId!: number;
     description?: string | undefined;
     currency?: string | undefined;
     amount!: number;
@@ -2403,6 +2569,7 @@ export class ExpensesDTO implements IExpensesDTO {
 
     init(_data?: any) {
         if (_data) {
+            this.expenseId = _data["expenseId"];
             this.description = _data["Description"];
             this.currency = _data["Currency"];
             this.amount = _data["Amount"];
@@ -2421,6 +2588,7 @@ export class ExpensesDTO implements IExpensesDTO {
 
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
+        data["expenseId"] = this.expenseId;
         data["Description"] = this.description;
         data["Currency"] = this.currency;
         data["Amount"] = this.amount;
@@ -2432,6 +2600,7 @@ export class ExpensesDTO implements IExpensesDTO {
 }
 
 export interface IExpensesDTO {
+    expenseId: number;
     description?: string | undefined;
     currency?: string | undefined;
     amount: number;
@@ -2717,6 +2886,7 @@ export interface IApplicationUser extends IIdentityUser {
 }
 
 export class FriendsDTO implements IFriendsDTO {
+    id!: number;
     balance!: number;
     creator?: string | undefined;
     friendName?: string | undefined;
@@ -2732,6 +2902,7 @@ export class FriendsDTO implements IFriendsDTO {
 
     init(_data?: any) {
         if (_data) {
+            this.id = _data["Id"];
             this.balance = _data["Balance"];
             this.creator = _data["creator"];
             this.friendName = _data["friendName"];
@@ -2747,6 +2918,7 @@ export class FriendsDTO implements IFriendsDTO {
 
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
+        data["Id"] = this.id;
         data["Balance"] = this.balance;
         data["creator"] = this.creator;
         data["friendName"] = this.friendName;
@@ -2755,6 +2927,7 @@ export class FriendsDTO implements IFriendsDTO {
 }
 
 export interface IFriendsDTO {
+    id: number;
     balance: number;
     creator?: string | undefined;
     friendName?: string | undefined;
@@ -2817,6 +2990,7 @@ export interface IFriends {
 }
 
 export class GroupMembersDTO implements IGroupMembersDTO {
+    memberId!: number;
     email?: string | undefined;
     name?: string | undefined;
 
@@ -2831,6 +3005,7 @@ export class GroupMembersDTO implements IGroupMembersDTO {
 
     init(_data?: any) {
         if (_data) {
+            this.memberId = _data["memberId"];
             this.email = _data["Email"];
             this.name = _data["Name"];
         }
@@ -2845,6 +3020,7 @@ export class GroupMembersDTO implements IGroupMembersDTO {
 
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
+        data["memberId"] = this.memberId;
         data["Email"] = this.email;
         data["Name"] = this.name;
         return data; 
@@ -2852,6 +3028,7 @@ export class GroupMembersDTO implements IGroupMembersDTO {
 }
 
 export interface IGroupMembersDTO {
+    memberId: number;
     email?: string | undefined;
     name?: string | undefined;
 }
@@ -2909,6 +3086,7 @@ export interface IGroupMembers {
 }
 
 export class GroupsDTO implements IGroupsDTO {
+    groupId!: number;
     groupName?: string | undefined;
     groupType?: string | undefined;
     creatorId?: string | undefined;
@@ -2924,6 +3102,7 @@ export class GroupsDTO implements IGroupsDTO {
 
     init(_data?: any) {
         if (_data) {
+            this.groupId = _data["groupId"];
             this.groupName = _data["groupName"];
             this.groupType = _data["groupType"];
             this.creatorId = _data["creatorId"];
@@ -2939,6 +3118,7 @@ export class GroupsDTO implements IGroupsDTO {
 
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
+        data["groupId"] = this.groupId;
         data["groupName"] = this.groupName;
         data["groupType"] = this.groupType;
         data["creatorId"] = this.creatorId;
@@ -2947,12 +3127,14 @@ export class GroupsDTO implements IGroupsDTO {
 }
 
 export interface IGroupsDTO {
+    groupId: number;
     groupName?: string | undefined;
     groupType?: string | undefined;
     creatorId?: string | undefined;
 }
 
 export class Payees_ExpensesDTO implements IPayees_ExpensesDTO {
+    pId!: number;
     share!: number;
     expenseId!: number;
     payerName?: string | undefined;
@@ -2970,6 +3152,7 @@ export class Payees_ExpensesDTO implements IPayees_ExpensesDTO {
 
     init(_data?: any) {
         if (_data) {
+            this.pId = _data["pId"];
             this.share = _data["Share"];
             this.expenseId = _data["expenseId"];
             this.payerName = _data["payerName"];
@@ -2987,6 +3170,7 @@ export class Payees_ExpensesDTO implements IPayees_ExpensesDTO {
 
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
+        data["pId"] = this.pId;
         data["Share"] = this.share;
         data["expenseId"] = this.expenseId;
         data["payerName"] = this.payerName;
@@ -2997,6 +3181,7 @@ export class Payees_ExpensesDTO implements IPayees_ExpensesDTO {
 }
 
 export interface IPayees_ExpensesDTO {
+    pId: number;
     share: number;
     expenseId: number;
     payerName?: string | undefined;
@@ -3069,6 +3254,7 @@ export interface IPayees_Expenses {
 }
 
 export class Payers_ExpensesDTO implements IPayers_ExpensesDTO {
+    id!: number;
     paidAmount!: number;
     share!: number;
     expenseId!: number;
@@ -3086,6 +3272,7 @@ export class Payers_ExpensesDTO implements IPayers_ExpensesDTO {
 
     init(_data?: any) {
         if (_data) {
+            this.id = _data["Id"];
             this.paidAmount = _data["paidAmount"];
             this.share = _data["Share"];
             this.expenseId = _data["expenseId"];
@@ -3103,6 +3290,7 @@ export class Payers_ExpensesDTO implements IPayers_ExpensesDTO {
 
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
+        data["Id"] = this.id;
         data["paidAmount"] = this.paidAmount;
         data["Share"] = this.share;
         data["expenseId"] = this.expenseId;
@@ -3113,6 +3301,7 @@ export class Payers_ExpensesDTO implements IPayers_ExpensesDTO {
 }
 
 export interface IPayers_ExpensesDTO {
+    id: number;
     paidAmount: number;
     share: number;
     expenseId: number;
@@ -3181,6 +3370,7 @@ export interface IPayers_Expenses {
 }
 
 export class SettlementDTO implements ISettlementDTO {
+    settlementId!: number;
     amount!: number;
     expenseId!: number;
     payerName?: string | undefined;
@@ -3199,6 +3389,7 @@ export class SettlementDTO implements ISettlementDTO {
 
     init(_data?: any) {
         if (_data) {
+            this.settlementId = _data["settlementId"];
             this.amount = _data["Amount"];
             this.expenseId = _data["expenseId"];
             this.payerName = _data["payerName"];
@@ -3217,6 +3408,7 @@ export class SettlementDTO implements ISettlementDTO {
 
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
+        data["settlementId"] = this.settlementId;
         data["Amount"] = this.amount;
         data["expenseId"] = this.expenseId;
         data["payerName"] = this.payerName;
@@ -3228,6 +3420,7 @@ export class SettlementDTO implements ISettlementDTO {
 }
 
 export interface ISettlementDTO {
+    settlementId: number;
     amount: number;
     expenseId: number;
     payerName?: string | undefined;
@@ -3239,7 +3432,7 @@ export interface ISettlementDTO {
 export class Settlement implements ISettlement {
     settlemntId!: number;
     amount!: number;
-    expenseId!: number;
+    expenseId?: number | undefined;
     expenses?: Expenses | undefined;
     groupId?: number | undefined;
     groups?: Groups | undefined;
@@ -3298,7 +3491,7 @@ export class Settlement implements ISettlement {
 export interface ISettlement {
     settlemntId: number;
     amount: number;
-    expenseId: number;
+    expenseId?: number | undefined;
     expenses?: Expenses | undefined;
     groupId?: number | undefined;
     groups?: Groups | undefined;

@@ -1,11 +1,33 @@
-<app-details></app-details>
 <app-top-nav></app-top-nav>
+<app-details></app-details>
 
-<h2>All Expenses</h2><hr>
-<div style="float: right;">
-  <h4>Your Total Balance:</h4>
+<nav class="navbar navbar-expand navbar-light bg-light">
+  <h4 class="navbar-brand">Expense Details</h4>
+  <ul class="navbar-nav">
+    <li style="float:right" class="nav-item" >
+      <a class="nav-link" [routerLink]="['/expense/editexpense',ExpenseId]" >Edit</a>
+    </li>
+    <li style="float:right" class="nav-item" >
+      <a class="nav-link" >Delete</a>
+    </li>
+  </ul>
+
+</nav>
+
+<h4>{{pageTitle}}</h4><hr>
+<div *ngFor="let e of expensesDtoDetails">
+  <h6>total amount paid:</h6>
+  <p>{{e.amount |  currency:'INR'}}</p>
+  <h6>Created By:</h6>
+  <p>{{e.creatorId}}</p>
 </div>
-<h5>All Expense(Group & Non-Group) Will Be Displayed Here!!</h5>
+<div *ngFor="let p of payersExpensesDetails">
+  <p><i>{{p.payerName}}</i>&nbsp;<b> paid&nbsp; </b> <i>{{p.paidAmount}}</i><b>&nbsp; And Owes</b>&nbsp; <i>{{p.share}}</i></p>
+</div><hr>
+<div *ngFor="let pa of payeesExpensesDetails">
+  <p><i>{{pa.payerName}}</i>&nbsp;<b> owes</b>&nbsp; <i>{{pa.share}}</i>&nbsp; <b>To</b>&nbsp; <i>{{pa.receiverName}}</i></p>
+</div>
+
 
 <div class="outlet">
   <router-outlet></router-outlet>
