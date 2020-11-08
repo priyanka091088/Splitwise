@@ -14,7 +14,18 @@
 
   <button (click)="ShowAndHide()" class="btn btn-primary">Add Members</button><br><br>
   <div *ngIf="check">
-    <app-add-members></app-add-members>
+    <input type="text" placeholder="Name">&nbsp;
+    <input type="text" placeholder="Email">&nbsp;
+    <a href="" style="color: red;"><b>X</b></a>
+    <br><br>
+
+   <div id="newElementId"></div>
+   <div id="newElementId2"></div>
+
+   <div>
+    <button type="button" (click)="createNewElement()"><b>+</b></button>
+    </div>
+
   </div>
 
 <br><br>

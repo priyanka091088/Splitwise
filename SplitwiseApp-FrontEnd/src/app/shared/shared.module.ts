@@ -17,7 +17,8 @@ import { services } from '../services/services.service';
     RouterModule,
     HttpClientModule
   ],
-  providers:[services.ExpensesClient,services.GroupsClient,services.FriendsClient,services.PayersExpensesClient,services.PayeesExpensesClient],
+  providers:[services.ExpensesClient,services.GroupsClient,services.FriendsClient,
+    services.PayersExpensesClient,services.PayeesExpensesClient,services.GroupMembersClient,services.UserClient],
   exports:[DetailsComponent,TopNavComponent]
 })
 export class SharedModule { }

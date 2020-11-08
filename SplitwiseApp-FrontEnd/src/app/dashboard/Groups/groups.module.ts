@@ -9,6 +9,7 @@ import { UpdateGroupMembersComponent } from './groupMember/update-group-members/
 import { SharedModule } from 'src/app/shared/shared.module';
 import { FormsModule } from '@angular/forms';
 import { ExpensesModule } from '../Expenses/expenses.module';
+import { ExpensesComponent } from '../expenses/expenses.component';
 
 
 

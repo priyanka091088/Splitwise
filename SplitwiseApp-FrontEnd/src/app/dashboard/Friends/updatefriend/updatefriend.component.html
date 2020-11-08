@@ -4,9 +4,9 @@
 <h2>{{pageTitle}}</h2>
 <form #form="ngForm">
 <label>Name:</label>
-<input type="text" placeholder="Name" [(ngModel)]="users.Name"><br>
+<input type="text" placeholder="Name" ><br>
 <label>Email Id: *</label>
-<input type="text" placeholder="Email Address" name="Email" [(ngModel)]="users.Email"
+<input type="text" placeholder="Email Address" name="Email"
 (change)="emailCheckUnique(form.value.Email)" pattern="^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" required><br><br>
 
 <div *ngIf="message != ''" class="alert-danger">
@@ -14,6 +14,6 @@
 </div><br>
 
 
-<button type="submit" class="btn-btn-primary" [disabled]="(form.invalid)|| !(emailAlreadyExist)" (click)="onSubmit(friends)">ADD</button>
+<button type="submit" class="btn-btn-primary" [disabled]="(form.invalid)|| !(emailAlreadyExist)" (click)="onSubmit()">ADD</button>
 <button class="btn btn-danger" >CANCEL</button>
 </form>

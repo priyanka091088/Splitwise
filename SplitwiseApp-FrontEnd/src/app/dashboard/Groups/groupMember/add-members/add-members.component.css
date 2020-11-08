@@ -1,0 +1,19 @@
+.group-edit{
+  background-color: blueviolet;
+  float: left;
+	margin-top: 0;
+  margin-left: 10px;
+}
+#newElementId{
+  float: left;
+  margin-left: 5px;
+}
+#newElementId2{
+  padding-left: 5px;;
+  margin-left: 50px;
+}
+#close{
+  background-color: black;
+  padding-left: 5px;;
+  margin-left: 100px;
+}

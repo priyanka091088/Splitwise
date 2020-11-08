@@ -1,7 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { GroupMembers } from 'src/app/Models/groupMembers.model';
-import { Groups } from 'src/app/Models/groups.model';
 import { services } from 'src/app/services/services.service';
 
 @Component({
@@ -12,10 +10,6 @@ import { services } from 'src/app/services/services.service';
 export class AddGroupComponent implements OnInit {
 public pageTitle:string="Add Group";
 
-
-members:GroupMembers;
-memberDetails:GroupMembers[];
-memberList:GroupMembers[]=[];
 
 groups:services.Groups={
   groupId:0,
@@ -32,28 +26,25 @@ check:boolean=false;
 
   ngOnInit(): void {
 
-    this.members=this.initializeGroupMembers();
   }
 
-  private initializeGroup():Groups{
-    return{
-      groupId:0,
-      groupName:"",
-      groupType:"",
-      creatorId:"",
-    }
-  }
-
-  private initializeGroupMembers():GroupMembers{
-    return{
-      memberId:0,
-      groupId:0,
-      userId:""
-    }
-  }
   ShowAndHide(){
     this.check=!this.check;
   }
+
+  createNewElement() {
+    // First create a DIV element.
+  var txtNewInputBox = document.createElement('div');
+  var txtNewInputBox2 = document.createElement('div');
+
+    // Then add the content (a new input box) of the element.
+  txtNewInputBox.innerHTML = "<input type='text' id='nameInputBox' placeholder='Name' [(ngModel)]=''>";
+  txtNewInputBox2.innerHTML = "<input type='text' id='EmailInputBox' placeholder='Email' [(ngModel)]=''>";
+
+    // Finally put it where it is supposed to appear.
+  document.getElementById("newElementId").appendChild(txtNewInputBox);
+  document.getElementById("newElementId2").appendChild(txtNewInputBox2);
+}
   onSubmit(groups:services.Groups){
     groups.creatorId="ffec802a-f39d-4074-a071-f725d96d14d1";
     this.groupServices.addAGroup(groups).subscribe(

@@ -23,6 +23,7 @@ export class GroupsComponent implements OnInit {
   payeesExpensesDetails:services.Payees_ExpensesDTO[];
 
 public pageTitle:string;
+GroupId:number;
 check:boolean=false;
 arr:number[]=[];
   constructor(private route:ActivatedRoute,private groupsServices:services.GroupsClient,
@@ -31,13 +32,14 @@ arr:number[]=[];
 
   ngOnInit(): void {
     const id=+this.route.snapshot.paramMap.get('id');
-    //this.groupDto=this.initializeGroupDto();
+this.GroupId=id;
+
     this.groupsServices.getGroup2(id).subscribe({
       next:groupDto=>{
         console.log(groupDto);
         this.pageTitle=groupDto.groupName;
         console.log(this.pageTitle);
-        //this.groupDtoDetails.push(groupDto);
+
       }
     });
 
@@ -45,39 +47,12 @@ arr:number[]=[];
       next:expenseDto=>{
         console.log(expenseDto);
         this.expensesDtoDetails=expenseDto;
-        alert(this.expensesDtoDetails[0].expenseId)
+        if(this.expensesDtoDetails.length==0){
+          console.log("No Expense Found");
+        }
+
       }
     });
   }
-  ShowAndHide(id:number){
-if(this.arr[id]!=-1){
- // this.check=!this.check;
- this.arr.splice(this.arr.indexOf(id), 1);
-}
-else{
-  this.arr.push(id);
-  //this.arr[id]=id;
-  //this.check=false;
-}
-this.payeeServices.getPayeesExpensesById(id).subscribe({
-  next:payee=>{
-    console.log(payee);
-    this.payeesExpensesDetails=payee;
 
-  }
-});
-this.payerServices.getPayersExpensesByexpenseId(id).subscribe({
-  next:payer=>{
-    console.log(payer);
-this.payersExpensesDetails=payer;
-  }
-})
-  }
-private initializeGroupDto(){
-  return{
-    groupId:0,
-    groupName:"",
-    groupType:""
-  }
-}
 }

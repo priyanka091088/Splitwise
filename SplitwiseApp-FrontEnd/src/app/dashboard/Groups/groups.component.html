@@ -5,7 +5,7 @@
     <h4 class="navbar-brand">{{pageTitle}}</h4>
     <ul class="navbar-nav">
       <li style="float:right" class="nav-item" >
-        <a class="nav-link" >Edit</a>
+        <a class="nav-link" [routerLink]="['/groups/editgroup',GroupId]" >Edit</a>
       </li>
       <li style="float:right" class="nav-item" >
         <a class="nav-link" >Delete</a>
@@ -28,13 +28,13 @@
             <th></th>
           </tr>
         </thead>
-        <tbody >
-          <tr *ngFor="let e of expensesDtoDetails">
-          <td><a [routerLink]="['/expense/expense',e.expenseId]"  class="text-dark">{{e.description}}</a></td>
+        <tbody *ngFor="let e of expensesDtoDetails">
+          <tr >
+          <td><a [routerLink]="['/expense/expense',e.expenseId]" class="text-dark">{{e.description}}</a></td>
           <td>{{e.amount}}</td>
           <td>{{e.splitBy}}</td>
         </tr>
-       <!-- <tr>
+        <!--<tr>
           <div *ngIf="arr.indexOf(e.expenseId)==1">
             <app-expenses></app-expenses>
             <h5>Expense Details Will Be Viewed Here!!</h5>

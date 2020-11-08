@@ -30,6 +30,6 @@ import { FormsModule } from '@angular/forms';
 
     ])
   ],
-  exports:[RouterModule]
+  exports:[RouterModule,ExpensesComponent]
 })
 export class ExpensesModule { }

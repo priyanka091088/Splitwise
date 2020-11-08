@@ -34,7 +34,7 @@ export class DetailsComponent implements OnInit {
 
       },
      });
-     this.friendsService.getFriends("ac146507-e123-4fda-a9d9-178d92921ebf").subscribe({
+     this.friendsService.getFriends("ffec802a-f39d-4074-a071-f725d96d14d1").subscribe({
        next:friendDto=>{
          console.log(friendDto);
          this.friendsDtoDetails=friendDto;

@@ -1,14 +1,18 @@
 
 
   <label>Group Members: </label><br>
+<form>
+  <input type="text" placeholder="Name">&nbsp;
+  <input type="text" placeholder="Email">&nbsp;
+  <a href="" style="color: red;"><b>X</b></a>
+  <br><br>
 
-  <!--<div id="dynamicCheck">
-    <input type="button" value="Add Members" onclick="createNewElement();"/>
- </div>
+ <div id="newElementId"></div>
+ <div id="newElementId2"></div>
 
- <div id="newElementId">New inputbox goes here:</div>-->
+</form>
 
- <input type="text" placeholder="Name">&nbsp;
- <input type="text" placeholder="Email">&nbsp;
-<a href="" style="color: red;"><b>X</b></a>
+<div>
+<button type="button" (click)="createNewElement()"><b>+</b></button>
+</div>
 

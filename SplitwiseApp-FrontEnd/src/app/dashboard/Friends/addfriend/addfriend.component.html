@@ -3,17 +3,20 @@
 
 <h2>{{pageTitle}}</h2>
 <form #form="ngForm">
-<label>Name:</label>
-<input type="text" placeholder="Name" [(ngModel)]="users.Name"><br>
+
 <label>Email Id: *</label>
-<input type="text" placeholder="Email Address" name="Email" [(ngModel)]="users.Email"
-(change)="emailCheckUnique(form.value.Email)" pattern="^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" required><br><br>
+<input type="text" placeholder="Email Address" name="email" [(ngModel)]="users.email"
+(change)="emailCheckUnique(users.email)" pattern="^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" required><br>
 
 <div *ngIf="message != ''" class="alert-danger">
   {{message}}
 </div><br>
 
+<label>Name:</label>
+<input type="text" placeholder="Name" name="name" [(ngModel)]="users.name" ><br><br>
 
-<button type="submit" class="btn-btn-primary" [disabled]="(form.invalid)|| !(emailAlreadyExist)" (click)="onSubmit(friends)">ADD</button>
-<button class="btn btn-danger" >CANCEL</button>
+
+
+<button type="submit" class="btn-btn-primary" [disabled]="(form.invalid)|| !(emailAlreadyExist)" (click)="onSubmit()">ADD</button>
+<button class="btn btn-danger" [routerLink]="['/dashboard']" >CANCEL</button>
 </form>

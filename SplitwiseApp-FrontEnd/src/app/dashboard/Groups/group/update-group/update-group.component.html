@@ -1,20 +1,37 @@
 <app-details></app-details>
 <app-top-nav></app-top-nav>
 
-<form #form="ngForm">
-  <label>My Group Name Will Be: </label><br>
-  <input type="text" placeholder="Group Name" [(ngModel)]="groups.groupName" maxlength="30" required><br><br>
-  <label>Group type</label><br>
-  <select id = "myList" [(ngModel)]="groups.groupType" class="form-control">
-    <option value = "Apartment">Apartment</option>
-    <option value = "Trip">Trip</option>
-    <option value = "Family">Family</option>
-    <option value = "Others">Others</option>
-  </select><br><br>
+<div class="group-edit">
+  <form #form="ngForm">
+    <label>My Group Name Will Be: </label><br>
+    <input type="text" placeholder="Group Name" maxlength="30" required><br><br>
+    <label>Group type</label><br>
+    <select id = "myList" class="form-control">
+      <option value = "Apartment">Apartment</option>
+      <option value = "Trip">Trip</option>
+      <option value = "Family">Family</option>
+      <option value = "Others">Others</option>
+    </select><br><br>
 
-  <button routerLink="/groups/editmember/groups.groupId" routerLinkActive="router-link-active" class="btn btn-primary">Add Members</button><br><br>
-  <app-add-members></app-add-members>
-<br><br>
-<button type="submit" class="btn btn-primary" (click)="onSubmit(groups,members)" [disabled]="(form.invalid)" [routerLink]="['/dashboard']">Save</button>&nbsp;
+    <button  (click)="ShowAndHide()" class="btn btn-primary">Add/Remove Members</button><br><br>
+    <div *ngIf="check">
+      <app-add-members></app-add-members>
+    </div>
+
+  <br><br>
+  <button type="submit" class="btn btn-primary" (click)="onSubmit(groupDto)" [disabled]="(form.invalid)" [routerLink]="['/dashboard']">Save</button>&nbsp;
 <button type="submit" class="btn btn-danger" [routerLink]="['/dashboard']">Cancel</button>
 </form>
+</div>
+
+
+<div class="member-details">
+  <h5>Members Of The Group:</h5>
+  <div *ngFor="let m of memberDetails">
+    {{m.name}}&nbsp;&nbsp;&nbsp;{{m.email}}
+  </div>
+</div><br><br>
+
+
+
+
