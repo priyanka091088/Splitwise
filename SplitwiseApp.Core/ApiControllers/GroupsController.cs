@@ -68,20 +68,20 @@ namespace SplitwiseApp.Core.ApiControllers
 
         // POST: api/Groups
         [HttpPost]
-        public IActionResult AddAGroup(Groups groups)
+        public ActionResult<int> AddAGroup(Groups groups)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest();
             }
-             var count= _groups.AddGroupForUser(groups);
-            if (count==0 )
+            var count = _groups.AddGroupForUser(groups);
+            if (count == 0)
             {
                 return NotFound();
-                
+
             }
             else
-                return Ok();
+                return Ok(count);
 
         }
 

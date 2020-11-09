@@ -69,7 +69,7 @@ namespace SplitwiseApp.Core.ApiControllers
 
         [HttpPost]
         [Route("login")]
-        public async Task<IActionResult> Login(LoginDTO user)
+        public async Task<ActionResult<string>> Login(LoginDTO user)
         {
             var login = await _user.Login(user);
             if (login!=null)

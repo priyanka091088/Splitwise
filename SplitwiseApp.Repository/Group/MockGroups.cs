@@ -50,7 +50,12 @@ namespace SplitwiseApp.Repository.Group
             }
            
             var result= _context.SaveChanges();
-            return result;
+            if (result == 0)
+            {
+                return 0;
+            }
+            else
+                return group.groupId;
         }
 
         public int DeleteAGroupById(int groupId)

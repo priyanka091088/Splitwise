@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { services } from 'src/app/services/services.service';
 
 @Component({
   selector: 'app-login',
@@ -8,12 +9,40 @@ import { Router } from '@angular/router';
 })
 export class LoginComponent implements OnInit {
 
-  constructor(private router:Router) { }
+  login:services.LoginDTO={
+    email:"",
+    password:"",
+    rememberMe:false,
+    init:null,
+    toJSON:null
+  };
+  loginDetails:services.LoginDTO[];
+  loginList:services.LoginDTO[]=[];
+
+  constructor(private router:Router,private userServices:services.UserClient) { }
 
   ngOnInit(): void {
   }
-  Login(){
-    this.router.navigate(['/dashboard']);
+  Login(login:services.LoginDTO){
+    this.userServices.login(login).subscribe(
+      (next:any)=>{
+        localStorage.setItem('userToken',next)
+
+        let token=localStorage.getItem('userToken');
+        console.log(token);
+
+        let jwtData=token.split('.')[1]
+        let decodedJwtJsonData=window.atob(jwtData);
+        let decodedJwtData=JSON.parse(decodedJwtJsonData);
+        localStorage.setItem('userName',decodedJwtData.name);
+        console.log("name: "+decodedJwtData.name);
+
+        alert("login successful");
+        this.router.navigate(['/dashboard']);
+      }
+    )
+
+
   }
 
 }

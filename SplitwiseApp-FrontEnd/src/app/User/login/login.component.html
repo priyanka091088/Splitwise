@@ -1,9 +1,9 @@
 <form #form="ngForm">
   <label>Email</label><br>
-  <input type="text" placeholder="Email" name="Email" pattern="^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" required><br><br>
+  <input type="text" placeholder="Email" name="Email" [(ngModel)]="login.email" pattern="^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" required><br><br>
 
   <label>Password</label><br>
-  <input type="password" placeholder="password" name="Password" required><br><br>
+  <input type="password" placeholder="password" name="Password" [(ngModel)]="login.password" required><br><br>
 
-  <button class="btn btn-primary" [disabled]="(form.invalid)" (click)="Login()" >Login</button>
+  <button class="btn btn-primary" [disabled]="(form.invalid)" (click)="Login(login)" >Login</button>
 </form>

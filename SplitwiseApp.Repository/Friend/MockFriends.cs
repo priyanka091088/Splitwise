@@ -36,7 +36,8 @@ namespace SplitwiseApp.Repository.Friend
             List<Friends> search = new List<Friends>();
 
            //checks if the user is already a friend or not
-            var res=_context.friends.Where(c=>c.creatorId==friends.creatorId && c.friendId==friends.friendId);
+            var res=_context.friends.Where(c=>c.creatorId==friends.creatorId && c.friendId==friends.friendId 
+            || c.friendId==friends.creatorId && c.creatorId==friends.friendId);
 
             search.AddRange(res);
             //will not add if the user is already a friend
@@ -46,6 +47,13 @@ namespace SplitwiseApp.Repository.Friend
             }
             
             _context.friends.Add(friends);
+
+            Friends friend = new Friends();
+            var id = friends.creatorId;
+            friend.creatorId = friends.friendId;
+            friend.friendId=id;
+            _context.friends.Add(friend);
+            
             var result = _context.SaveChanges();
             return result;
             
@@ -80,6 +88,7 @@ namespace SplitwiseApp.Repository.Friend
 
             return friends.Select(f => new FriendsDTO
             {
+                creator=f.users.Id,
                 friendName = f.users.Name
             });
           

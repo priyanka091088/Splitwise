@@ -40,10 +40,10 @@ namespace SplitwiseApp.Core.ApiControllers
         {
             if (_expenses.ExpenseExist(id))
             {
-                var expensesDto = _expenses.GetExpensesByexpenseId(id);
-                return Ok(expensesDto);
+                return _expenses.GetExpensesByexpenseId(id);
+                 
             }
-            return NotFound();
+            return BadRequest();
 
         }
 

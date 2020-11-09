@@ -37,14 +37,21 @@ users:services.UserDTO={
 usersDetails:services.UserDTO[];
 userList:services.UserDTO[]=[];
 
+email=localStorage.getItem('userName');
+UserId:string;
   constructor(private friendServices:services.FriendsClient,private userServices:services.UserClient,private router:Router) { }
 
   ngOnInit(): void {
-
+    this.userServices.getUserByEmail2(this.email).subscribe({
+      next: user=>{
+      console.log(user);
+      this.UserId=user.id;
+    }
+  });
   }
 
   emailCheckUnique(email:string){
-    alert(email);
+
     this.userServices.getUserByEmail2(email).subscribe({
       next: user=>{
         console.log(user);
@@ -52,18 +59,18 @@ userList:services.UserDTO[]=[];
           this.emailAlreadyExist=false;
           this.message="User is not on Splitwise.Please refresh the page before adding again";
         }
-        alert(user.email);
+
         this.users=user;
 
       }
-    })
+    });
   }
 
   onSubmit(){
-    alert("hii");
-this.friends.balance=0;
-this.friends.creatorId="ffec802a-f39d-4074-a071-f725d96d14d1";
-this.friends.friendId=this.users.id;
+
+    this.friends.balance=0;
+    this.friends.creatorId=this.UserId;
+    this.friends.friendId=this.users.id;
 
     this.friendServices.addAFriend(this.friends).subscribe(
       res=>{
@@ -79,24 +86,5 @@ console.log("Add Friend Details");
   }
   onSaveComplete():void{
     this.router.navigate(['/dashboard']);
-  }
-  private initializeFriends():Friends{
-    return{
-      Id:0,
-      Balance:0,
-      creatorId:"",
-      friendId:"",
-
-    }
-  }
-
-  private initializeUsers():User{
-    return{
-      Id:"",
-      Name:"",
-      Balance:0,
-      Email:"",
-      Password:""
-    }
   }
 }

@@ -1,7 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { Friends } from 'src/app/Models/friends.model';
-import { Groups } from 'src/app/Models/groups.model';
-import { User } from 'src/app/Models/user.model';
 import { services } from 'src/app/services/services.service';
 
 @Component({
@@ -19,14 +16,22 @@ export class DetailsComponent implements OnInit {
   friendsDtoDetails:services.FriendsDTO[];
   friendDtoList:services.FriendsDTO[]=[];
 
+   email=localStorage.getItem('userName');
+
   constructor(private groupServices:services.GroupsClient,private expenseServices:services.ExpensesClient,
-    private friendsService:services.FriendsClient ) { }
+    private friendsService:services.FriendsClient,private userServices:services.UserClient ) { }
 
   ngOnInit(): void {
-
-    //this.groupDto=this.initializeGroupDto();
-
-    this.groupServices.getGroupsForAUser("ffec802a-f39d-4074-a071-f725d96d14d1").subscribe({
+    this.userServices.getUserByEmail2(this.email).subscribe({
+        next: user=>{
+        console.log(user);
+        this.getFriends(user.id);
+        this.getGroups(user.id);
+      }
+    })
+  }
+  getGroups(id:string){
+    this.groupServices.getGroupsForAUser(id).subscribe({
       next: groupDto => {
 
         console.log(groupDto);
@@ -34,44 +39,15 @@ export class DetailsComponent implements OnInit {
 
       },
      });
-     this.friendsService.getFriends("ffec802a-f39d-4074-a071-f725d96d14d1").subscribe({
-       next:friendDto=>{
-         console.log(friendDto);
-         this.friendsDtoDetails=friendDto;
-
-       }
-     });
-
-
-
-
-  }
-  private initializeGroup():Groups{
-    return{
-      groupId:0,
-      groupName:"",
-      groupType:"",
-      creatorId:"",
-    }
   }
 
-  private initializeFriends():Friends{
-    return{
-      Id:0,
-      Balance:0,
-      creatorId:"",
-      friendId:"",
+  getFriends(id:string){
+    this.friendsService.getFriends(id).subscribe({
+      next:friendDto=>{
+        console.log(friendDto);
+        this.friendsDtoDetails=friendDto;
 
-    }
-  }
-
-  private initializeUsers():User{
-    return{
-      Id:"",
-      Name:"",
-      Balance:0,
-      Email:"",
-      Password:""
-    }
+      }
+    });
   }
 }
