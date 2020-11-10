@@ -61,22 +61,14 @@ namespace SplitwiseApp.Core.ApiControllers
 
         // POST: api/Expenses
         [HttpPost]
-        public IActionResult AddExpense(Expenses expenses)
+        public ActionResult<Expenses> AddExpense(Expenses expenses)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest();
             }
 
-            var count = _expenses.AddAnExpense(expenses);
-            if (count == 0)
-            {
-                return NotFound();
-            }
-            else
-            {
-                return Ok();
-            }
+            return _expenses.AddAnExpense(expenses);
 
         }
 

@@ -291,7 +291,7 @@ export class ExpensesClient {
         return _observableOf<ExpensesDTO[]>(<any>null);
     }
 
-    addExpense(expenses: Expenses): Observable<FileResponse | null> {
+    addExpense(expenses: Expenses): Observable<Expenses> {
         let url_ = this.baseUrl + "/api/Expenses";
         url_ = url_.replace(/[?&]$/, "");
 
@@ -303,7 +303,7 @@ export class ExpensesClient {
             responseType: "blob",
             headers: new HttpHeaders({
                 "Content-Type": "application/json",
-                "Accept": "application/octet-stream"
+                "Accept": "application/json"
             })
         };
 
@@ -314,31 +314,33 @@ export class ExpensesClient {
                 try {
                     return this.processAddExpense(<any>response_);
                 } catch (e) {
-                    return <Observable<FileResponse | null>><any>_observableThrow(e);
+                    return <Observable<Expenses>><any>_observableThrow(e);
                 }
             } else
-                return <Observable<FileResponse | null>><any>_observableThrow(response_);
+                return <Observable<Expenses>><any>_observableThrow(response_);
         }));
     }
 
-    protected processAddExpense(response: HttpResponseBase): Observable<FileResponse | null> {
+    protected processAddExpense(response: HttpResponseBase): Observable<Expenses> {
         const status = response.status;
         const responseBlob =
             response instanceof HttpResponse ? response.body :
             (<any>response).error instanceof Blob ? (<any>response).error : undefined;
 
         let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
-        if (status === 200 || status === 206) {
-            const contentDisposition = response.headers ? response.headers.get("content-disposition") : undefined;
-            const fileNameMatch = contentDisposition ? /filename="?([^"]*?)"?(;|$)/g.exec(contentDisposition) : undefined;
-            const fileName = fileNameMatch && fileNameMatch.length > 1 ? fileNameMatch[1] : undefined;
-            return _observableOf({ fileName: fileName, data: <any>responseBlob, status: status, headers: _headers });
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = Expenses.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
         } else if (status !== 200 && status !== 204) {
             return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
             return throwException("An unexpected server error occurred.", status, _responseText, _headers);
             }));
         }
-        return _observableOf<FileResponse | null>(<any>null);
+        return _observableOf<Expenses>(<any>null);
     }
 
     deleteExpense(expenseId: number): Observable<FileResponse | null> {

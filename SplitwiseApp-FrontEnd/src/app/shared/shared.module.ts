@@ -18,7 +18,8 @@ import { services } from '../services/services.service';
     HttpClientModule
   ],
   providers:[services.ExpensesClient,services.GroupsClient,services.FriendsClient,
-    services.PayersExpensesClient,services.PayeesExpensesClient,services.GroupMembersClient,services.UserClient],
+    services.PayersExpensesClient,services.PayeesExpensesClient,services.GroupMembersClient,services.UserClient,services.PayeesExpensesClient,
+    services.PayersExpensesClient],
   exports:[DetailsComponent,TopNavComponent]
 })
 export class SharedModule { }

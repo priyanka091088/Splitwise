@@ -38,12 +38,12 @@ namespace SplitwiseApp.Repository.Expense
         #endregion
 
         #region public methods
-        public int AddAnExpense(Expenses expenses)
+        public ActionResult<Expenses> AddAnExpense(Expenses expenses)
         {
             
             _context.expenses.Add(expenses);
-            var result = _context.SaveChanges();
-            return result;
+            _context.SaveChanges();
+            return expenses;
             
         }
 

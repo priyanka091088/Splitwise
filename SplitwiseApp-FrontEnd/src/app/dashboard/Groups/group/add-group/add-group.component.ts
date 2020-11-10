@@ -68,19 +68,6 @@ check:boolean=false;
     this.check=!this.check;
   }
 
- /* createNewElement() {
-    // First create a DIV element.
-  var txtNewInputBox = document.createElement('div');
-  var txtNewInputBox2 = document.createElement('div');
-
-    // Then add the content (a new input box) of the element.
-  txtNewInputBox.innerHTML = "<input type='text' id='nameInputBox' placeholder='Name' [(ngModel)]=''>";
-  txtNewInputBox2.innerHTML = "<input type='text' id='EmailInputBox' placeholder='Email' [(ngModel)]=''>";
-
-    // Finally put it where it is supposed to appear.
-  document.getElementById("newElementId").appendChild(txtNewInputBox);
-  document.getElementById("newElementId2").appendChild(txtNewInputBox2);
-}*/
 listarray:string[]=[];
 x:number;
 
