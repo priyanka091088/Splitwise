@@ -12,6 +12,9 @@ export class GroupsComponent implements OnInit {
   groupDtoDetails:services.GroupsDTO[];
   groupDtoList:services.GroupsDTO[]=[];
 
+  memberDto:services.GroupMembersDTO;
+  memberDtoDetails:services.GroupMembersDTO[];
+
   expensesDto:services.ExpensesDTO;
   expensesDtoDetails:services.ExpensesDTO[];
   expensesDtoList:services.ExpensesDTO[]=[];
@@ -32,7 +35,7 @@ arr:number[]=[];
 
   ngOnInit(): void {
     const id=+this.route.snapshot.paramMap.get('id');
-this.GroupId=id;
+    this.GroupId=id;
 
     this.groupsServices.getGroup2(id).subscribe({
       next:groupDto=>{
@@ -40,6 +43,12 @@ this.GroupId=id;
         this.pageTitle=groupDto.groupName;
         console.log(this.pageTitle);
 
+      }
+    });
+    this.groupsServices.getGroupBalanceById(id).subscribe({
+      next:res=>{
+        console.log(res);
+        this.memberDtoDetails=res;
       }
     });
 

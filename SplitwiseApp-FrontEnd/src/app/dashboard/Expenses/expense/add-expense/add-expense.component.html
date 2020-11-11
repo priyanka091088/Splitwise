@@ -4,22 +4,22 @@
 <h2>{{pageTitle}}</h2><hr>
 <form #form="ngForm">
   <label>With <b>You</b> And</label>&nbsp;&nbsp;
- <!-- <select id="grp&nongrp" name="groupSelect" (change)="ShowAndHide(form.value.groupSelect)" >
+ <select id="grp&nongrp" name="groupSelect" (change)="ShowAndHide(form.value.groupSelect)" [ngModel]="expense.groupId">
     <option value="groups">Group Expense</option>
     <option value="non-groups">Non-Group Expense</option>
-  </select><br><br>-->
-  <button (click)="ShowAndHide()">Select</button><br><br>
-  <div *ngIf="check">
+  </select><br><br>
+  <div *ngIf="check2">
     <div *ngFor="let f of friendsDtoDetails;index as i;">
       <input  type="checkbox" name="users" (change)="ListOfUserId($event,i)">
       <label name="users">{{f.friendName}}</label>
     </div>
+  </div>
+  <div *ngIf="check">
     <div *ngFor="let g of groupDtoDetails;index as j">
       <input  type="checkbox" name="groups" (change)="ListOfGroupId($event,j)">
       <label name="groups">{{g.groupName}}</label>
     </div>
   </div>
-
   <input type="text" placeholder="Description" name="Description" [(ngModel)]="expense.description" required><br><br>
 <label>Currency:</label>&nbsp;
   <select id="currencyList" name="Currency" [(ngModel)]="expense.currency" required>
@@ -195,7 +195,7 @@
   <label>paid by</label>&nbsp;&nbsp;
   <select id = "myFriends" name="payer" [(ngModel)]="payersExpense.payerId">
     <option [ngValue]="users.id">You</option>
-    <option [ngValue] = "f.creator" *ngFor="let f of friendsDtoDetails">{{f.friendName}}</option>
+    <option [ngValue]="f.creator" *ngFor="let f of friendsDtoDetails">{{f.friendName}}</option>
 
   </select>&nbsp;&nbsp;
   <label>And SplitBy</label>&nbsp;&nbsp;

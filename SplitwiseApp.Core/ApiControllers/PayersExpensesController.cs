@@ -3,6 +3,7 @@ using SplitwiseApp.DomainModels.Models;
 using SplitwiseApp.Repository.DTOs;
 using SplitwiseApp.Repository.Expense;
 using SplitwiseApp.Repository.Payers_Expense;
+using SplitwiseApp.Repository.User;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -17,26 +18,38 @@ namespace SplitwiseApp.Core.ApiControllers
         #region private variables
         private readonly IPayersExpenses _payersExpense;
         private readonly IExpenses _expenses;
+        private readonly IUser _users;
         #endregion
 
         #region constructor
-        public PayersExpensesController(IPayersExpenses payersExpense,IExpenses expenses)
+        public PayersExpensesController(IPayersExpenses payersExpense,IExpenses expenses,IUser users)
         {
             _payersExpense = payersExpense;
             _expenses = expenses;
+            _users = users;
         }
 
         #endregion
 
         #region API Controller methods
 
-        [HttpGet("{id}")]
+        [HttpGet("payersExpense/{id}")]
         public ActionResult<IEnumerable<Payers_ExpensesDTO>> GetPayersExpensesByexpenseId(int id)
         {
             if (_expenses.ExpenseExist(id))
             {
                 IEnumerable<Payers_ExpensesDTO> payer = _payersExpense.GetPayersExpensesByExpenseId(id);
                 return Ok(payer);
+            }
+            return NotFound();
+        }
+        [HttpGet("UserExpense/{userId}")]
+        public ActionResult<IEnumerable<Payers_ExpensesDTO>> GetPayersExpensesByUserId(string userId)
+        {
+            if (_users.UserExists(userId))
+            {
+                IEnumerable<Payers_ExpensesDTO> payersExpense = _payersExpense.GetPayersByUserId(userId);
+                return Ok(payersExpense);
             }
             return NotFound();
         }

@@ -12,6 +12,7 @@ namespace SplitwiseApp.Repository.Expense
     {
         IEnumerable<ExpensesDTO> GetExpenseForGroup(int groupId);
         ActionResult<ExpensesDTO> GetExpensesByexpenseId(int id);
+        IEnumerable<ExpensesDTO> GetExpenseByUserId(string userId);
         public ActionResult<Expenses> AddAnExpense(Expenses expenses);
         public int UpdateAParticularExpense(Expenses expenses);
         public int DeleteAnExpense(int id);

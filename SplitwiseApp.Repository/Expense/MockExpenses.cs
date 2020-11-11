@@ -83,6 +83,19 @@ namespace SplitwiseApp.Repository.Expense
             
         }
 
+        public IEnumerable<ExpensesDTO> GetExpenseByUserId(string userId)
+        {
+            var expense = _context.expenses.Where(e => e.creatorId == userId);
+            return expense.Select(e => new ExpensesDTO
+            {
+                expenseId = e.expenseId,
+                Description = e.Description,
+                Amount = e.Amount,
+                SplitBy = e.SplitBy
+            });
+            //throw new NotImplementedException();
+        }
+
         public IEnumerable<ExpensesDTO> GetExpenseForGroup(int groupId)
         {
             var expense = _context.expenses.Where(e => e.groupId == groupId);

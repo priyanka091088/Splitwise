@@ -8,22 +8,16 @@
 
           <div class="detail-left-sec">
             <h5>YOU OWE</h5>
-            <div *ngFor="let f of friendOwing">
-              <a href="#" style="color: green;">{{f}}</a>
-
-              <div *ngFor="let a of amountOwing">
-                <p style="color: red;">You Owe:&nbsp;{{a}}</p>
-              </div>
+            <div *ngFor="let f of friendDetails">
+              <a *ngIf="f.balance>0" href="#" style="color: green;">{{f.friendName}}</a>
+              <p *ngIf="f.balance>0" style="color: red;">You Owe:&nbsp;{{f.balance}}</p>
             </div>
          </div>
           <div class="detail-right-sec" >
             <h5>YOU ARE OWED</h5>
-            <div *ngFor="let fo of friendOwed">
-              <a href="#" style="color:green">{{fo}}</a>
-
-              <div *ngFor="let ao of amountOwed">
-                <p style="color: blue;">You Are Owed:&nbsp;{{ao}}</p>
-               </div>
+            <div *ngFor="let f of friendDetails">
+              <a *ngIf="f.balance<0" href="#" style="color:green">{{f.friendName}}</a>
+              <p *ngIf="f.balance<0" style="color: blue;">You Are Owed:&nbsp;{{-(f.balance)}}</p>
             </div>
 
 

@@ -19,7 +19,7 @@ import { services } from '../services/services.service';
   ],
   providers:[services.ExpensesClient,services.GroupsClient,services.FriendsClient,
     services.PayersExpensesClient,services.PayeesExpensesClient,services.GroupMembersClient,services.UserClient,services.PayeesExpensesClient,
-    services.PayersExpensesClient],
+    services.PayersExpensesClient,services.SettlementClient],
   exports:[DetailsComponent,TopNavComponent]
 })
 export class SharedModule { }

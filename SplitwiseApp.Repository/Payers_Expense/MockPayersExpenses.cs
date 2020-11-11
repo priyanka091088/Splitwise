@@ -75,6 +75,21 @@ namespace SplitwiseApp.Repository.Payers_Expense
             return _context.payers_Expenses.Any(p =>p.Id == id);
           
         }
+
+        public IEnumerable<Payers_ExpensesDTO> GetPayersByUserId(string userId)
+        {
+            var payers = _context.payers_Expenses.Include(e => e.expenses).Include(p => p.payer).
+               Where(p => p.payerId == userId );
+            return payers.Select(p => new Payers_ExpensesDTO
+            {
+                Share = p.Share,
+                payerName = p.payer.Name,
+               paidAmount=p.paidAmount,
+                expense = p.expenses.Description
+            });
+
+           // throw new NotImplementedException();
+        }
         #endregion
     }
 }

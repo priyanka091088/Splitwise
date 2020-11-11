@@ -4,36 +4,26 @@
 <h2>Add A Settlement</h2><hr>
 <form>
 
-  <select id="payer">
-    <option value="sweta">Sweta</option>
-    <option value="shush">Shush</option>
-    <option value="tahseen">Tahseen</option>
-    <option value="others">others</option>
+  <select id = "myFriends" name="payerId" [(ngModel)]="settlement.payerId">
+    <option [ngValue]="currentUserId">You</option>
+    <option [ngValue] = "f.creator" *ngFor="let f of friendsDtoDetails">{{f.friendName}}</option>
+
   </select>&nbsp;&nbsp;
   <label>Paid</label>&nbsp;&nbsp;
-  <select id="receiver">
-    <option value="sweta">Sweta</option>
-    <option value="shush">Shush</option>
-    <option value="tahseen">Tahseen</option>
-    <option value="others">others</option>
-  </select><br><br>
+  <select id = "receiver" name="receiverId" [(ngModel)]="settlement.receiverId">
+    <option [ngValue]="currentUserId">You</option>
+    <option [ngValue] = "f.creator" *ngFor="let f of friendsDtoDetails">{{f.friendName}}</option>
+
+  </select>&nbsp;&nbsp;<br><br>
+
   <label>Amount:</label><br>
-  <select id = "currency">
-    <option value = "INR">Indian Rupee</option>
-    <option value = "Dollar">American Dollar</option>
-    <option value = "Won">Korean Won</option>
-    <option value = "Others">Others</option>
-  </select>
-  <input type="number" placeholder="amount"><br><br>
+  <input type="number" placeholder="amount" name="Amount" [(ngModel)]="settlement.amount"><br><br>
 
-  <label>Choose Date:</label><br><br>
-
-  <select id = "Group">
-    <option value = "Family">Family</option>
-    <option value = "Trip">Trip</option>
-    <option value = "Promact">Promact</option>
-    <option value = "Non-Group">Non-Group Expenses</option>
+  <label>Group/Non-Group</label>
+  <select id = "Group" name="groups" [(ngModel)]="settlement.groupId" class="form-control">
+    <option [ngValue]="g.groupId" *ngFor="let g of groupDtoDetails">{{g.groupName}}</option>
+    <option [ngValue]="null">Non-Group</option>
   </select><br><br>
-  <button class="btn btn-primary">Save</button>
+  <button class="btn btn-primary" (click)="onSubmit(settlement)">Save</button>
   <button [routerLink]="['/dashboard']" class="btn btn-danger">Cancel</button>
 </form>

@@ -227,11 +227,26 @@ listarray:string[]=[];
 
   //Show And Hide a div When Required
   check:boolean=false;
-  ShowAndHide(){
-    this.check=!this.check;
-  }
-public listarray2:string[]=[];
+  check2:boolean=false;
+  ShowAndHide(value:string){
+    if(value=="groups"){
+      this.check=!this.check;
+      if(this.check2==true){
+        this.check2=false;
+      }
 
+    }
+    else if(value=="non-groups"){
+      this.check2=!this.check2;
+      if(this.check==true){
+        this.check=false;
+      }
+    }
+  }
+ /* ShowAndHide(){
+    this.check=!this.check;
+  }*/
+public listarray2:string[]=[];
 //To get the id of all the users selected from the list
   ListOfUserId(event:any,i:number){
   if(event.target.checked){

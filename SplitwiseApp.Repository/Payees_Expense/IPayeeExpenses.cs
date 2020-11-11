@@ -10,6 +10,7 @@ namespace SplitwiseApp.Repository.Payees_Expense
     public interface IPayeeExpenses
     {
         IEnumerable<Payees_ExpensesDTO> GetPayeesExpensesByExpenseId(int expenseId);
+        IEnumerable<Payees_ExpensesDTO> GetPayeesByUserId(string userId);
         public int AddPayeesExpenses(Payees_Expenses payerExpense);
         public int UpdatePayeesExpenses(Payees_Expenses payerExpense);
         public int DeletePayeesExpenses(int id);

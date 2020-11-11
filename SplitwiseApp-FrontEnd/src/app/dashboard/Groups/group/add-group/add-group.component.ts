@@ -31,6 +31,7 @@ members:services.GroupMembers={
   memberId:0,
   groupId:0,
   userId:"",
+
   init:null,
   toJSON:null
 };

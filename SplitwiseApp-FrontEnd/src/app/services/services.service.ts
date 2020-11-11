@@ -291,6 +291,61 @@ export class ExpensesClient {
         return _observableOf<ExpensesDTO[]>(<any>null);
     }
 
+    expenseForAUser(userId: string | null): Observable<ExpensesDTO[]> {
+        let url_ = this.baseUrl + "/api/Expenses/UserExpense/{userId}";
+        if (userId === undefined || userId === null)
+            throw new Error("The parameter 'userId' must be defined.");
+        url_ = url_.replace("{userId}", encodeURIComponent("" + userId));
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "application/json"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processExpenseForAUser(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processExpenseForAUser(<any>response_);
+                } catch (e) {
+                    return <Observable<ExpensesDTO[]>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<ExpensesDTO[]>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processExpenseForAUser(response: HttpResponseBase): Observable<ExpensesDTO[]> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            if (Array.isArray(resultData200)) {
+                result200 = [] as any;
+                for (let item of resultData200)
+                    result200!.push(ExpensesDTO.fromJS(item));
+            }
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<ExpensesDTO[]>(<any>null);
+    }
+
     addExpense(expenses: Expenses): Observable<Expenses> {
         let url_ = this.baseUrl + "/api/Expenses";
         url_ = url_.replace(/[?&]$/, "");
@@ -1376,6 +1431,61 @@ export class GroupsClient {
         return _observableOf<GroupsDTO>(<any>null);
     }
 
+    getGroupBalanceByIdAll(groupId: number): Observable<GroupMembersDTO[]> {
+        let url_ = this.baseUrl + "/api/Groups/{groupId}";
+        if (groupId === undefined || groupId === null)
+            throw new Error("The parameter 'groupId' must be defined.");
+        url_ = url_.replace("{groupId}", encodeURIComponent("" + groupId));
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "application/json"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetGroupBalanceByIdAll(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetGroupBalanceByIdAll(<any>response_);
+                } catch (e) {
+                    return <Observable<GroupMembersDTO[]>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<GroupMembersDTO[]>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processGetGroupBalanceByIdAll(response: HttpResponseBase): Observable<GroupMembersDTO[]> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            if (Array.isArray(resultData200)) {
+                result200 = [] as any;
+                for (let item of resultData200)
+                    result200!.push(GroupMembersDTO.fromJS(item));
+            }
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<GroupMembersDTO[]>(<any>null);
+    }
+
     deleteGroup(groupId: number): Observable<FileResponse | null> {
         let url_ = this.baseUrl + "/api/Groups/{groupId}";
         if (groupId === undefined || groupId === null)
@@ -1424,6 +1534,61 @@ export class GroupsClient {
         }
         return _observableOf<FileResponse | null>(<any>null);
     }
+
+    getGroupBalanceById(groupId: number): Observable<GroupMembersDTO[]> {
+        let url_ = this.baseUrl + "/api/Groups/getBalance/{groupId}";
+        if (groupId === undefined || groupId === null)
+            throw new Error("The parameter 'groupId' must be defined.");
+        url_ = url_.replace("{groupId}", encodeURIComponent("" + groupId));
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "application/json"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetGroupBalanceById(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetGroupBalanceById(<any>response_);
+                } catch (e) {
+                    return <Observable<GroupMembersDTO[]>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<GroupMembersDTO[]>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processGetGroupBalanceById(response: HttpResponseBase): Observable<GroupMembersDTO[]> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            if (Array.isArray(resultData200)) {
+                result200 = [] as any;
+                for (let item of resultData200)
+                    result200!.push(GroupMembersDTO.fromJS(item));
+            }
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<GroupMembersDTO[]>(<any>null);
+    }
 }
 
 @Injectable()
@@ -1438,7 +1603,7 @@ export class PayeesExpensesClient {
     }
 
     getPayeesExpensesById(id: number): Observable<Payees_ExpensesDTO[]> {
-        let url_ = this.baseUrl + "/api/PayeesExpenses/{id}";
+        let url_ = this.baseUrl + "/api/PayeesExpenses/payeesExpense/{id}";
         if (id === undefined || id === null)
             throw new Error("The parameter 'id' must be defined.");
         url_ = url_.replace("{id}", encodeURIComponent("" + id));
@@ -1492,6 +1657,111 @@ export class PayeesExpensesClient {
         return _observableOf<Payees_ExpensesDTO[]>(<any>null);
     }
 
+    getPayeesExpensesByUserId(userId: string | null): Observable<Payees_ExpensesDTO[]> {
+        let url_ = this.baseUrl + "/api/PayeesExpenses/UserExpense/{userId}";
+        if (userId === undefined || userId === null)
+            throw new Error("The parameter 'userId' must be defined.");
+        url_ = url_.replace("{userId}", encodeURIComponent("" + userId));
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "application/json"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetPayeesExpensesByUserId(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetPayeesExpensesByUserId(<any>response_);
+                } catch (e) {
+                    return <Observable<Payees_ExpensesDTO[]>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<Payees_ExpensesDTO[]>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processGetPayeesExpensesByUserId(response: HttpResponseBase): Observable<Payees_ExpensesDTO[]> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            if (Array.isArray(resultData200)) {
+                result200 = [] as any;
+                for (let item of resultData200)
+                    result200!.push(Payees_ExpensesDTO.fromJS(item));
+            }
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<Payees_ExpensesDTO[]>(<any>null);
+    }
+
+    addPayeesExpense(payees: Payees_Expenses): Observable<FileResponse | null> {
+        let url_ = this.baseUrl + "/api/PayeesExpenses";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(payees);
+
+        let options_ : any = {
+            body: content_,
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Content-Type": "application/json",
+                "Accept": "application/octet-stream"
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processAddPayeesExpense(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processAddPayeesExpense(<any>response_);
+                } catch (e) {
+                    return <Observable<FileResponse | null>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<FileResponse | null>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processAddPayeesExpense(response: HttpResponseBase): Observable<FileResponse | null> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200 || status === 206) {
+            const contentDisposition = response.headers ? response.headers.get("content-disposition") : undefined;
+            const fileNameMatch = contentDisposition ? /filename="?([^"]*?)"?(;|$)/g.exec(contentDisposition) : undefined;
+            const fileName = fileNameMatch && fileNameMatch.length > 1 ? fileNameMatch[1] : undefined;
+            return _observableOf({ fileName: fileName, data: <any>responseBlob, status: status, headers: _headers });
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<FileResponse | null>(<any>null);
+    }
+
     updatePayee(payees: Payees_Expenses, id: number): Observable<FileResponse | null> {
         let url_ = this.baseUrl + "/api/PayeesExpenses/{id}";
         if (id === undefined || id === null)
@@ -1526,56 +1796,6 @@ export class PayeesExpensesClient {
     }
 
     protected processUpdatePayee(response: HttpResponseBase): Observable<FileResponse | null> {
-        const status = response.status;
-        const responseBlob =
-            response instanceof HttpResponse ? response.body :
-            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
-
-        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
-        if (status === 200 || status === 206) {
-            const contentDisposition = response.headers ? response.headers.get("content-disposition") : undefined;
-            const fileNameMatch = contentDisposition ? /filename="?([^"]*?)"?(;|$)/g.exec(contentDisposition) : undefined;
-            const fileName = fileNameMatch && fileNameMatch.length > 1 ? fileNameMatch[1] : undefined;
-            return _observableOf({ fileName: fileName, data: <any>responseBlob, status: status, headers: _headers });
-        } else if (status !== 200 && status !== 204) {
-            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
-            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
-            }));
-        }
-        return _observableOf<FileResponse | null>(<any>null);
-    }
-
-    addPayeesExpense(payees: Payees_Expenses): Observable<FileResponse | null> {
-        let url_ = this.baseUrl + "/api/PayeesExpenses";
-        url_ = url_.replace(/[?&]$/, "");
-
-        const content_ = JSON.stringify(payees);
-
-        let options_ : any = {
-            body: content_,
-            observe: "response",
-            responseType: "blob",
-            headers: new HttpHeaders({
-                "Content-Type": "application/json",
-                "Accept": "application/octet-stream"
-            })
-        };
-
-        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
-            return this.processAddPayeesExpense(response_);
-        })).pipe(_observableCatch((response_: any) => {
-            if (response_ instanceof HttpResponseBase) {
-                try {
-                    return this.processAddPayeesExpense(<any>response_);
-                } catch (e) {
-                    return <Observable<FileResponse | null>><any>_observableThrow(e);
-                }
-            } else
-                return <Observable<FileResponse | null>><any>_observableThrow(response_);
-        }));
-    }
-
-    protected processAddPayeesExpense(response: HttpResponseBase): Observable<FileResponse | null> {
         const status = response.status;
         const responseBlob =
             response instanceof HttpResponse ? response.body :
@@ -1657,7 +1877,7 @@ export class PayersExpensesClient {
     }
 
     getPayersExpensesByexpenseId(id: number): Observable<Payers_ExpensesDTO[]> {
-        let url_ = this.baseUrl + "/api/PayersExpenses/{id}";
+        let url_ = this.baseUrl + "/api/PayersExpenses/payersExpense/{id}";
         if (id === undefined || id === null)
             throw new Error("The parameter 'id' must be defined.");
         url_ = url_.replace("{id}", encodeURIComponent("" + id));
@@ -1711,6 +1931,111 @@ export class PayersExpensesClient {
         return _observableOf<Payers_ExpensesDTO[]>(<any>null);
     }
 
+    getPayersExpensesByUserId(userId: string | null): Observable<Payers_ExpensesDTO[]> {
+        let url_ = this.baseUrl + "/api/PayersExpenses/UserExpense/{userId}";
+        if (userId === undefined || userId === null)
+            throw new Error("The parameter 'userId' must be defined.");
+        url_ = url_.replace("{userId}", encodeURIComponent("" + userId));
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "application/json"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetPayersExpensesByUserId(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetPayersExpensesByUserId(<any>response_);
+                } catch (e) {
+                    return <Observable<Payers_ExpensesDTO[]>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<Payers_ExpensesDTO[]>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processGetPayersExpensesByUserId(response: HttpResponseBase): Observable<Payers_ExpensesDTO[]> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            if (Array.isArray(resultData200)) {
+                result200 = [] as any;
+                for (let item of resultData200)
+                    result200!.push(Payers_ExpensesDTO.fromJS(item));
+            }
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<Payers_ExpensesDTO[]>(<any>null);
+    }
+
+    addPayersExpense(payers: Payers_Expenses): Observable<FileResponse | null> {
+        let url_ = this.baseUrl + "/api/PayersExpenses";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(payers);
+
+        let options_ : any = {
+            body: content_,
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Content-Type": "application/json",
+                "Accept": "application/octet-stream"
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processAddPayersExpense(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processAddPayersExpense(<any>response_);
+                } catch (e) {
+                    return <Observable<FileResponse | null>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<FileResponse | null>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processAddPayersExpense(response: HttpResponseBase): Observable<FileResponse | null> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200 || status === 206) {
+            const contentDisposition = response.headers ? response.headers.get("content-disposition") : undefined;
+            const fileNameMatch = contentDisposition ? /filename="?([^"]*?)"?(;|$)/g.exec(contentDisposition) : undefined;
+            const fileName = fileNameMatch && fileNameMatch.length > 1 ? fileNameMatch[1] : undefined;
+            return _observableOf({ fileName: fileName, data: <any>responseBlob, status: status, headers: _headers });
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<FileResponse | null>(<any>null);
+    }
+
     updatePayersExpense(payers: Payers_Expenses, id: number): Observable<FileResponse | null> {
         let url_ = this.baseUrl + "/api/PayersExpenses/{id}";
         if (id === undefined || id === null)
@@ -1745,56 +2070,6 @@ export class PayersExpensesClient {
     }
 
     protected processUpdatePayersExpense(response: HttpResponseBase): Observable<FileResponse | null> {
-        const status = response.status;
-        const responseBlob =
-            response instanceof HttpResponse ? response.body :
-            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
-
-        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
-        if (status === 200 || status === 206) {
-            const contentDisposition = response.headers ? response.headers.get("content-disposition") : undefined;
-            const fileNameMatch = contentDisposition ? /filename="?([^"]*?)"?(;|$)/g.exec(contentDisposition) : undefined;
-            const fileName = fileNameMatch && fileNameMatch.length > 1 ? fileNameMatch[1] : undefined;
-            return _observableOf({ fileName: fileName, data: <any>responseBlob, status: status, headers: _headers });
-        } else if (status !== 200 && status !== 204) {
-            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
-            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
-            }));
-        }
-        return _observableOf<FileResponse | null>(<any>null);
-    }
-
-    addPayersExpense(payers: Payers_Expenses): Observable<FileResponse | null> {
-        let url_ = this.baseUrl + "/api/PayersExpenses";
-        url_ = url_.replace(/[?&]$/, "");
-
-        const content_ = JSON.stringify(payers);
-
-        let options_ : any = {
-            body: content_,
-            observe: "response",
-            responseType: "blob",
-            headers: new HttpHeaders({
-                "Content-Type": "application/json",
-                "Accept": "application/octet-stream"
-            })
-        };
-
-        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
-            return this.processAddPayersExpense(response_);
-        })).pipe(_observableCatch((response_: any) => {
-            if (response_ instanceof HttpResponseBase) {
-                try {
-                    return this.processAddPayersExpense(<any>response_);
-                } catch (e) {
-                    return <Observable<FileResponse | null>><any>_observableThrow(e);
-                }
-            } else
-                return <Observable<FileResponse | null>><any>_observableThrow(response_);
-        }));
-    }
-
-    protected processAddPayersExpense(response: HttpResponseBase): Observable<FileResponse | null> {
         const status = response.status;
         const responseBlob =
             response instanceof HttpResponse ? response.body :
@@ -3164,6 +3439,8 @@ export class GroupMembersDTO implements IGroupMembersDTO {
     memberId!: number;
     email?: string | undefined;
     name?: string | undefined;
+    balance?: number | undefined;
+    memberName?: string | undefined;
 
     constructor(data?: IGroupMembersDTO) {
         if (data) {
@@ -3179,6 +3456,8 @@ export class GroupMembersDTO implements IGroupMembersDTO {
             this.memberId = _data["memberId"];
             this.email = _data["Email"];
             this.name = _data["Name"];
+            this.balance = _data["Balance"];
+            this.memberName = _data["memberName"];
         }
     }
 
@@ -3194,6 +3473,8 @@ export class GroupMembersDTO implements IGroupMembersDTO {
         data["memberId"] = this.memberId;
         data["Email"] = this.email;
         data["Name"] = this.name;
+        data["Balance"] = this.balance;
+        data["memberName"] = this.memberName;
         return data; 
     }
 }
@@ -3202,10 +3483,13 @@ export interface IGroupMembersDTO {
     memberId: number;
     email?: string | undefined;
     name?: string | undefined;
+    balance?: number | undefined;
+    memberName?: string | undefined;
 }
 
 export class GroupMembers implements IGroupMembers {
     memberId!: number;
+    balance?: number | undefined;
     groupId!: number;
     groups?: Groups | undefined;
     userId?: string | undefined;
@@ -3223,6 +3507,7 @@ export class GroupMembers implements IGroupMembers {
     init(_data?: any) {
         if (_data) {
             this.memberId = _data["memberId"];
+            this.balance = _data["Balance"];
             this.groupId = _data["groupId"];
             this.groups = _data["groups"] ? Groups.fromJS(_data["groups"]) : <any>undefined;
             this.userId = _data["userId"];
@@ -3240,6 +3525,7 @@ export class GroupMembers implements IGroupMembers {
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
         data["memberId"] = this.memberId;
+        data["Balance"] = this.balance;
         data["groupId"] = this.groupId;
         data["groups"] = this.groups ? this.groups.toJSON() : <any>undefined;
         data["userId"] = this.userId;
@@ -3250,6 +3536,7 @@ export class GroupMembers implements IGroupMembers {
 
 export interface IGroupMembers {
     memberId: number;
+    balance?: number | undefined;
     groupId: number;
     groups?: Groups | undefined;
     userId?: string | undefined;

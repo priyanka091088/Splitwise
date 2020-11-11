@@ -14,9 +14,16 @@
 
   </nav>
 <h5>Expenses</h5><hr>
-  <div class="card-body">
-
-
+<div class="member-details">
+  <p>Balance For Each Member:</p>
+  <div *ngFor="let m of memberDtoDetails">
+    <p>{{m.memberName}}</p>
+    <p *ngIf="m.balance>0" style="color:red;">Owes:&nbsp;{{m.balance}}</p>
+    <p *ngIf="m.balance<0" style="color: blue;">You Get:&nbsp;{{-(m.balance)}}</p>
+    <p *ngIf="m.balance==0">You Are Settled Up</p>
+  </div>
+</div><br><br>
+  <div id="expense-details" class="card-body">
     <div class="table-responsive">
       <table class="table mb-0">
         <thead>
@@ -34,12 +41,6 @@
           <td>{{e.amount}}</td>
           <td>{{e.splitBy}}</td>
         </tr>
-        <!--<tr>
-          <div *ngIf="arr.indexOf(e.expenseId)==1">
-            <app-expenses></app-expenses>
-            <h5>Expense Details Will Be Viewed Here!!</h5>
-          </div>
-        </tr>-->
 
         </tbody>
         </table>

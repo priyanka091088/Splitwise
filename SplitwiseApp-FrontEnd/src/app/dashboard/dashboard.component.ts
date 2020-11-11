@@ -26,11 +26,6 @@ export class DashboardComponent implements OnInit {
     })
 }
 i:number;
-friendOwing:string[]=[];
-friendOwed:string[]=[];
-amountOwing:number[]=[];
-amountOwed:number[]=[];
-owed:number=0;
 
 GetFriendsBalance(id:string){
   this.friendsServices.getFriendsBalance(id).subscribe({
@@ -38,19 +33,6 @@ GetFriendsBalance(id:string){
       console.log(friend);
       this.friendDetails=friend;
       console.log(this.friendDetails.length);
-      //this.friendList=this.friendDetails;
-      for(this.i=0;this.i<this.friendDetails.length;this.i++){
-        if(this.friendDetails[this.i].balance>0){
-          this.friendOwing[this.owed]=this.friendDetails[this.i].friendName;
-          this.amountOwing[this.owed]=this.friendDetails[this.i].balance;
-          this.owed++;
-        }
-        else{
-          this.friendOwed[this.owed]=this.friendDetails[this.i].friendName;
-          this.amountOwed[this.owed]= -(this.friendDetails[this.i].balance);
-          this.owed++;
-        }
-      }
     }
   })
 }

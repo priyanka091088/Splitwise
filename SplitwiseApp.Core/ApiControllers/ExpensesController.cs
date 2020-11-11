@@ -7,6 +7,7 @@ using SplitwiseApp.Repository.Expense;
 using System.Threading.Tasks;
 using SplitwiseApp.DomainModels.Models;
 using SplitwiseApp.Repository.Group;
+using SplitwiseApp.Repository.User;
 
 namespace SplitwiseApp.Core.ApiControllers
 {
@@ -19,14 +20,16 @@ namespace SplitwiseApp.Core.ApiControllers
         private readonly IExpenses _expenses;
         private readonly IGroups _groups;
         private readonly AppDbContext _context;
+        private readonly IUser _users;
         #endregion
 
         #region constructor
-        public ExpensesController(IExpenses expenses, IGroups groups,AppDbContext context)
+        public ExpensesController(IExpenses expenses, IGroups groups,AppDbContext context,IUser users)
         {
             _expenses = expenses;
             _groups = groups;
             _context = context;
+            _users = users;
 
         }
         #endregion
@@ -56,6 +59,19 @@ namespace SplitwiseApp.Core.ApiControllers
                 IEnumerable<ExpensesDTO> expensesDto = _expenses.GetExpenseForGroup(groupId);
                 return Ok(expensesDto);
             }
+            return NotFound();
+        }
+
+        [HttpGet("UserExpense/{userId}")]
+        
+        public ActionResult<IEnumerable<ExpensesDTO>> ExpenseForAUser(string userId)
+        {
+            if (_users.UserExists(userId))
+            {
+                IEnumerable<ExpensesDTO> expensesDto = _expenses.GetExpenseByUserId(userId);
+                return Ok(expensesDto);
+            }
+            
             return NotFound();
         }
 
