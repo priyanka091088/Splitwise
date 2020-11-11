@@ -404,7 +404,7 @@ export class FriendsClient {
         this.baseUrl = baseUrl !== undefined && baseUrl !== null ? baseUrl : "https://localhost:44331";
     }
 
-    getFriends(id: string | null): Observable<FriendsDTO[]> {
+    getFriendsAll(id: string | null): Observable<FriendsDTO[]> {
         let url_ = this.baseUrl + "/api/Friends/{id}";
         if (id === undefined || id === null)
             throw new Error("The parameter 'id' must be defined.");
@@ -420,11 +420,11 @@ export class FriendsClient {
         };
 
         return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
-            return this.processGetFriends(response_);
+            return this.processGetFriendsAll(response_);
         })).pipe(_observableCatch((response_: any) => {
             if (response_ instanceof HttpResponseBase) {
                 try {
-                    return this.processGetFriends(<any>response_);
+                    return this.processGetFriendsAll(<any>response_);
                 } catch (e) {
                     return <Observable<FriendsDTO[]>><any>_observableThrow(e);
                 }
@@ -433,7 +433,7 @@ export class FriendsClient {
         }));
     }
 
-    protected processGetFriends(response: HttpResponseBase): Observable<FriendsDTO[]> {
+    protected processGetFriendsAll(response: HttpResponseBase): Observable<FriendsDTO[]> {
         const status = response.status;
         const responseBlob =
             response instanceof HttpResponse ? response.body :
@@ -559,6 +559,171 @@ export class FriendsClient {
             }));
         }
         return _observableOf<FileResponse | null>(<any>null);
+    }
+
+    getFriends(id: string | null): Observable<FriendsDTO[]> {
+        let url_ = this.baseUrl + "/api/Friends/getByUserId/{id}";
+        if (id === undefined || id === null)
+            throw new Error("The parameter 'id' must be defined.");
+        url_ = url_.replace("{id}", encodeURIComponent("" + id));
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "application/json"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetFriends(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetFriends(<any>response_);
+                } catch (e) {
+                    return <Observable<FriendsDTO[]>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<FriendsDTO[]>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processGetFriends(response: HttpResponseBase): Observable<FriendsDTO[]> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            if (Array.isArray(resultData200)) {
+                result200 = [] as any;
+                for (let item of resultData200)
+                    result200!.push(FriendsDTO.fromJS(item));
+            }
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<FriendsDTO[]>(<any>null);
+    }
+
+    getFriendsBalanceAll(userId: string | null): Observable<FriendsDTO[]> {
+        let url_ = this.baseUrl + "/api/Friends/{userId}";
+        if (userId === undefined || userId === null)
+            throw new Error("The parameter 'userId' must be defined.");
+        url_ = url_.replace("{userId}", encodeURIComponent("" + userId));
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "application/json"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetFriendsBalanceAll(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetFriendsBalanceAll(<any>response_);
+                } catch (e) {
+                    return <Observable<FriendsDTO[]>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<FriendsDTO[]>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processGetFriendsBalanceAll(response: HttpResponseBase): Observable<FriendsDTO[]> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            if (Array.isArray(resultData200)) {
+                result200 = [] as any;
+                for (let item of resultData200)
+                    result200!.push(FriendsDTO.fromJS(item));
+            }
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<FriendsDTO[]>(<any>null);
+    }
+
+    getFriendsBalance(userId: string | null): Observable<FriendsDTO[]> {
+        let url_ = this.baseUrl + "/api/Friends/getBalance/{userId}";
+        if (userId === undefined || userId === null)
+            throw new Error("The parameter 'userId' must be defined.");
+        url_ = url_.replace("{userId}", encodeURIComponent("" + userId));
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "application/json"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetFriendsBalance(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetFriendsBalance(<any>response_);
+                } catch (e) {
+                    return <Observable<FriendsDTO[]>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<FriendsDTO[]>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processGetFriendsBalance(response: HttpResponseBase): Observable<FriendsDTO[]> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            if (Array.isArray(resultData200)) {
+                result200 = [] as any;
+                for (let item of resultData200)
+                    result200!.push(FriendsDTO.fromJS(item));
+            }
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<FriendsDTO[]>(<any>null);
     }
 
     addAFriend(friends: Friends): Observable<FileResponse | null> {

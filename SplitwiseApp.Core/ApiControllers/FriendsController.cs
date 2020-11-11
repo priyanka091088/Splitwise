@@ -30,6 +30,7 @@ namespace SplitwiseApp.Core.ApiControllers
 
         #region API controller methods
         [HttpGet("{id}")]
+        [Route("getByUserId/{id}")]
         public ActionResult<IEnumerable<FriendsDTO>> GetFriends(string id)
         {
             if (_user.UserExists(id))
@@ -40,7 +41,18 @@ namespace SplitwiseApp.Core.ApiControllers
             return NotFound();
         }
 
-        
+
+        [HttpGet("{userId}")]
+        [Route("getBalance/{userId}")]
+        public ActionResult<IEnumerable<FriendsDTO>> GetFriendsBalance(string userId)
+        {
+            if (_user.UserExists(userId))
+            {
+                IEnumerable<FriendsDTO> friendDtos = _friends.GetFriendBalance(userId);
+                return Ok(friendDtos);
+            }
+            return NotFound();
+        }
 
         [HttpPost]
         public IActionResult AddAFriend(Friends friends)

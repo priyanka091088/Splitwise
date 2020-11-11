@@ -8,8 +8,12 @@ import { services } from 'src/app/services/services.service';
   styleUrls: ['./expenses.component.css']
 })
 export class ExpensesComponent implements OnInit {
-  pageTitle:string;
-  public ExpenseId:number;
+  pageTitle:string="All Expenses";
+  public totalBalance:number;
+  public positiveTotalBalance:number;
+  balanceOwed:boolean=false;
+  balanceOwe:boolean=false;
+  email=localStorage.getItem('userName');
 
   expensesDto:services.ExpensesDTO;
   expensesDtoDetails:services.ExpensesDTO[];
@@ -20,34 +24,47 @@ export class ExpensesComponent implements OnInit {
 
   payeesExpensesDto:services.Payees_ExpensesDTO;
   payeesExpensesDetails:services.Payees_ExpensesDTO[];
-  constructor(private payeeServices:services.PayeesExpensesClient,
-    private payerServices:services.PayersExpensesClient,private route:ActivatedRoute,private expenseServices:services.ExpensesClient) { }
+  constructor(private userServices:services.UserClient) { }
 
   ngOnInit(): void {
-    const id=+this.route.snapshot.paramMap.get('id');
-    this.ExpenseId=id;
-alert(id);
-alert("hii"+this.ExpenseId);
-    this.expenseServices.getExpenseByExpenseId2(id).subscribe({
-      next:expenseDto=>{
-        console.log(expenseDto);
-        this.expensesDto=expenseDto;
+     this.userServices.getUserByEmail2(this.email).subscribe({
+      next:user=>{
+        console.log(user);
+        this.UpdateUserBalance(user.id);
+      }
+    })
 
+  }
+  UpdateUserBalance(id:string){
+    this.userServices.getUserBalance2(id).subscribe({
+      next:res=>{
+        alert("updated successfully");
+        this.getBalance(id);
       }
     });
-    this.payeeServices.getPayeesExpensesById(id).subscribe({
-      next:payee=>{
-        console.log(payee);
-        this.payeesExpensesDetails=payee;
-        this.pageTitle=this.payeesExpensesDetails[0].expense;
-      }
-    });
-    this.payerServices.getPayersExpensesByexpenseId(id).subscribe({
-      next:payer=>{
-        console.log(payer);
-    this.payersExpensesDetails=payer;
+  }
+  getBalance(id:string){
+    this.userServices.getUser2(id).subscribe({
+      next:user=>{
+        console.log(user);
+        console.log(user.balance);
+        this.totalBalance=user.balance;
+        if(this.totalBalance>0){
+          this.balanceOwed=true;
+        }
+       if(this.totalBalance<0){
+          this.positiveTotalBalance= -(this.totalBalance);
+          this.balanceOwe=true;
+        }
       }
     })
   }
-
+  showExpense:boolean=false;
+  ShowExpenses(){
+    this.showExpense=!this.showExpense;
+  }
+  showSettlement:boolean=false;
+  ShowSettlements(){
+    this.showSettlement=!this.showSettlement;
+  }
 }

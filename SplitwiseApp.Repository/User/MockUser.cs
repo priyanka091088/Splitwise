@@ -39,6 +39,7 @@ namespace SplitwiseApp.Repository.User
         public float payeeShare = 0;
         public float receiverShare = 0;
         public float settlementShare = 0;
+        public float receivedSettlementShare = 0;
         #endregion
 
         #region constructor
@@ -154,6 +155,7 @@ namespace SplitwiseApp.Repository.User
             var payees = _context.payees_Expenses.Where(p => p.payerId == userId);
             var receivers = _context.payees_Expenses.Where(r => r.receiverId == userId);
             var settled = _context.settlement.Where(s => s.payerId == userId);
+            var receiverSettled = _context.settlement.Where(s => s.receiverId == userId);
 
             foreach(var p in payees)
             {
@@ -167,10 +169,13 @@ namespace SplitwiseApp.Repository.User
             {
                 settlementShare = settlementShare + s.Amount;
             }
-            var totalBalance = payeeShare - (settlementShare + receiverShare);
+            foreach(var sr in receiverSettled)
+            {
+                receivedSettlementShare = receivedSettlementShare + sr.Amount;   
+            }
+            var totalBalance = (payeeShare+receivedSettlementShare) - (settlementShare + receiverShare);
             u.Balance = totalBalance;
             return await _userManager.UpdateAsync(u);
-            //throw new NotImplementedException();
         }
 
         #endregion

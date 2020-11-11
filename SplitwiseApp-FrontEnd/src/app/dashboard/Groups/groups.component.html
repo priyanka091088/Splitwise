@@ -30,7 +30,7 @@
         </thead>
         <tbody *ngFor="let e of expensesDtoDetails">
           <tr >
-          <td><a [routerLink]="['/expense/expense',e.expenseId]" class="text-dark">{{e.description}}</a></td>
+          <td><a [routerLink]="['/expense/viewexpense',e.expenseId]" class="text-dark">{{e.description}}</a></td>
           <td>{{e.amount}}</td>
           <td>{{e.splitBy}}</td>
         </tr>

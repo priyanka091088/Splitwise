@@ -9,24 +9,26 @@ import { UpdateSettlementComponent } from './Settlement/update-settlement/update
 import { ViewSettlementComponent } from './Settlement/view-settlement/view-settlement.component';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { FormsModule } from '@angular/forms';
+import { ViewExpenseComponent } from './expense/view-expense/view-expense.component';
 
 
 
 @NgModule({
-  declarations: [ExpensesComponent,AddExpenseComponent,UpdateExpenseComponent,AddSettlementComponent,UpdateSettlementComponent],
+  declarations: [ExpensesComponent,AddExpenseComponent,UpdateExpenseComponent,AddSettlementComponent,UpdateSettlementComponent, ViewExpenseComponent],
   imports: [
     CommonModule,
     SharedModule,
     FormsModule,
     RouterModule.forChild([
-      { path: 'expense/:id', component: ExpensesComponent },
+      { path: 'expense', component: ExpensesComponent },
 
       { path: 'addexpense/:id', component: AddExpenseComponent},
       { path: 'editexpense/:id', component: UpdateExpenseComponent },
+      { path: 'viewexpense/:id', component: ViewExpenseComponent },
       { path: 'addsettlement/:id', component: AddSettlementComponent},
       { path: 'editsettlement/:id', component: UpdateSettlementComponent},
       { path: 'viewsettlement', component: ViewSettlementComponent},
-      { path: '', redirectTo: 'expense/:id', pathMatch: 'full' },
+      { path: '', redirectTo: 'expense', pathMatch: 'full' },
 
     ])
   ],

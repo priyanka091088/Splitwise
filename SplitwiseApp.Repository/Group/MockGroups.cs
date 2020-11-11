@@ -89,7 +89,63 @@ namespace SplitwiseApp.Repository.Group
             return result;
            
         }
-        
+
+        public IEnumerable<GroupMembersDTO> GetGroupBalance(int groupId)
+        { 
+
+            
+            var members = _context.groupMember.Where(m => m.groupId == groupId);
+
+            foreach(var item in members)
+            {
+                float totalBalance = 0;
+                float payeeShare = 0;
+                float receiverShare = 0;
+                float settlementShare = 0;
+                float receivedSettlementShare = 0;
+
+                var expenses = _context.expenses.Where(e => e.groupId == groupId);
+                var paid = _context.settlement.Where(ps => ps.groupId == item.groupId && ps.payerId == item.userId);
+                var received = _context.settlement.Where(rs => rs.groupId == item.groupId && rs.receiverId == item.userId);
+                foreach(var expense in expenses)
+                {
+                    var payer = _context.payees_Expenses.Where(p => p.payerId == item.userId && p.expenseId == expense.expenseId);
+                    var receiver = _context.payees_Expenses.Where(r => r.receiverId == item.userId && r.expenseId == expense.expenseId);
+
+                    foreach(var p in payer)
+                    {
+                        payeeShare = payeeShare + p.Share;
+                    }
+                    foreach(var r in receiver)
+                    {
+                        receiverShare = receiverShare + r.Share;
+                    }
+                    foreach(var pa in paid)
+                    {
+                        settlementShare = settlementShare + pa.Amount;
+                    }
+                    foreach(var ra in received)
+                    {
+                        receivedSettlementShare = receivedSettlementShare + ra.Amount;
+                    }
+                }
+                totalBalance = (payeeShare + receivedSettlementShare) - (receiverShare + settlementShare);
+                item.Balance = totalBalance;
+                _context.groupMember.Update(item);
+            }
+
+            _context.SaveChanges();
+
+            var search = _context.groupMember.Include(u=>u.users).Where(g => g.groupId == groupId);
+
+            return search.Select(s => new GroupMembersDTO
+            {
+                Balance=s.Balance,
+                memberName=s.users.Name
+                
+            });
+        }
+
         public ActionResult<GroupsDTO> GetGroupByGroupId(int groupId)
         {
             return _mapper.Map<GroupsDTO>(_context.group.Include(u => u.creator).FirstOrDefault(g => g.groupId == groupId));

@@ -2,30 +2,21 @@
 <app-details></app-details>
 
 <nav class="navbar navbar-expand navbar-light bg-light">
-  <h4 class="navbar-brand">Expense Details</h4>
-  <ul class="navbar-nav">
-    <li style="float:right" class="nav-item" >
-      <a class="nav-link" [routerLink]="['/expense/editexpense',ExpenseId]" >Edit</a>
-    </li>
-    <li style="float:right" class="nav-item" >
-      <a class="nav-link" >Delete</a>
-    </li>
-  </ul>
+  <h4 class="navbar-brand">{{pageTitle}}</h4>
 
 </nav>
 
-<h4>{{pageTitle}}</h4><hr>
-<div *ngFor="let e of expensesDtoDetails">
-  <h6>total amount paid:</h6>
-  <p>{{e.amount |  currency:'INR'}}</p>
-  <h6>Created By:</h6>
-  <p>{{e.creatorId}}</p>
-</div>
-<div *ngFor="let p of payersExpensesDetails">
-  <p><i>{{p.payerName}}</i>&nbsp;<b> paid&nbsp; </b> <i>{{p.paidAmount}}</i><b>&nbsp; And Owes</b>&nbsp; <i>{{p.share}}</i></p>
-</div><hr>
-<div *ngFor="let pa of payeesExpensesDetails">
-  <p><i>{{pa.payerName}}</i>&nbsp;<b> owes</b>&nbsp; <i>{{pa.share}}</i>&nbsp; <b>To</b>&nbsp; <i>{{pa.receiverName}}</i></p>
+<h5> Your Total Balance:</h5>
+  <h6 *ngIf="balanceOwed" style="color:red">You Owe&nbsp;&nbsp;{{totalBalance}}</h6><hr>
+  <h6 *ngIf="balanceOwe" style="color: blue;">You Are Owed&nbsp;&nbsp;{{positiveTotalBalance}}</h6><hr>
+
+<button (click)="ShowExpenses()">Show Expenses</button><br><br>
+<div *ngIf="showExpense">
+<p>All Expenses will be displayed here!!!</p>
+</div><br><br>
+<button (click)="ShowSettlements()">Show Settlements</button><br><br>
+<div *ngIf="showSettlement">
+  <p>All Settlements will be displayed here</p>
 </div>
 
 

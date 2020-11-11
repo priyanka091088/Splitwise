@@ -11,6 +11,7 @@ namespace SplitwiseApp.Repository.Friend
     public interface IFriends
     {
         IEnumerable<FriendsDTO> GetFriends(string userId);
+        public IEnumerable<FriendsDTO> GetFriendBalance(string userId);
         public int AddAFriend(Friends friends);
         public int UpdateAFriend(Friends friends);
         public int DeleteAFriend(int id);

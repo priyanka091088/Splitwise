@@ -66,6 +66,18 @@ namespace SplitwiseApp.Core.ApiControllers
             return BadRequest();
         }
 
+        [HttpGet("{groupId}")]
+        [Route("getBalance/{groupId}")]
+        public ActionResult<IEnumerable<GroupMembersDTO>> GetGroupBalanceById(int groupId)
+        {
+            if (_groups.GroupExist(groupId))
+            {
+                IEnumerable<GroupMembersDTO> memberDtos = _groups.GetGroupBalance(groupId);
+                return Ok(memberDtos);
+            }
+            return NotFound();
+        }
+
         // POST: api/Groups
         [HttpPost]
         public ActionResult<int> AddAGroup(Groups groups)

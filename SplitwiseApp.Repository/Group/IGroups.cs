@@ -15,6 +15,7 @@ namespace SplitwiseApp.Repository.Group
         int UpdateAGroup(Groups group);
         ActionResult<GroupsDTO> GetGroupByGroupId(int groupId);
         IEnumerable<GroupsDTO> GetGroupByUserId(string id);
+        IEnumerable<GroupMembersDTO> GetGroupBalance(int groupId);
         int DeleteAGroupById(int groupId);
         public bool GroupExist(int groupId);
 

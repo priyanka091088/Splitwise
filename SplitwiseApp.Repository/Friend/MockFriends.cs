@@ -14,7 +14,11 @@ namespace SplitwiseApp.Repository.Friend
     {
         #region private variables
         private readonly AppDbContext _context;
-       
+
+        #endregion
+        #region public variables
+
+        
         #endregion
 
         #region constructor
@@ -82,12 +86,70 @@ namespace SplitwiseApp.Repository.Friend
             
         }
 
+        public IEnumerable<FriendsDTO> GetFriendBalance(string userId)
+        {
+            
+            var search = _context.friends.Where(f => f.creatorId == userId);
+
+            foreach(var item in search)
+            {
+                float totalBalance = 0;
+                float payeeShare = 0;
+                float receiverShare = 0;
+                float settlementShare = 0;
+                float receivedSettlementShare = 0;
+
+                var pay = _context.payees_Expenses.Where(p => p.payerId == item.creatorId && p.receiverId == item.friendId);
+                var receive = _context.payees_Expenses.Where(r => r.receiverId == item.creatorId && r.payerId == item.friendId);
+                var paidSettlement = _context.settlement.Where(ps => ps.payerId == item.creatorId && ps.receiverId == item.friendId);
+                var receivedSettlement= _context.settlement.Where(rs => rs.receiverId == item.creatorId && rs.payerId == item.friendId);
+
+                //to calculate balances for each friend
+
+                foreach(var payer in pay)
+                {
+                    payeeShare = payeeShare + payer.Share;
+                }
+                foreach(var receiver in receive)
+                {
+                    receiverShare = receiverShare + receiver.Share;
+                }
+                foreach(var paid in paidSettlement)
+                {
+                    settlementShare = settlementShare + paid.Amount;
+                }
+                foreach(var received in receivedSettlement)
+                {
+                    receivedSettlementShare = receivedSettlementShare + received.Amount;
+                }
+
+                 totalBalance = (payeeShare + receivedSettlementShare) - (receiverShare + settlementShare);
+                
+                item.Balance = totalBalance;
+                _context.friends.Update(item);
+            }
+
+            _context.SaveChanges();
+
+            var friends = _context.friends.Include(u => u.users).Where(f => f.creatorId == userId);
+
+            return friends.Select(f => new FriendsDTO
+            {
+                creator = f.users.Id,
+                friendName = f.users.Name,
+                Balance = f.Balance
+
+            }) ;
+            //throw new NotImplementedException();
+        }
+
         public IEnumerable<FriendsDTO> GetFriends(string userId)
         {
             var friends = _context.friends.Include(u=>u.users).Where(f => f.creatorId == userId);
 
             return friends.Select(f => new FriendsDTO
             {
+                Balance=f.Balance,
                 creator=f.users.Id,
                 friendName = f.users.Name
             });
