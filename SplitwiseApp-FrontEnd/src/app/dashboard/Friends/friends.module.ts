@@ -4,14 +4,14 @@ import { FriendsComponent } from '../friends/friends.component';
 import { RouterModule } from '@angular/router';
 
 import { AddfriendComponent } from './addfriend/addfriend.component';
-import { UpdatefriendComponent } from './updatefriend/updatefriend.component';
+
 import { SharedModule } from 'src/app/shared/shared.module';
 import { FormsModule } from '@angular/forms';
 
 
 
 @NgModule({
-  declarations: [FriendsComponent,AddfriendComponent,UpdatefriendComponent],
+  declarations: [FriendsComponent,AddfriendComponent],
   imports: [
     CommonModule,
     SharedModule,
@@ -20,7 +20,6 @@ import { FormsModule } from '@angular/forms';
       { path: 'friends/:id', component: FriendsComponent },
       { path: '', redirectTo: 'friends/:id', pathMatch: 'full' },
       { path: 'addfriend/:id', component: AddfriendComponent},
-      { path: 'editfriend/:id', component: UpdatefriendComponent},
 
     ])
   ],

@@ -79,7 +79,7 @@ x:number;
       res=>{
         console.log(res);
         this.onSaveComplete(res);
-        alert("group successfully updated");
+        alert("group along with members successfully Added");
       },
       err=>{
         console.log(err);
@@ -92,17 +92,18 @@ x:number;
       groupMember.userId=this.listarray[this.x];
       this.memberServices.addMember(groupMember).subscribe({
         next:res=>{
-          alert('member successfully updated');
+
           this.router.navigate(['/dashboard']);
         }
       })
     }
   }
-
+index:number=0;
   getMembers(event:any,i:number){
     if(event.target.checked){
-      this.listarray[i]=this.friendsDtoDetails[i].creator;
-      console.log(this.listarray[i]);
+      this.listarray[this.index]=this.friendsDtoDetails[i].creator;
+      this.index++;
+      console.log(this.listarray[this.index]);
     }
   }
 }

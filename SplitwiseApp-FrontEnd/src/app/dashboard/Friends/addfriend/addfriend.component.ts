@@ -46,6 +46,7 @@ UserId:string;
       next: user=>{
       console.log(user);
       this.UserId=user.id;
+
     }
   });
   }
@@ -53,8 +54,10 @@ UserId:string;
   emailCheckUnique(email:string){
 
     this.userServices.getUserByEmail2(email).subscribe({
+
       next: user=>{
         console.log(user);
+        console.log(this.UserId);
         if(user==null ){
           this.emailAlreadyExist=false;
           this.message="User is not on Splitwise.Please refresh the page before adding again";
@@ -67,7 +70,7 @@ UserId:string;
   }
 
   onSubmit(){
-
+    console.log(this.UserId);
     this.friends.balance=0;
     this.friends.creatorId=this.UserId;
     this.friends.friendId=this.users.id;

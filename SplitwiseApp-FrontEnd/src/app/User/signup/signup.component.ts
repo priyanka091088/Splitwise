@@ -50,7 +50,7 @@ userList:services.UserDTO[]=[];
   }
 
   emailCheckUnique(email:string){
-    alert(email);
+
     this.userServices.getUserByEmail2(email).subscribe({
       next: user=>{
         console.log(user);
@@ -58,8 +58,7 @@ userList:services.UserDTO[]=[];
           this.emailAlreadyExist=true;
           this.message="User with this email Id already exists.Refresh the page before filling up again";
         }
-        alert(user.email);
-        this.users=user;
+
 
       }
     })

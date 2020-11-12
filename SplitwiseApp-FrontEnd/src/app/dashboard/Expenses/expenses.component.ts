@@ -82,7 +82,6 @@ export class ExpensesComponent implements OnInit {
   UpdateUserBalance(id:string){
     this.userServices.getUserBalance2(id).subscribe({
       next:res=>{
-        alert("updated successfully");
         this.getBalance(id);
       }
     });

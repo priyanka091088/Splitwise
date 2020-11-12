@@ -27,6 +27,7 @@
     </div>
 
   </div>-->
+
   <div *ngIf="check" >
     <div *ngFor="let f of friendsDtoDetails;index as i;">
       <input  type="checkbox" name="users" (change)="getMembers($event,i)">

@@ -6,7 +6,7 @@
 
 <label>Email Id: *</label>
 <input type="text" placeholder="Email Address" name="email" [(ngModel)]="users.email"
-(change)="emailCheckUnique(users.email)" pattern="^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" required><br>
+(change)="emailCheckUnique(form.value.email)" pattern="^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" required><br>
 
 <div *ngIf="message != ''" class="alert-danger">
   {{message}}

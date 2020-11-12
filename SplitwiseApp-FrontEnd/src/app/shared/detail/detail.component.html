@@ -10,19 +10,19 @@
 
         <a [routerLink]="['/dashboard']" routerLinkActive="router-link-active">Dashboard</a>
 
-        <a [routerLink]="['/expense']" routerLinkActive="router-link-active">Expenses</a>
+        <a title="view all expenses" [routerLink]="['/expense']" routerLinkActive="router-link-active">Expenses</a>
 
-        <a routerLink="/groups/addgroup/0" routerLinkActive="router-link-active">Groups</a>
+        <a title="Add Group" routerLink="/groups/addgroup/0" routerLinkActive="router-link-active">Groups</a>
 
         <div *ngFor="let g of groupDtoDetails">
-          <a [routerLink]="['/groups/groups',g.groupId]"><i>{{g.groupName}}</i></a>
+          <a title="view group details" [routerLink]="['/groups/groups',g.groupId]"><i>{{g.groupName}}</i></a>
 
         </div>
 
-        <a [routerLink]="['/friends/addfriend',0]" routerLinkActive="router-link-active">Friends</a>
+        <a title="Add friend" [routerLink]="['/friends/addfriend',0]" routerLinkActive="router-link-active">Friends</a>
 
         <div *ngFor="let f of friendsDtoDetails">
-          <a [routerLink]="['/friends/friends',f.id]"><i>{{f.friendName}}</i></a>
+          <a title="view friends details" [routerLink]="['/friends/friends',f.id]"><i>{{f.friendName}}</i></a>
         </div>
       </div>
 
