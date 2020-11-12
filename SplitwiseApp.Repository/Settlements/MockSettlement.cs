@@ -39,17 +39,16 @@ namespace SplitwiseApp.Repository.Settlements
         public IEnumerable<SettlementDTO> GetSettlementDetails(string userId)
         {
 
-            var settlement = _context.settlement.Include(p => p.payer).Include(r=>r.receiver).
-                Where(s => s.payerId == userId || s.receiverId==userId)
-                .ToList();
+            var settlement = _context.settlement.Include(p => p.payer).Include(r=>r.receiver).Include(g=>g.groups).
+                Where(s => s.payerId == userId || s.receiverId==userId);
 
             return settlement.Select(s => new SettlementDTO
             {
                 Amount = s.Amount,
                 receiverName = s.receiver.Name,
                 payerName = s.payer.Name,
-                
-            }).ToList();
+                groupName=s.groups.groupName
+            });
             
         }
 
@@ -57,7 +56,7 @@ namespace SplitwiseApp.Repository.Settlements
         {
 
             var settlement = _context.settlement.Include(p => p.payer).Include(r=>r.receiver).
-                Where(s => s.groupId == groupId).ToList();
+                Where(s => s.groupId == groupId);
 
             var groups = _context.group.FirstOrDefault(g => g.groupId == groupId);
             return settlement.Select(s => new SettlementDTO
@@ -66,7 +65,7 @@ namespace SplitwiseApp.Repository.Settlements
                 receiverName = s.receiver.Name,
                 payerName = s.payer.Name,
                 groupName = groups.groupName
-            }).ToList();
+            });
 
         }
 

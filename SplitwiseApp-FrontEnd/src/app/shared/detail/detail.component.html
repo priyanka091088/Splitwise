@@ -1,0 +1,33 @@
+
+<html>
+  <head>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="detail.component.css">
+  </head>
+    <body >
+
+      <div id="mySidenav" class="sidenav">
+
+        <a [routerLink]="['/dashboard']" routerLinkActive="router-link-active">Dashboard</a>
+
+        <a [routerLink]="['/expense']" routerLinkActive="router-link-active">Expenses</a>
+
+        <a routerLink="/groups/addgroup/0" routerLinkActive="router-link-active">Groups</a>
+
+        <div *ngFor="let g of groupDtoDetails">
+          <a [routerLink]="['/groups/groups',g.groupId]"><i>{{g.groupName}}</i></a>
+
+        </div>
+
+        <a [routerLink]="['/friends/addfriend',0]" routerLinkActive="router-link-active">Friends</a>
+
+        <div *ngFor="let f of friendsDtoDetails">
+          <a [routerLink]="['/friends/friends',f.id]"><i>{{f.friendName}}</i></a>
+        </div>
+      </div>
+
+
+      </body>
+
+  </html>
+

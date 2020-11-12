@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { services } from 'src/app/services/services.service';
 
 @Component({
@@ -22,7 +22,8 @@ export class ViewExpenseComponent implements OnInit {
   payeesExpensesDetails:services.Payees_ExpensesDTO[];
 
   constructor(private payeeServices:services.PayeesExpensesClient,
-    private payerServices:services.PayersExpensesClient,private route:ActivatedRoute,private expenseServices:services.ExpensesClient) { }
+    private payerServices:services.PayersExpensesClient,private route:ActivatedRoute,private expenseServices:services.ExpensesClient,
+    private router:Router) { }
 
   ngOnInit(): void {
     const id=+this.route.snapshot.paramMap.get('id');
@@ -50,5 +51,19 @@ alert("hii"+this.ExpenseId);
       }
     })
   }
-
+  DeleteExpense(id:number){
+    if(confirm('Really want to delete the expense from splitwise?')){
+      this.expenseServices.deleteExpense(id).subscribe(
+        res=>{
+          this.onSaveComplete();
+        },
+        err=>{
+          console.log(err);
+        }
+      )
+    }
+  }
+  onSaveComplete():void{
+    this.router.navigate(['/dashboard']);
+  }
 }

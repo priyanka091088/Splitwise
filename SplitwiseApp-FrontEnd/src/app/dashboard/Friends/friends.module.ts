@@ -17,8 +17,8 @@ import { FormsModule } from '@angular/forms';
     SharedModule,
     FormsModule,
     RouterModule.forChild([
-      { path: 'friends', component: FriendsComponent },
-      { path: '', redirectTo: 'friends', pathMatch: 'full' },
+      { path: 'friends/:id', component: FriendsComponent },
+      { path: '', redirectTo: 'friends/:id', pathMatch: 'full' },
       { path: 'addfriend/:id', component: AddfriendComponent},
       { path: 'editfriend/:id', component: UpdatefriendComponent},
 

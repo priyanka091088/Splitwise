@@ -22,7 +22,7 @@
       <a [routerLink]="['/friends/addfriend',0]" routerLinkActive="router-link-active">Friends</a>
 
       <div *ngFor="let f of friendsDtoDetails">
-        <a routerLink="/friends"><i>{{f.friendName}}</i></a>
+        <a [routerLink]="['/friends/friends',f.id]"><i>{{f.friendName}}</i></a>
       </div>
     </div>
 

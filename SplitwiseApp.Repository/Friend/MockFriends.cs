@@ -137,8 +137,8 @@ namespace SplitwiseApp.Repository.Friend
             {
                 creator = f.users.Id,
                 friendName = f.users.Name,
-                Balance = f.Balance
-
+                Balance = f.Balance,
+                Id=f.Id
             }) ;
             //throw new NotImplementedException();
         }
@@ -149,6 +149,7 @@ namespace SplitwiseApp.Repository.Friend
 
             return friends.Select(f => new FriendsDTO
             {
+                Id=f.Id,
                 Balance=f.Balance,
                 creator=f.users.Id,
                 friendName = f.users.Name

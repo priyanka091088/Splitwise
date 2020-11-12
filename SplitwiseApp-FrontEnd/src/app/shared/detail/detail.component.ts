@@ -2,11 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { services } from 'src/app/services/services.service';
 
 @Component({
-  selector: 'app-details',
-  templateUrl: './details.component.html',
-  styleUrls: ['./details.component.css']
+  selector: 'app-detail',
+  templateUrl: './detail.component.html',
+  styleUrls: ['./detail.component.css']
 })
-export class DetailsComponent implements OnInit {
+export class DetailComponent implements OnInit {
 
   groupDto:services.GroupsDTO;
   groupDtoDetails:services.GroupsDTO[];

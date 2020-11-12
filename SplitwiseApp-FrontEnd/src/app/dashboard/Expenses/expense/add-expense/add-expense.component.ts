@@ -97,6 +97,7 @@ listarray:string[]=[];
     }
   });
 }
+//get all the groups for that particular user
   getGroups(id:string){
     this.groupServices.getGroupsForAUser(id).subscribe({
       next: groupDto => {
@@ -107,6 +108,7 @@ listarray:string[]=[];
       },
      });
   }
+  //get the friends of the current user
   getFriends(id:string){
     this.friendsService.getFriends(id).subscribe({
       next:friendDto=>{
@@ -119,6 +121,7 @@ listarray:string[]=[];
   amntList:number[]=[];
   idlist:string[]=[];
   a:number=0;
+  //calculating the unequally splitby
   getShare(amount:number,l:string){
     console.log(l);
     console.log(amount);
@@ -128,7 +131,7 @@ listarray:string[]=[];
     console.log(this.amntList);
     this.a++;
   }
-
+//calculation of percentage splitby
   getPercentageAmount(percent:number,l:string){
     console.log(l);
     console.log(percent);
@@ -147,8 +150,7 @@ listarray:string[]=[];
         console.log(expense);
         console.log(this.counter);
         alert("Expense successfully added");
-
-          if(expense.splitBy=="equally"){
+            if(expense.splitBy=="equally"){
             payees.share=expense.amount/this.counter;
             payers.share=expense.amount/this.counter;
             console.log(payees.share);
@@ -158,7 +160,7 @@ listarray:string[]=[];
           }
           else if(expense.splitBy=="exact amount"){
             for(var i=0;i<this.idlist.length;i++){
-              if(this.idlist[i]==payers.payerId)
+              if(this.idlist[i]==payers.payerId)//checking whether the id is payers id or not
               {
                 payers.share=this.amntList[i];
                 this.AddPayer(payers,expenses,expense.expenseId,payees);
@@ -172,7 +174,7 @@ listarray:string[]=[];
           }
           else if(expense.splitBy=="percentage"){
             for(var i=0;i<this.idlist.length;i++){
-              if(this.idlist[i]==payers.payerId)
+              if(this.idlist[i]==payers.payerId)//checking whether the id is payers id or not
               {
                 payers.share=this.amntList[i];
                 this.AddPayer(payers,expenses,expense.expenseId,payees);
@@ -197,7 +199,6 @@ listarray:string[]=[];
     this.payersServices.addPayersExpense(payers).subscribe({
       next:res=>{
         alert("payer successfully added");
-        //this.AddPayee(payers,expenseId,payees);
       }
     });
     console.log("adding payer");
@@ -212,7 +213,7 @@ listarray:string[]=[];
     payees.expenseId=expenseId;
     payees.share=payee.share;
     for(this.i=0;this.i<this.listarray.length;this.i++){
-      if(this.listarray[this.i]!=payers.payerId){
+      if(this.listarray[this.i]!=payers.payerId){//if the id is of payr than it won't get added
         payees.payerId=this.listarray[this.i];
         this.payeesServices.addPayeesExpense(payees).subscribe({
           next:res=>{
@@ -222,7 +223,6 @@ listarray:string[]=[];
         })
       }
     }
-    console.log("payee added");
   }
 
   //Show And Hide a div When Required
@@ -243,22 +243,17 @@ listarray:string[]=[];
       }
     }
   }
- /* ShowAndHide(){
-    this.check=!this.check;
-  }*/
 public listarray2:string[]=[];
 //To get the id of all the users selected from the list
   ListOfUserId(event:any,i:number){
   if(event.target.checked){
 
       this.listarray[this.x]=this.friendsDtoDetails[i].creator;
-
       console.log(this.listarray[this.x]);
       this.x=this.x+1;
       this.lengths=this.listarray.length;
       console.log(this.lengths);
     }
-
   }
 
   //to get the names of all the members of the selected group
@@ -267,13 +262,10 @@ public listarray2:string[]=[];
       this.memberServices.getMembersOfAGroup(this.groupDtoDetails[j].groupId).subscribe({
         next:members=>{
         this.memberDtoDetails=members;
-          this.memberDtoList=this.memberDtoDetails;
-
-          this.getMembers(this.memberDtoList);
+        this.memberDtoList=this.memberDtoDetails;
+        this.getMembers(this.memberDtoList);
         }
-
       })
-
     }
   }
   getMembers(members:services.GroupMembersDTO[]){
@@ -307,6 +299,7 @@ public listarray2:string[]=[];
   userListArray:string[]=[];
   SplitByCalculations(amnt:number,splitby:string){
     console.log(splitby);
+    //transferring all the group-members of the selected group into a single listarray
     if(this.listarray2!=null){
       for(var j=0;j<this.listarray2.length;j++){
         this.listarray[this.lengths]=this.listarray2[j];

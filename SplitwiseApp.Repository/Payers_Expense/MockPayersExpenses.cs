@@ -88,7 +88,7 @@ namespace SplitwiseApp.Repository.Payers_Expense
                 expense = p.expenses.Description
             });
 
-           // throw new NotImplementedException();
+           
         }
         #endregion
     }

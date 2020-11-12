@@ -1,26 +1,30 @@
-<app-details></app-details>
+<app-detail></app-detail>
 <app-top-nav></app-top-nav>
 
   <nav class="navbar navbar-expand navbar-light bg-light">
     <h4 class="navbar-brand">{{pageTitle}}</h4>
     <ul class="navbar-nav">
       <li style="float:right" class="nav-item" >
-        <a class="nav-link" [routerLink]="['/groups/editgroup',GroupId]" >Edit</a>
-      </li>
-      <li style="float:right" class="nav-item" >
-        <a class="nav-link" >Delete</a>
+        <button class="btn btn-danger" (click)="DeleteGroup(GroupId)" >Delete</button>
       </li>
     </ul>
 
   </nav>
 <h5>Expenses</h5><hr>
+<button (click)="ShowAndHide()">Show Settlement</button>
+<div *ngIf="showSettlement">
+  <div *ngFor="let s of settlementDtoDetails">
+    <p *ngIf="s.groupName!=null"><i>{{s.payerName}}</i>&nbsp;<b>paid</b>&nbsp; <i>{{s.receiverName}}</i>&nbsp;
+      <i>{{s.amount}}</i></p>
+  </div>
+</div>
 <div class="member-details">
   <p>Balance For Each Member:</p>
   <div *ngFor="let m of memberDtoDetails">
     <p>{{m.memberName}}</p>
     <p *ngIf="m.balance>0" style="color:red;">Owes:&nbsp;{{m.balance}}</p>
     <p *ngIf="m.balance<0" style="color: blue;">You Get:&nbsp;{{-(m.balance)}}</p>
-    <p *ngIf="m.balance==0">You Are Settled Up</p>
+    <p *ngIf="m.balance==0" style="color:brown;">You Are Settled Up</p>
   </div>
 </div><br><br>
   <div id="expense-details" class="card-body">

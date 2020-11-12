@@ -59,7 +59,6 @@ namespace SplitwiseApp.Repository.Payees_Expense
 
             //throw new NotImplementedException();
         }
-
         public IEnumerable<Payees_ExpensesDTO> GetPayeesExpensesByExpenseId(int expenseId)
         {
             var payees = _context.payees_Expenses.Include(p => p.payer).Include(r=>r.receiever).

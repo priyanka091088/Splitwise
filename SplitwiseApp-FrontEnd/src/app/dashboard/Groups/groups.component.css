@@ -13,7 +13,7 @@ button {
   /*optional*/
   font-family: arial, sans-serif;
   /*input has OS specific font-family*/
-  color: #069;
+  color: red;
   text-decoration: underline;
   cursor: pointer;
 }

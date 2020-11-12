@@ -1,10 +1,11 @@
 
-<app-details></app-details>
+<app-detail></app-detail>
 <app-top-nav></app-top-nav>
 
-<h2>Shush</h2>
-<h5 style="float: right;">Total Balance:</h5>
-<p>You Can View All Your Friends Expenses!!!</p>
+<h2>{{friendsName}}</h2>
+<h5 style="color:red;" *ngIf="totalBalance>0">Total Balance:&nbsp; You Owe:&nbsp;{{totalBalance}}</h5>
+<h5 style="color:blue;" *ngIf="totalBalance<0">Total Balance:&nbsp; You Are Owed&nbsp;{{-(totalBalance)}}</h5>
+<button class="btn btn-danger" (click)="DeleteFriend(groupid)">Remove This Friend</button>
 <div class="outlet">
   <router-outlet></router-outlet>
 </div>

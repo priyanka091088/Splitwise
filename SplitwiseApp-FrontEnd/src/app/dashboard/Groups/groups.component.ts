@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { services } from 'src/app/services/services.service';
 
 @Component({
@@ -25,13 +25,16 @@ export class GroupsComponent implements OnInit {
   payeesExpensesDto:services.Payees_ExpensesDTO;
   payeesExpensesDetails:services.Payees_ExpensesDTO[];
 
+  settlementDto:services.SettlementDTO;
+  settlementDtoDetails:services.SettlementDTO[];
+
 public pageTitle:string;
 GroupId:number;
 check:boolean=false;
 arr:number[]=[];
   constructor(private route:ActivatedRoute,private groupsServices:services.GroupsClient,
     private expenseServices:services.ExpensesClient,private payeeServices:services.PayeesExpensesClient,
-    private payerServices:services.PayersExpensesClient) { }
+    private payerServices:services.PayersExpensesClient,private router:Router,private settlementServices:services.SettlementClient) { }
 
   ngOnInit(): void {
     const id=+this.route.snapshot.paramMap.get('id');
@@ -62,6 +65,31 @@ arr:number[]=[];
 
       }
     });
-  }
 
+    this.settlementServices.getSettlementByGroupId(id).subscribe({
+      next:settle=>{
+        console.log(settle);
+        this.settlementDtoDetails=settle;
+      }
+    })
+  }
+  DeleteGroup(id:number){
+    if(confirm('Really want to delete the group from splitwise?')){
+      this.groupsServices.deleteGroup(id).subscribe(
+        res=>{
+          this.onSaveComplete();
+        },
+        err=>{
+          console.log(err);
+        }
+      )
+    }
+  }
+  onSaveComplete():void{
+    this.router.navigate(['/dashboard']);
+  }
+  showSettlement:boolean=false;
+  ShowAndHide(){
+    this.showSettlement=!this.showSettlement;
+  }
 }
