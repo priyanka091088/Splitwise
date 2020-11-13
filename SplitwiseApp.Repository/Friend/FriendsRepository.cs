@@ -10,7 +10,7 @@ using Microsoft.AspNetCore.Mvc;
 using System.Linq;
 namespace SplitwiseApp.Repository.Friend
 {
-    public class MockFriends : IFriends
+    public class FriendsRepository : IFriends
     {
         #region private variables
         private readonly AppDbContext _context;
@@ -22,11 +22,11 @@ namespace SplitwiseApp.Repository.Friend
         #endregion
 
         #region constructor
-        public MockFriends()
+        public FriendsRepository()
         {
 
         }
-        public MockFriends(AppDbContext context)
+        public FriendsRepository(AppDbContext context)
         {
             _context = context;
             

@@ -10,7 +10,7 @@ namespace SplitwiseApp.Repository.Test.Modules.Friend
     [TestClass]
     public class FriendRepositoryTest
     {
-        MockFriends f = new MockFriends();
+        FriendsRepository f = new FriendsRepository();
 
         [TestMethod]
         public void AddinFriendTest()

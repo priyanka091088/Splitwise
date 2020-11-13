@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace SplitwiseApp.Repository.GroupMember
 {
-    public class MockGroupMembers : IGroupMembers
+    public class GroupMembersRepository : IGroupMembers
     {
         #region private variables
 
@@ -20,11 +20,11 @@ namespace SplitwiseApp.Repository.GroupMember
         #endregion
 
         #region constructor
-        public MockGroupMembers()
+        public GroupMembersRepository()
         {
 
         }
-        public MockGroupMembers(AppDbContext context)
+        public GroupMembersRepository(AppDbContext context)
         {
             _context = context;
             

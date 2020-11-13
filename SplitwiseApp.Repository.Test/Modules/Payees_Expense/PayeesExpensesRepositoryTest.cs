@@ -10,7 +10,7 @@ namespace SplitwiseApp.Repository.Test.Modules.Payees_Expense
     [TestClass]
     public class PayeesExpensesRepositoryTest
     {
-        MockPayeesExpenses payee = new MockPayeesExpenses();
+        PayeesExpensesRepository payee = new PayeesExpensesRepository();
 
         [TestMethod]
         public void AddingPayeesExpenseTest()

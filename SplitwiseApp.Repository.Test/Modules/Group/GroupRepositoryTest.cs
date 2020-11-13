@@ -10,7 +10,7 @@ namespace SplitwiseApp.Repository.Test.Modules.Group
     [TestClass]
     public class GroupRepositoryTest
     {
-        MockGroups g = new MockGroups();
+        GroupsRepository g = new GroupsRepository();
 
         [TestMethod]
         public void AddingGroupTest()

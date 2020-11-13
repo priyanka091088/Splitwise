@@ -10,7 +10,7 @@ namespace SplitwiseApp.Repository.Test.Modules.Settlements
     [TestClass]
     public class SettlementRepositoryTest
     {
-        MockSettlement s = new MockSettlement();
+        SettlementRepository s = new SettlementRepository();
 
         [TestMethod]
         public void AddingSettlementTest()

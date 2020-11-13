@@ -13,7 +13,7 @@ using System.Threading.Tasks;
 
 namespace SplitwiseApp.Repository.Group
 {
-    public class MockGroups : IGroups
+    public class GroupsRepository : IGroups
     {
         #region private variables
         private readonly AppDbContext _context;
@@ -22,11 +22,11 @@ namespace SplitwiseApp.Repository.Group
         #endregion
 
         #region constructor
-        public MockGroups()
+        public GroupsRepository()
         {
 
         }
-        public MockGroups(AppDbContext context, IMapper mapper)
+        public GroupsRepository(AppDbContext context, IMapper mapper)
         {
             _context = context;
             _mapper = mapper;

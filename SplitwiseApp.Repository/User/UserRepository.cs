@@ -22,7 +22,7 @@ using System.Threading.Tasks;
 
 namespace SplitwiseApp.Repository.User
 {
-    public class MockUser : IUser
+    public class UserRepository : IUser
     {
 
         #region private variables
@@ -43,11 +43,11 @@ namespace SplitwiseApp.Repository.User
         #endregion
 
         #region constructor
-        public MockUser()
+        public UserRepository()
         {
 
         }
-        public MockUser(AppDbContext context, UserManager<ApplicationUser> userManager,IMapper mapper,
+        public UserRepository(AppDbContext context, UserManager<ApplicationUser> userManager,IMapper mapper,
              IConfiguration configuration,IPayeeExpenses payees,IPayersExpenses payers)
         {
             _userManager = userManager;

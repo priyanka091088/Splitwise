@@ -10,7 +10,7 @@ using Microsoft.AspNetCore.Identity;
 
 namespace SplitwiseApp.Repository.Settlements
 {
-    public class MockSettlement : ISettlement
+    public class SettlementRepository : ISettlement
     {
         #region private variables
         private readonly AppDbContext _context;
@@ -18,11 +18,11 @@ namespace SplitwiseApp.Repository.Settlements
         #endregion
 
         #region constructor
-        public MockSettlement()
+        public SettlementRepository()
         {
 
         }
-        public MockSettlement(AppDbContext context, UserManager<ApplicationUser> userManager)
+        public SettlementRepository(AppDbContext context, UserManager<ApplicationUser> userManager)
         {
             _context = context;
         }

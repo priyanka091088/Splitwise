@@ -12,7 +12,7 @@ namespace SplitwiseApp.Repository.Test.Modules.Expense
     [TestClass]
     public class ExpenseRepositoryTest
     {
-        MockExpenses e = new MockExpenses();
+        ExpensesRepository e = new ExpensesRepository();
         [TestMethod]
         public void AddingExpenseTest()
         {

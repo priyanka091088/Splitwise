@@ -9,19 +9,19 @@ using Microsoft.EntityFrameworkCore;
 
 namespace SplitwiseApp.Repository.Payees_Expense
 {
-    public class MockPayeesExpenses : IPayeeExpenses
+    public class PayeesExpensesRepository : IPayeeExpenses
     {
         #region private variable
         private readonly AppDbContext _context;
         #endregion
 
         #region constructor
-        public MockPayeesExpenses()
+        public PayeesExpensesRepository()
         {
 
         }
 
-        public MockPayeesExpenses(AppDbContext context)
+        public PayeesExpensesRepository(AppDbContext context)
         {
             _context = context;
         }

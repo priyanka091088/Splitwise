@@ -59,14 +59,14 @@ namespace SplitwiseApp.Web
 
             services.AddSwaggerDocument();
 
-            services.AddScoped<IUser, MockUser>();
-            services.AddScoped<IExpenses, MockExpenses>();
-            services.AddScoped<IFriends, MockFriends>();
-            services.AddScoped<IGroups, MockGroups>();
-            services.AddScoped<IGroupMembers, MockGroupMembers>();
-            services.AddScoped<IPayeeExpenses, MockPayeesExpenses>();
-            services.AddScoped<IPayersExpenses, MockPayersExpenses>();
-            services.AddScoped<ISettlement, MockSettlement>();
+            services.AddScoped<IUser, UserRepository>();
+            services.AddScoped<IExpenses, ExpensesRepository>();
+            services.AddScoped<IFriends, FriendsRepository>();
+            services.AddScoped<IGroups, GroupsRepository>();
+            services.AddScoped<IGroupMembers, GroupMembersRepository>();
+            services.AddScoped<IPayeeExpenses, PayeesExpensesRepository>();
+            services.AddScoped<IPayersExpenses, PayersExpensesRepository>();
+            services.AddScoped<ISettlement, SettlementRepository>();
 
             services.AddControllersWithViews()
                 .AddNewtonsoftJson(options =>

@@ -13,7 +13,7 @@ using System.Threading.Tasks;
 
 namespace SplitwiseApp.Repository.Expense
 {
-    public class MockExpenses : IExpenses
+    public class ExpensesRepository : IExpenses
     {
         #region private variables
         private readonly AppDbContext _context;
@@ -23,11 +23,11 @@ namespace SplitwiseApp.Repository.Expense
         #endregion
 
         #region constructor
-        public MockExpenses()
+        public ExpensesRepository()
         {
                 
         }
-        public MockExpenses(AppDbContext context,IPayeeExpenses payeesExpenses,IPayersExpenses payersExpenses,IMapper mapper)
+        public ExpensesRepository(AppDbContext context,IPayeeExpenses payeesExpenses,IPayersExpenses payersExpenses,IMapper mapper)
         {
             _context = context;
             _payersExpenses = payersExpenses;
