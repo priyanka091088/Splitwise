@@ -17,18 +17,21 @@ export class DetailComponent implements OnInit {
   friendDtoList:services.FriendsDTO[]=[];
 
    email=localStorage.getItem('userName');
-
+   token=localStorage.getItem('userToken');
   constructor(private groupServices:services.GroupsClient,private expenseServices:services.ExpensesClient,
     private friendsService:services.FriendsClient,private userServices:services.UserClient) { }
 
   ngOnInit(): void {
-    this.userServices.getUserByEmail2(this.email).subscribe({
-      next: user=>{
-      console.log(user);
-      this.getFriends(user.id);
-      this.getGroups(user.id);
+    if(this.token!=null){
+      this.userServices.getUserByEmail2(this.email).subscribe({
+        next: user=>{
+        console.log(user);
+        this.getFriends(user.id);
+        this.getGroups(user.id);
+      }
+    })
     }
-  })
+
   }
   getGroups(id:string){
     this.groupServices.getGroupsForAUser(id).subscribe({

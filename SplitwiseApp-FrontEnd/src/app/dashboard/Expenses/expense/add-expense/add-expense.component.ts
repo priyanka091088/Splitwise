@@ -12,7 +12,7 @@ export class AddExpenseComponent implements OnInit {
 public pageTitle:string="Add Expense";
 ctr:number;
 lengths:number;
-
+i:number;
 expenseData: any = {
   PayerId: null,
   share:0
@@ -123,27 +123,18 @@ listarray:string[]=[];
   a:number=0;
   //calculating the unequally splitby
   getShare(amount:number,l:string){
-    console.log(l);
-    console.log(amount);
     this.idlist[this.a]=l;
     this.amntList[this.a]=amount;
-    console.log(this.idlist);
-    console.log(this.amntList);
     this.a++;
   }
 //calculation of percentage splitby
   getPercentageAmount(percent:number,l:string){
-    console.log(l);
-    console.log(percent);
     this.idlist[this.a]=l;
     this.amntList[this.a]=(this.expense.amount*percent)/100;
     this.a++;
-    console.log(this.idlist);
-    console.log(this.amntList);
   }
   //function for adding expenses
   onSubmit(expenses:services.Expenses,payers:services.Payers_Expenses,payees:services.Payees_Expenses){
-    //console.log(this.UserId);
     expenses.creatorId=this.UserId;
     this.expenseServices.addExpense(expenses).subscribe({
       next:expense=>{
@@ -153,9 +144,7 @@ listarray:string[]=[];
             if(expense.splitBy=="equally"){
             payees.share=expense.amount/this.counter;
             payers.share=expense.amount/this.counter;
-            console.log(payees.share);
-            console.log(payers.share);
-            this.AddPayer(payers,expenses,expense.expenseId,payees);
+            this.AddPayer(payers,expenses,expense.expenseId);
             this.AddPayee(payers,expense.expenseId,payees);
           }
           else if(expense.splitBy=="exact amount"){
@@ -163,7 +152,7 @@ listarray:string[]=[];
               if(this.idlist[i]==payers.payerId)//checking whether the id is payers id or not
               {
                 payers.share=this.amntList[i];
-                this.AddPayer(payers,expenses,expense.expenseId,payees);
+                this.AddPayer(payers,expenses,expense.expenseId);
               }
               else{
                 payees.share=this.amntList[i];
@@ -177,10 +166,11 @@ listarray:string[]=[];
               if(this.idlist[i]==payers.payerId)//checking whether the id is payers id or not
               {
                 payers.share=this.amntList[i];
-                this.AddPayer(payers,expenses,expense.expenseId,payees);
+                this.AddPayer(payers,expenses,expense.expenseId);
               }
               else{
                 payees.share=this.amntList[i];
+                payees.payerId=this.idlist[i];
                 this.AddPayee(payers,expense.expenseId,payees);
               }
             }
@@ -192,7 +182,7 @@ listarray:string[]=[];
   }
 
   //Function for adding payers
-  AddPayer(payers:services.Payers_Expenses,expense:services.Expenses,expenseId:number,payees:services.Payees_Expenses){
+  AddPayer(payers:services.Payers_Expenses,expense:services.Expenses,expenseId:number){
     payers.expenseId=expenseId;
     payers.paidAmount=expense.amount;
 
@@ -201,28 +191,19 @@ listarray:string[]=[];
         alert("payer successfully added");
       }
     });
-    console.log("adding payer");
   }
-
-  i:number;
-
-  //Function for adding payee
+//Function for adding payee
   AddPayee(payers:services.Payers_Expenses,expenseId:number,payee:services.Payees_Expenses){
     const payees=new services.Payees_Expenses();
     payees.receiverId=payers.payerId;
     payees.expenseId=expenseId;
     payees.share=payee.share;
-    for(this.i=0;this.i<this.listarray.length;this.i++){
-      if(this.listarray[this.i]!=payers.payerId){//if the id is of payr than it won't get added
-        payees.payerId=this.listarray[this.i];
-        this.payeesServices.addPayeesExpense(payees).subscribe({
-          next:res=>{
-            alert("payees successfully added");
-            this.onSaveComplete();
-          }
-        })
+    payees.payerId=payee.payerId;
+    this.payeesServices.addPayeesExpense(payees).subscribe({
+      next:res=>{
+        this.onSaveComplete();
       }
-    }
+    })
   }
 
   //Show And Hide a div When Required
@@ -297,6 +278,7 @@ public listarray2:string[]=[];
   percentage:boolean=false;
   check1:boolean=false;
   userListArray:string[]=[];
+
   SplitByCalculations(amnt:number,splitby:string){
     console.log(splitby);
     //transferring all the group-members of the selected group into a single listarray
@@ -306,16 +288,12 @@ public listarray2:string[]=[];
         this.lengths++;
       }
     }
-    console.log(this.listarray);
     this.counter=this.listarray.length;
     if(splitby=="equally"){
       this.TotalAmount=amnt/this.counter;
       this.check1=!this.check1;
-      console.log(this.payeesExpenses.share);
-      console.log(this.TotalAmount);
     }
     else if(splitby=="exact amount"){
-      console.log(this.listarray.length);
       this.exactAmnt=!this.exactAmnt;
       for(this.i=0;this.i<this.listarray.length;this.i++){
         this.userServices.getUser2(this.listarray[this.i]).subscribe({

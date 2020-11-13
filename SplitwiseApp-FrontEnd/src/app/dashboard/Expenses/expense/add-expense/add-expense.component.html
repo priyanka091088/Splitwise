@@ -193,7 +193,7 @@
   <input type="number" placeholder="amount" name="Amount" [(ngModel)]="expense.amount" required><br><br>
 
   <label>paid by</label>&nbsp;&nbsp;
-  <select id = "myFriends" name="payer" [(ngModel)]="payersExpense.payerId">
+  <select id = "myFriends" name="payer" [(ngModel)]="payersExpense.payerId" required>
     <option [ngValue]="users.id">You</option>
     <option [ngValue]="f.creator" *ngFor="let f of friendsDtoDetails">{{f.friendName}}</option>
 
@@ -221,7 +221,6 @@
   </div>
 
   <div class="Split-Amount-By" *ngIf="check1"><p>Each Person Will Pay INR&nbsp;{{TotalAmount}}</p></div><br>
-  <label>Choose Date:</label><br><br>
 
 <label>Group/Non-Group</label>
   <select id = "Group" name="groups" [(ngModel)]="expense.groupId" class="form-control">

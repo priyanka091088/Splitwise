@@ -27,8 +27,7 @@ namespace SplitwiseApp.Core.ApiControllers
 
         #region API controller methods
 
-        [HttpGet("{id}")]
-        [Route("getSettlementByUser/{id}")]
+        [HttpGet("getSettlementByUser/{id}")]
         public ActionResult<IEnumerable<SettlementDTO>> GetSettlement(string id)
         {
 
@@ -36,8 +35,7 @@ namespace SplitwiseApp.Core.ApiControllers
             return Ok(settlementDtos);
         }
 
-        [HttpGet("{groupId}")]
-        [Route("getSettlementByGroup/{groupId}")]
+        [HttpGet("getSettlementByGroup/{groupId}")]
         public ActionResult<IEnumerable<SettlementDTO>> GetSettlementByGroupId(int groupId)
         {
 

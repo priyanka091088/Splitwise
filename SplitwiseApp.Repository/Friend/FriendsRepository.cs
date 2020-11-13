@@ -66,7 +66,14 @@ namespace SplitwiseApp.Repository.Friend
         public int DeleteAFriend(int id)
         {
             var friend = _context.friends.Find(id);
+            var friend2 = _context.friends.FirstOrDefault(f => f.creatorId == friend.friendId && f.friendId == friend.creatorId);
             _context.friends.Remove(friend);
+            if (_context.SaveChanges() != 0)
+            {
+                var friends = _context.friends.Find(friend2.Id);
+                _context.friends.Remove(friends);
+            }
+         
             var result = _context.SaveChanges();
             return result;
             

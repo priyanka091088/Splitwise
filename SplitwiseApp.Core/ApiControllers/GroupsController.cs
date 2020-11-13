@@ -41,8 +41,7 @@ namespace SplitwiseApp.Core.ApiControllers
             return groups.ToList();
         }
         // GET: api/Groups
-      [HttpGet("{userId}")]
-      [Route("getByUser/{userId}")]
+      [HttpGet("getByUser/{userId}")]
         public ActionResult<IEnumerable<GroupsDTO>> GetGroupsForAUser(string userId)
         {
             if (_user.UserExists(userId))
@@ -54,8 +53,7 @@ namespace SplitwiseApp.Core.ApiControllers
         }
 
         // GET: api/Groups
-        [HttpGet("{id}")]
-        [Route("getByGroupid/{id}")]
+        [HttpGet("getByGroupid/{id}")]
         public ActionResult<GroupsDTO> GetGroup(int id)
         {
             if (_groups.GroupExist(id))
@@ -66,8 +64,7 @@ namespace SplitwiseApp.Core.ApiControllers
             return BadRequest();
         }
 
-        [HttpGet("{groupId}")]
-        [Route("getBalance/{groupId}")]
+        [HttpGet("getBalance/{groupId}")]
         public ActionResult<IEnumerable<GroupMembersDTO>> GetGroupBalanceById(int groupId)
         {
             if (_groups.GroupExist(groupId))

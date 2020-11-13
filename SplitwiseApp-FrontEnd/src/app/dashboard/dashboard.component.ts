@@ -9,7 +9,7 @@ import { services } from '../services/services.service';
 export class DashboardComponent implements OnInit {
   title: "Dashboard"
   email=localStorage.getItem('userName');
-
+  token=localStorage.getItem('userToken');
   friends:services.FriendsDTO;
 
   friendDetails:services.FriendsDTO[];
@@ -18,12 +18,16 @@ export class DashboardComponent implements OnInit {
   constructor(private userServices:services.UserClient,private friendsServices:services.FriendsClient) { }
 
   ngOnInit(): void {
-    this.userServices.getUserByEmail2(this.email).subscribe({
-      next:user=>{
-        console.log(user);
-        this.GetFriendsBalance(user.id);
-      }
-    })
+    if(this.token!=null){
+      alert("token is not null");
+      this.userServices.getUserByEmail2(this.email).subscribe({
+        next:user=>{
+          console.log(user);
+          this.GetFriendsBalance(user.id);
+        }
+      })
+    }
+
 }
 i:number;
 

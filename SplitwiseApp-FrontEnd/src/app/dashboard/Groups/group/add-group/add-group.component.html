@@ -13,30 +13,12 @@
   </select><br><br>
 
   <button (click)="ShowAndHide()" class="btn btn-primary">Add Members</button><br><br>
- <!-- <div *ngIf="check">
-    <input type="text" placeholder="Name">&nbsp;
-    <input type="text" placeholder="Email">&nbsp;
-    <a href="" style="color: red;"><b>X</b></a>
-    <br><br>
-
-   <div id="newElementId"></div>
-   <div id="newElementId2"></div>
-
-   <div>
-    <button type="button" (click)="createNewElement()"><b>+</b></button>
-    </div>
-
-  </div>-->
 
   <div *ngIf="check" >
     <div *ngFor="let f of friendsDtoDetails;index as i;">
       <input  type="checkbox" name="users" (change)="getMembers($event,i)">
       <label name="users">{{f.friendName}}</label>
     </div>
-   <!-- <p style="color:red;">*hold down the ctrl button to select multiple members</p>
-    <select id = "Members" name="users"  multiple>
-      <option [ngValue]="f.creator" *ngFor="let f of friendsDtoDetails;index as i;" (change)="getMembers($event,i)">{{f.friendName}}</option>
-    </select><br><br>-->
 
   </div>
 

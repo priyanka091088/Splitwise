@@ -33,8 +33,7 @@ namespace SplitwiseApp.Core.ApiControllers
         {
             return _user.GetUsers();
         }
-        [HttpGet("{id}")]
-        [Route("getById/{id}")]
+        [HttpGet("getById/{id}")]
         public ActionResult<UserDTO> GetUser(string id)
         {
             if (_user.UserExists(id))
@@ -44,8 +43,7 @@ namespace SplitwiseApp.Core.ApiControllers
             return NotFound();
         }
 
-        [HttpGet("{email}")]
-        [Route("getByEmail/{email}")]
+        [HttpGet("getByEmail/{email}")]
         public async Task<ActionResult<UserDTO>> GetUserByEmail(string email)
         {
             
@@ -99,8 +97,7 @@ namespace SplitwiseApp.Core.ApiControllers
             return NotFound();
         }
 
-        [HttpPut("{Id}")]
-        [Route("getBalance/{Id}")]
+        [HttpPut("getBalance/{Id}")]
         public async Task<IActionResult> GetUserBalance(string Id)
         {
             var users= await _user.GetBalanceByUserId(Id);

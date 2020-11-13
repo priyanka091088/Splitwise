@@ -37,8 +37,7 @@ namespace SplitwiseApp.Core.ApiControllers
         #region API controller methods
 
         // GET: api/Expenses/id
-        [HttpGet("{id}")]
-        [Route("expense/{id}")]
+        [HttpGet("expense/{id}")]
         public ActionResult<ExpensesDTO> GetExpenseByExpenseId(int id)
         {
             if (_expenses.ExpenseExist(id))
@@ -50,8 +49,7 @@ namespace SplitwiseApp.Core.ApiControllers
 
         }
 
-        [HttpGet("{groupId}")]
-        [Route("groupsExpense/{groupId}")]
+        [HttpGet("groupsExpense/{groupId}")]
         public ActionResult<IEnumerable<ExpensesDTO>> ExpenseForAGroup(int groupId)
         {
             if (_groups.GroupExist(groupId))
