@@ -32,7 +32,7 @@ export class ExpensesComponent implements OnInit {
     private payersServices:services.PayersExpensesClient) { }
 
   ngOnInit(): void {
-     this.userServices.getUserByEmail2(this.email).subscribe({
+     this.userServices.getUserByEmail(this.email).subscribe({
       next:user=>{
         console.log(user);
         this.UserId=user.id;
@@ -80,14 +80,14 @@ export class ExpensesComponent implements OnInit {
     })
   }
   UpdateUserBalance(id:string){
-    this.userServices.getUserBalance2(id).subscribe({
+    this.userServices.getUserBalance(id).subscribe({
       next:res=>{
         this.getBalance(id);
       }
     });
   }
   getBalance(id:string){
-    this.userServices.getUser2(id).subscribe({
+    this.userServices.getUser(id).subscribe({
       next:user=>{
         console.log(user);
         console.log(user.balance);

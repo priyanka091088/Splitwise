@@ -46,7 +46,7 @@ check:boolean=false;
     ,private userServices:services.UserClient) { }
 
   ngOnInit(): void {
-    this.userServices.getUserByEmail2(this.email).subscribe({
+    this.userServices.getUserByEmail(this.email).subscribe({
       next: user=>{
       console.log(user);
       this.UserId=user.id;

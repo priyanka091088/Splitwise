@@ -6,11 +6,6 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit{
-  token=localStorage.getItem('userToken');
-  show:boolean=false;
-  ngOnInit(): void {
-    console.log(this.token);
-
-  }
+  ngOnInit(): void {}
   title = 'SplitwiseApp-Application';
 }

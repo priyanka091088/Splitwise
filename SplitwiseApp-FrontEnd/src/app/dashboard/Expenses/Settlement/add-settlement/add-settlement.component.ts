@@ -33,7 +33,7 @@ export class AddSettlementComponent implements OnInit {
     private groupServices:services.GroupsClient,private settlementServices:services.SettlementClient,private router:Router) { }
 
   ngOnInit(): void {
-    this.userServices.getUserByEmail2(this.email).subscribe({
+    this.userServices.getUserByEmail(this.email).subscribe({
       next: user=>{
       console.log(user);
       this.currentUserId=user.id;

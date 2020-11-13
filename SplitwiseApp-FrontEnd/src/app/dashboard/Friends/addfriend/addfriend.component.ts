@@ -42,7 +42,7 @@ UserId:string;
   constructor(private friendServices:services.FriendsClient,private userServices:services.UserClient,private router:Router) { }
 
   ngOnInit(): void {
-    this.userServices.getUserByEmail2(this.email).subscribe({
+    this.userServices.getUserByEmail(this.email).subscribe({
       next: user=>{
       console.log(user);
       this.UserId=user.id;
@@ -53,7 +53,7 @@ UserId:string;
 
   emailCheckUnique(email:string){
 
-    this.userServices.getUserByEmail2(email).subscribe({
+    this.userServices.getUserByEmail(email).subscribe({
 
       next: user=>{
         console.log(user);

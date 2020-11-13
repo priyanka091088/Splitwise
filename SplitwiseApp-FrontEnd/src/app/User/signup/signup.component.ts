@@ -32,17 +32,38 @@ users:services.UserDTO={
 };
 usersDetails:services.UserDTO[];
 userList:services.UserDTO[]=[];
+token=localStorage.getItem('userToken');
   constructor(private userServices:services.UserClient,private router:Router) { }
 
   ngOnInit(): void {
-
+    console.log(this.token);
   }
   onSubmit(signup:services.SignUpDTO){
     this.userServices.signUp(signup).subscribe({
       next:register=>{
         alert("User has been registered succesfully");
-        this.onSaveComplete();
+        this.generateToken(signup);
+
       }
+    })
+  }
+  generateToken(signup:services.SignUpDTO){
+    const login=new services.LoginDTO();
+    login.email=signup.email;
+    login.password=signup.password;
+    this.userServices.login(login).subscribe(
+      (next:any)=>{
+        localStorage.setItem('userToken',next)
+
+        let token=localStorage.getItem('userToken');
+        console.log(token);
+
+        let jwtData=token.split('.')[1]
+        let decodedJwtJsonData=window.atob(jwtData);
+        let decodedJwtData=JSON.parse(decodedJwtJsonData);
+        localStorage.setItem('userName',decodedJwtData.name);
+        console.log("name: "+decodedJwtData.name);
+        this.onSaveComplete();
     })
   }
   onSaveComplete():void{
@@ -51,7 +72,7 @@ userList:services.UserDTO[]=[];
 
   emailCheckUnique(email:string){
 
-    this.userServices.getUserByEmail2(email).subscribe({
+    this.userServices.getUserByEmail(email).subscribe({
       next: user=>{
         if(user!=null ){
           this.emailAlreadyExist=true;

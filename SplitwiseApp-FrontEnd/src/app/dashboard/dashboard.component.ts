@@ -20,7 +20,7 @@ export class DashboardComponent implements OnInit {
   ngOnInit(): void {
     if(this.token!=null){
       alert("token is not null");
-      this.userServices.getUserByEmail2(this.email).subscribe({
+      this.userServices.getUserByEmail(this.email).subscribe({
         next:user=>{
           console.log(user);
           this.GetFriendsBalance(user.id);

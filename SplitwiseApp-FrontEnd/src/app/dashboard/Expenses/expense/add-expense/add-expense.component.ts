@@ -82,7 +82,7 @@ listarray:string[]=[];
     ,private payeesServices:services.PayeesExpensesClient,private memberServices:services.GroupMembersClient) { }
 
   ngOnInit(): void {
-    this.userServices.getUserByEmail2(this.email).subscribe({
+    this.userServices.getUserByEmail(this.email).subscribe({
       next: user=>{
       console.log(user);
       this.UserId=user.id;
@@ -142,11 +142,18 @@ listarray:string[]=[];
         console.log(this.counter);
         alert("Expense successfully added");
             if(expense.splitBy=="equally"){
-            payees.share=expense.amount/this.counter;
-            payers.share=expense.amount/this.counter;
-            this.AddPayer(payers,expenses,expense.expenseId);
-            this.AddPayee(payers,expense.expenseId,payees);
-          }
+              for(var j=0;j<this.listarray.length;j++){
+                if(this.listarray[j]==payers.payerId){
+                  payers.share=expense.amount/this.counter;
+                  this.AddPayer(payers,expenses,expense.expenseId);
+                }
+                else{
+                  payees.share=expense.amount/this.counter;
+                  payees.payerId=this.listarray[j];
+                  this.AddPayee(payers,expense.expenseId,payees);
+                }
+              }
+       }
           else if(expense.splitBy=="exact amount"){
             for(var i=0;i<this.idlist.length;i++){
               if(this.idlist[i]==payers.payerId)//checking whether the id is payers id or not
@@ -156,6 +163,7 @@ listarray:string[]=[];
               }
               else{
                 payees.share=this.amntList[i];
+                payees.payerId=this.idlist[i];
                 this.AddPayee(payers,expense.expenseId,payees);
               }
             }
@@ -253,7 +261,7 @@ public listarray2:string[]=[];
 
     for(this.ctr=0;this.ctr<members.length;this.ctr++){
 
-      this.userServices.getUserByEmail2(members[this.ctr].email).subscribe({
+      this.userServices.getUserByEmail(members[this.ctr].email).subscribe({
 
         next:user=>{
           this.listOfMembers(user);
@@ -288,6 +296,7 @@ public listarray2:string[]=[];
         this.lengths++;
       }
     }
+    console.log(this.listarray);
     this.counter=this.listarray.length;
     if(splitby=="equally"){
       this.TotalAmount=amnt/this.counter;
@@ -296,7 +305,7 @@ public listarray2:string[]=[];
     else if(splitby=="exact amount"){
       this.exactAmnt=!this.exactAmnt;
       for(this.i=0;this.i<this.listarray.length;this.i++){
-        this.userServices.getUser2(this.listarray[this.i]).subscribe({
+        this.userServices.getUser(this.listarray[this.i]).subscribe({
           next:user=>{
             console.log(user);
             this.users=user;
@@ -308,7 +317,7 @@ public listarray2:string[]=[];
     else if(splitby=="percentage"){
       this.percentage=!this.percentage;
       for(this.i=0;this.i<this.listarray.length;this.i++){
-        this.userServices.getUser2(this.listarray[this.i]).subscribe({
+        this.userServices.getUser(this.listarray[this.i]).subscribe({
           next:user=>{
             console.log(user);
             this.users=user;

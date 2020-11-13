@@ -23,7 +23,8 @@ export class DetailComponent implements OnInit {
 
   ngOnInit(): void {
     if(this.token!=null){
-      this.userServices.getUserByEmail2(this.email).subscribe({
+      console.log(this.token);
+      this.userServices.getUserByEmail(this.email).subscribe({
         next: user=>{
         console.log(user);
         this.getFriends(user.id);

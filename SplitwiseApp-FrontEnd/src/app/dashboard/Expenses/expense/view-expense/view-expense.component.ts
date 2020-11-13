@@ -28,7 +28,7 @@ export class ViewExpenseComponent implements OnInit {
   ngOnInit(): void {
     const id=+this.route.snapshot.paramMap.get('id');
     this.ExpenseId=id;
-    this.expenseServices.getExpenseByExpenseId2(id).subscribe({
+    this.expenseServices.getExpenseByExpenseId(id).subscribe({
       next:expenseDto=>{
         console.log(expenseDto);
         this.expensesDto=expenseDto;

@@ -40,7 +40,7 @@ arr:number[]=[];
     const id=+this.route.snapshot.paramMap.get('id');
     this.GroupId=id;
 
-    this.groupsServices.getGroup2(id).subscribe({
+    this.groupsServices.getGroup(id).subscribe({
       next:groupDto=>{
         console.log(groupDto);
         this.pageTitle=groupDto.groupName;

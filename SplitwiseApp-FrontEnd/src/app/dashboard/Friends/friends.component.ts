@@ -28,7 +28,7 @@ export class FriendsComponent implements OnInit {
   ngOnInit(): void {
     const id=+this.route.snapshot.paramMap.get('id');
     this.groupid=id;
-    this.userServices.getUserByEmail2(this.email).subscribe({
+    this.userServices.getUserByEmail(this.email).subscribe({
       next:user=>{
         console.log(user);
         this.GetFriendsBalance(user.id,id);
